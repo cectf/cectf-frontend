@@ -1,6 +1,21 @@
 import os
 
-from flask import Flask
+from flask import Flask, request, redirect
+from frontend import auth
+
+
+def read_resource(realm: str, path: str):
+    if not auth.validate(realm):
+        return redirect("/login")
+    resourcePath = os.path.join("dist", realm, path)
+    print(resourcePath)
+    try:
+        with open(resourcePath, "r") as resource:
+            return resource.read()
+    except FileNotFoundError:
+        return "Resource not found", 404
+    except:
+        return "Error reading resource", 500
 
 
 def create_app(test_config=None):
@@ -23,41 +38,29 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    auth.init_app(app)
+
     # router for the bundles
-    @app.route('/<string:zone>/<string:bundle>.js')
-    def bundle(zone: str, bundle: str):
-        try:
-            with open("dist/" + zone + "/" + bundle + ".js", "r") as resource:
-                return resource.read()
-        except:
-            return "Error reading bundle", 500
+    @app.route('/<string:realm>/<string:bundle>.js')
+    def bundle(realm: str, bundle: str):
+        return read_resource(realm, bundle + ".js")
 
     # router for the bundle source maps
-    @app.route('/<string:zone>/<string:bundle>.js.map')
-    def bundle_source_map(zone: str, bundle: str):
-        try:
-            with open("dist/" + zone + "/" + bundle + ".js.map", "r") as resource:
-                return resource.read()
-        except:
-            return "Error reading bundle map", 500
+    @app.route('/<string:realm>/<string:bundle>.js.map')
+    def bundle_source_map(realm: str, bundle: str):
+        return read_resource(realm, bundle + ".js.map")
 
     # router for css resources
-    @app.route('/<string:zone>/css/<path:path>')
-    def css(zone: str, path: str):
-        try:
-            with open("dist/" + zone + "/css/" + path, "r") as resource:
-                return resource.read()
-        except:
-            return "Error reading " + path, 500
-        return "nope"
+    @app.route('/<string:realm>/css/<path:path>')
+    def css(realm: str, path: str):
+        return read_resource(realm, "css/" + path)
 
-    # router for html resources
-    @app.route('/<string:zone>/<path:path>')
-    def html(zone: str, path: str):
-        try:
-            with open("dist/" + zone + "/html/" + path, "r") as resource:
-                return resource.read()
-        except:
-            return "Error reading " + path, 500
+    # router for html index resources
+    @app.route('/<string:realm>')
+    def html(realm: str):
+        allowedRealm = auth.get_realm_for_token()
+        if realm != allowedRealm:
+            return redirect("/" + allowedRealm)
+        return read_resource(realm, "html/index.html")
 
     return app

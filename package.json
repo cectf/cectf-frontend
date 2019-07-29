@@ -7,8 +7,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.3.2",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
+    "babel-runtime": "^6.26.0",
+    "rxjs": "^6.5.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
@@ -16,6 +19,8 @@
     "webpack-cli": "^3.3.6"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
