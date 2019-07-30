@@ -57,10 +57,8 @@ def create_app(test_config=None):
 
     # router for html index resources
     @app.route('/<string:realm>')
+    @app.route('/<string:realm>/')
     def html(realm: str):
-        allowedRealm = auth.get_realm_for_token()
-        if realm != allowedRealm:
-            return redirect("/" + allowedRealm)
         return read_resource(realm, "html/index.html")
 
     return app

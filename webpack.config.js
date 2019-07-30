@@ -22,7 +22,8 @@ baseConfig = {
   },
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
+    'react-dom': 'ReactDOM',
+    'config': JSON.stringify(require('./config.json'))
   }
 };
 

@@ -19,6 +19,8 @@ export class LoginForm extends React.Component<LoginProps, LoginState> {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange_username = this.onChange_username.bind(this);
     this.onChange_password = this.onChange_password.bind(this);
+
+    localStorage.removeItem("token");
   }
 
   onSubmit(event: React.FormEvent) {

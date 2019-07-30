@@ -1,3 +1,6 @@
-//TODO
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-console.log('app')
+import { Hello } from "./components/Hello";
+
+ReactDOM.render(<Hello />, document.getElementById("example"));

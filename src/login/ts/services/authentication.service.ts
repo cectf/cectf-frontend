@@ -1,22 +1,27 @@
 import { BehaviorSubject } from "rxjs";
-import * as JWT from "jsonwebtoken";
+// import * as JWT from "jsonwebtoken";
 // import cookie from "react-cookies";
 
 //const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
-localStorage.getItem("currentUser");
-const currentUserSubject = new BehaviorSubject({});
+//localStorage.getItem("currentUser");
+//const currentUserSubject = new BehaviorSubject({});
+
+var config = require("config");
+
+var token = localStorage.getItem("token");
 
 export const authenticationService = {
   login,
-  currentUser: currentUserSubject.asObservable()
+  token
+  //currentUser: currentUserSubject.asObservable()
 };
 
 async function login(username: string, password: string): Promise<Response> {
-  return await fetch("http://127.0.0.1:5000/auth", {
+  return await fetch("/auth", {
     method: "POST",
-    mode: "same-origin",
+    mode: "cors",
     cache: "no-cache",
-    credentials: "same-origin",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json"
@@ -30,6 +35,9 @@ async function login(username: string, password: string): Promise<Response> {
       //console.log("Token", json.access_token);
       //console.log(JWT.decode(json.access_token));
       // cookie.save("token", json.access_token);
+      localStorage.setItem("token", json.access_token);
+      location.pathname = "/app";
+      //location.reload();
       return json.access_token;
     });
   });
