@@ -32,11 +32,13 @@ async function login(username: string, password: string): Promise<Response> {
       return Promise.reject("Unauthorized");
     }
     return response.json().then(json => {
-      //console.log("Token", json.access_token);
-      //console.log(JWT.decode(json.access_token));
-      // cookie.save("token", json.access_token);
+      console.log(json);
       localStorage.setItem("token", json.access_token);
-      location.pathname = "/app";
+      if (json.admin) {
+        location.pathname = "/admin";
+      } else {
+        location.pathname = "/app";
+      }
       //location.reload();
       return json.access_token;
     });
