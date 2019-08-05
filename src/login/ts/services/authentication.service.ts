@@ -17,7 +17,7 @@ export const authenticationService = {
 };
 
 async function login(username: string, password: string): Promise<Response> {
-  return await fetch("/auth", {
+  return await fetch("/api/login/auth", {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
