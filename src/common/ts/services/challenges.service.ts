@@ -21,7 +21,7 @@ export const submitFlag = async function(
   challengeId: number,
   flag: string
 ): Promise<Challenge> {
-  return post("/api/app/users/" + userId + "/challenge/" + challengeId, {
+  return post("/api/app/users/" + userId + "/challenges/" + challengeId, {
     flag: flag
   });
 };
