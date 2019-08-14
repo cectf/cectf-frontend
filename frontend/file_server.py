@@ -1,15 +1,17 @@
 import os
+from flask import Response
 
 
 def read_resource(path: str):
     resource_path = os.path.join("dist", path)
-    print(resource_path)
     if not os.path.isfile(resource_path):
         # try putting /index.html onto it if it's not a file
         resource_path = os.path.join(resource_path, "index.html")
     try:
         with open(resource_path, "r") as resource:
-            return resource.read()
+            if os.path.splitext(resource_path)[1] == ".css":
+                return Response(resource.read(), content_type="text/css")
+            return Response(resource.read())
     except FileNotFoundError:
         return "Resource not found", 404
     except:

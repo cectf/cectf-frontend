@@ -10,6 +10,7 @@
     "@types/jsonwebtoken": "^8.3.2",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
+    "@types/react-modal": "^3.8.2",
     "babel-runtime": "^6.26.0",
     "rxjs": "^6.5.2",
     "source-map-loader": "^0.2.4",
@@ -22,6 +23,7 @@
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-modal": "^3.9.1"
   }
 }

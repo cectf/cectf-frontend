@@ -6,6 +6,13 @@
     "target": "es2017",
     "strict": true,
     "jsx": "react",
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": "src",
+    "paths": {
+      "admin/*": ["admin/ts/*"],
+      "app/*": ["app/ts/*"],
+      "common/*": ["common/ts/*"],
+      "login/*": ["login/ts/*"]
+    }
   }
 }

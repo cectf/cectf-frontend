@@ -1,0 +1,12 @@
+
+div.challenges {
+  font-size: 22px;
+}
+
+div.challenge-tile {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #bcd266;
+}

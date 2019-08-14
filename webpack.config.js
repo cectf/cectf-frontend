@@ -3,7 +3,7 @@ const path = require('path');
 baseConfig = {
   mode: 'production',
   target: 'web',
-  devtool: "source-map",
+  devtool: 'source-map',
   module: {
     rules: [{
         test: /\.tsx?$/,
@@ -11,19 +11,28 @@ baseConfig = {
         exclude: path.resolve(__dirname, 'node_modules'),
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
-        loader: "source-map-loader"
+        loader: 'source-map-loader'
       }
     ]
   },
   resolve: {
+    alias: {
+      'app': path.resolve(__dirname, 'src/app/ts/'),
+      'admin': path.resolve(__dirname, 'src/admin/ts/'),
+      'common': path.resolve(__dirname, 'src/common/ts/'),
+      'login': path.resolve(__dirname, 'src/login/ts/')
+    },
     extensions: ['.tsx', '.ts', '.js']
   },
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
     'config': JSON.stringify(require('./config.json'))
+  },
+  stats: {
+    errorDetails: true
   }
 };
 

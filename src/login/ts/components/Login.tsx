@@ -25,14 +25,14 @@ export class LoginForm extends React.Component<LoginProps, LoginState> {
 
   onSubmit(event: React.FormEvent) {
     console.log("SUBMITTING! ", this.state);
+    event.preventDefault();
+    event.stopPropagation();
     authenticationService
       .login(this.state.username, this.state.password)
       .then(response => {
         console.log(response);
         console.log(location);
       });
-    event.preventDefault();
-    event.stopPropagation();
   }
 
   onChange_username(event: React.ChangeEvent<HTMLInputElement>) {
