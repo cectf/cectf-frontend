@@ -1,13 +1,9 @@
 import * as React from "react";
+import * as State from "app/state";
+import { Challenge } from "common/types";
 import { ChallengeTile } from "./ChallengeTile";
-import {
-  getChallenges,
-  Challenge
-} from "common/services/challenges.service.ts";
 
-export interface ChallengesProps {
-  userId: number;
-}
+export interface ChallengesProps {}
 
 export interface ChallengesState {
   challenges: Challenge[];
@@ -19,9 +15,7 @@ export class Challenges extends React.Component<
 > {
   constructor(props: ChallengesProps) {
     super(props);
-    getChallenges(1).then(async json => {
-      this.setState({ challenges: json });
-    });
+    State.addChallengesListener(this.setState.bind(this));
   }
   render() {
     if (this.state) {

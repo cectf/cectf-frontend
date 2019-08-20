@@ -1,12 +1,15 @@
 import * as React from "react";
 import * as Modal from "react-modal";
-import { Challenge, submitFlag } from "common/services/challenges.service.ts";
+import { Challenge } from "common/types";
+import * as ChallengesService from "app/services/challenges.service";
+import { SubmissionStatus } from "common/api/challenges.api";
 
 export interface ChallengeTileProps {
   challenge: Challenge;
 }
 export interface ChallengeTileState {
   modalOpen: boolean;
+  message: string;
   flagAttempt: string;
 }
 
@@ -18,6 +21,7 @@ export class ChallengeTile extends React.Component<
     super(props, state);
     this.state = {
       modalOpen: false,
+      message: "",
       flagAttempt: ""
     };
     this.onClick = this.onClick.bind(this);
@@ -30,21 +34,30 @@ export class ChallengeTile extends React.Component<
   }
   onFlagFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
-      modalOpen: this.state.modalOpen,
       flagAttempt: event.target.value
     });
   }
   onFlagSubmit(event: React.FormEvent) {
     event.preventDefault();
     event.stopPropagation();
-    console.log("I'M GONNA SUBMIT:", this.state.flagAttempt);
-    submitFlag(1, this.props.challenge.id, this.state.flagAttempt);
+    ChallengesService.submitFlag(
+      1,
+      this.props.challenge.id,
+      this.state.flagAttempt
+    ).then(status => {
+      if (status == SubmissionStatus.CORRECT) {
+        this.setState({ message: "You did it!" });
+      } else if (status == SubmissionStatus.INCORRECT) {
+        this.setState({ message: "That ain't right. n00b." });
+      } else if (status == SubmissionStatus.ALREADY_SOLVED) {
+        this.setState({ message: "You already solved this one!" });
+      }
+    });
   }
   onModalClose() {
-    this.setState({ modalOpen: false });
+    this.setState({ modalOpen: false, message: "" });
   }
   render() {
-    console.log("RENDERING DIS TILE ", this.props.challenge);
     return [
       <div className="challenge-tile" onClick={this.onClick}>
         <div className="challenge-tile__title">
@@ -53,12 +66,15 @@ export class ChallengeTile extends React.Component<
         <div className="challenge-tile__category">
           {this.props.challenge.category}
         </div>
+        <div>{this.props.challenge.hint}</div>
+        <div>{this.props.challenge.solution}</div>
       </div>,
       <Modal isOpen={this.state.modalOpen} onRequestClose={this.onModalClose}>
         <div>{this.props.challenge.body}</div>
         <div>
           <form onSubmit={this.onFlagSubmit}>
             <input type="text" id="flag" onChange={this.onFlagFieldChange} />
+            <div className="modal__message">{this.state.message}</div>
             <button type="submit" id="submit">
               Submit
             </button>

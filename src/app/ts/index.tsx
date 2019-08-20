@@ -1,6 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { AppRoot } from "app/components/AppRoot";
+import * as challengesService from "app/services/challenges.service";
 
-import { AppRoot } from "./components/AppRoot";
+let userId = 1;
 
-ReactDOM.render(<AppRoot />, document.getElementById("body"));
+export let appRoot = <AppRoot userId={userId} />;
+
+ReactDOM.render(appRoot, document.getElementById("body"));
+challengesService.getChallenges(userId);
