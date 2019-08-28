@@ -1,10 +1,9 @@
-import * as ChallengesApi from "common/api/challenges.api";
-import * as State from "app/state";
-import { Challenge } from "common/types";
+import * as ChallengesApi from "api/challenges.api";
+import * as State from "state";
 
 export const getChallenges = async function(userId: number): Promise<void> {
   return ChallengesApi.getChallenges(userId).then(challenges => {
-    State.setChallenges(challenges);
+    State.challenges.setChallenges(challenges);
   });
 };
 
@@ -19,7 +18,7 @@ export const submitFlag = async function(
       console.log(submission);
       if (submission.status == ChallengesApi.SubmissionStatus.CORRECT) {
         console.log("Correct!");
-        State.setChallenge(submission.challenge);
+        State.challenges.setChallenge(submission.challenge);
       }
       return submission.status;
     }

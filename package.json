@@ -7,7 +7,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jsonwebtoken": "^8.3.2",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
     "@types/react-modal": "^3.8.2",
@@ -21,7 +20,6 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^8.5.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-modal": "^3.9.1"

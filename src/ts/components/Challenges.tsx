@@ -1,7 +1,7 @@
 import * as React from "react";
-import * as State from "app/state";
-import { Challenge } from "common/types";
-import { ChallengeTile } from "./ChallengeTile";
+import * as State from "state";
+import { Challenge } from "types";
+import { ChallengeTile } from "components/ChallengeTile";
 
 export interface ChallengesProps {}
 
@@ -15,7 +15,7 @@ export class Challenges extends React.Component<
 > {
   constructor(props: ChallengesProps) {
     super(props);
-    State.addChallengesListener(this.setState.bind(this));
+    State.challenges.addListener(this.setState.bind(this));
   }
   render() {
     if (this.state) {

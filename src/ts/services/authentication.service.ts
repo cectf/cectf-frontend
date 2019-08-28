@@ -1,4 +1,4 @@
-import { BehaviorSubject } from "rxjs";
+//import { BehaviorSubject } from "rxjs";
 // import * as JWT from "jsonwebtoken";
 // import cookie from "react-cookies";
 
@@ -6,7 +6,8 @@ import { BehaviorSubject } from "rxjs";
 //localStorage.getItem("currentUser");
 //const currentUserSubject = new BehaviorSubject({});
 
-var config = require("config");
+//var config = require("config");
+import * as State from "state";
 
 var token = localStorage.getItem("token");
 
@@ -26,7 +27,11 @@ async function login(username: string, password: string): Promise<Response> {
       "Content-Type": "application/json",
       Accept: "application/json"
     },
-    body: JSON.stringify({ username: username, password: password })
+    body: JSON.stringify({
+      username: username,
+      password: password,
+      csrf_token: State.csrf.state.csrf_token
+    })
   }).then(async response => {
     if (!response.ok) {
       return Promise.reject("Unauthorized");

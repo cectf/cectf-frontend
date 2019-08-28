@@ -1,5 +1,5 @@
-import { get, post } from "common/api/index";
-import { Challenge } from "common/types";
+import { get, post } from "api";
+import { Challenge } from "types";
 
 export const getChallenges = async function(
   userId: number

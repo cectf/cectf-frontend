@@ -23,3 +23,7 @@ def init_app(app):
     @app.route('/<path:path>')
     def serve(path):
         return read_resource(path)
+
+    @app.route('/')
+    def serve_index():
+        return read_resource("index.html")

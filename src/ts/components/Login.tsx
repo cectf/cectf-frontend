@@ -1,5 +1,6 @@
 import * as React from "react";
-import { authenticationService } from "../services/authentication.service";
+import { authenticationService } from "services/authentication.service";
+import * as State from "state";
 
 export interface LoginProps {}
 export interface LoginState {
@@ -43,8 +44,16 @@ export class LoginForm extends React.Component<LoginProps, LoginState> {
   }
 
   render() {
+    console.log("Rendering with token");
+    console.log(State.csrf.state.csrf_token);
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} name="login_user_form">
+        <input
+          type="hidden"
+          id="csrf_token"
+          name="csrf_token"
+          value={State.csrf.state.csrf_token}
+        />
         <input type="text" id="username" onChange={this.onChange_username} />
         <input
           type="password"

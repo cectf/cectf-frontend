@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as Modal from "react-modal";
-import { Challenge } from "common/types";
-import * as ChallengesService from "app/services/challenges.service";
-import { SubmissionStatus } from "common/api/challenges.api";
+import { Challenge } from "types";
+import * as ChallengesService from "services/challenges.service";
+import { SubmissionStatus } from "api/challenges.api";
 
 export interface ChallengeTileProps {
   challenge: Challenge;

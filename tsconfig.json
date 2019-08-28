@@ -7,12 +7,6 @@
     "strict": true,
     "jsx": "react",
     "allowJs": true,
-    "baseUrl": "src",
-    "paths": {
-      "admin/*": ["admin/ts/*"],
-      "app/*": ["app/ts/*"],
-      "common/*": ["common/ts/*"],
-      "login/*": ["login/ts/*"]
-    }
+    "baseUrl": "src/ts"
   }
 }
