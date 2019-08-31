@@ -1,8 +1,11 @@
-import { get } from "api";
-import * as State from "state";
+import api from "api";
+import state from "state";
 
-export const getCsrf = async function() {
-  return get("/api/login/csrf")
+const getCsrf = async function() {
+  return api.csrf
+    .getCsrf()
     .then(response => response.json())
-    .then(json => State.csrf.nextState(json));
+    .then(json => state.csrf.nextState(json));
 };
+
+export default { getCsrf };

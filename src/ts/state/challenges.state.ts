@@ -1,35 +1,30 @@
-import { StateManager } from "state";
+import { StateManager } from "state/state";
 import { Challenge } from "types";
 
-export interface ChallengesState {
-  challenges: Challenge[];
-}
-
-export class ChallengesStateManager extends StateManager<ChallengesState> {
+export default class ChallengesStateManager extends StateManager<Challenge[]> {
   constructor() {
-    super({ challenges: [] });
+    super([]);
     this.setChallenges = this.setChallenges.bind(this);
     this.setChallenge = this.setChallenge.bind(this);
   }
 
   setChallenges(challenges: Challenge[]) {
-    console.log("Setting challenges");
-    console.log(challenges);
-    this.nextState({ challenges: challenges });
-    this.alertListeners();
+    this.nextState(challenges);
   }
 
   setChallenge(challenge: Challenge) {
-    console.log("Setting challenge");
-    console.log(challenge);
-    for (var i in this.state.challenges) {
-      if (this.state.challenges[i].id == challenge.id) {
-        this.state.challenges[i] = challenge;
-        this.alertListeners();
-        return;
+    var nextState: Challenge[] = [];
+    var found = false;
+    for (var i in this.state) {
+      if (this.state[i] == challenge) {
+        nextState.push(challenge);
+      } else {
+        nextState.push(this.state[i]);
       }
     }
-    this.state.challenges.push(challenge);
-    this.alertListeners();
+    if (!found) {
+      nextState.push(challenge);
+    }
+    this.nextState(nextState);
   }
 }

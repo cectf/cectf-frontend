@@ -1,19 +1,19 @@
 import * as React from "react";
 import * as Modal from "react-modal";
 import { Challenge } from "types";
-import * as ChallengesService from "services/challenges.service";
-import { SubmissionStatus } from "api/challenges.api";
+import service from "services";
+import { SubmissionStatus } from "types";
 
-export interface ChallengeTileProps {
+interface ChallengeTileProps {
   challenge: Challenge;
 }
-export interface ChallengeTileState {
+interface ChallengeTileState {
   modalOpen: boolean;
   message: string;
   flagAttempt: string;
 }
 
-export class ChallengeTile extends React.Component<
+export default class ChallengeTile extends React.Component<
   ChallengeTileProps,
   ChallengeTileState
 > {
@@ -40,19 +40,17 @@ export class ChallengeTile extends React.Component<
   onFlagSubmit(event: React.FormEvent) {
     event.preventDefault();
     event.stopPropagation();
-    ChallengesService.submitFlag(
-      1,
-      this.props.challenge.id,
-      this.state.flagAttempt
-    ).then(status => {
-      if (status == SubmissionStatus.CORRECT) {
-        this.setState({ message: "You did it!" });
-      } else if (status == SubmissionStatus.INCORRECT) {
-        this.setState({ message: "That ain't right. n00b." });
-      } else if (status == SubmissionStatus.ALREADY_SOLVED) {
-        this.setState({ message: "You already solved this one!" });
-      }
-    });
+    service.challenges
+      .submitFlag(this.props.challenge.id, this.state.flagAttempt)
+      .then(status => {
+        if (status == SubmissionStatus.CORRECT) {
+          this.setState({ message: "You did it!" });
+        } else if (status == SubmissionStatus.INCORRECT) {
+          this.setState({ message: "That ain't right. n00b." });
+        } else if (status == SubmissionStatus.ALREADY_SOLVED) {
+          this.setState({ message: "You already solved this one!" });
+        }
+      });
   }
   onModalClose() {
     this.setState({ modalOpen: false, message: "" });

@@ -1,21 +1,25 @@
 import * as React from "react";
-import * as State from "state";
+import state from "state";
+import ChallengeTile from "components/ChallengeTile";
 import { Challenge } from "types";
-import { ChallengeTile } from "components/ChallengeTile";
 
-export interface ChallengesProps {}
-
-export interface ChallengesState {
+interface ChallengesProps {}
+interface ChallengesState {
   challenges: Challenge[];
 }
 
-export class Challenges extends React.Component<
+export default class Challenges extends React.Component<
   ChallengesProps,
   ChallengesState
 > {
   constructor(props: ChallengesProps) {
     super(props);
-    State.challenges.addListener(this.setState.bind(this));
+    this.state = { challenges: state.challenges.state };
+  }
+  componentDidMount() {
+    state.challenges.addListener(challenges => {
+      this.setState({ challenges: challenges });
+    });
   }
   render() {
     if (this.state) {
@@ -27,7 +31,7 @@ export class Challenges extends React.Component<
         </div>
       );
     } else {
-      return <div>Loading challenges...</div>;
+      return <div id="challenges" className="challenges"></div>;
     }
   }
 }

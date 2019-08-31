@@ -1,12 +1,12 @@
 import * as React from "react";
 import * as ReactModal from "react-modal";
 
-export interface ModalProps {}
-export interface ModalState {
+interface ModalProps {}
+interface ModalState {
   isOpen: boolean;
 }
 
-export class Modal extends React.Component<ModalProps, ModalState> {
+export default class Modal extends React.Component<ModalProps, ModalState> {
   constructor(props: ModalProps, state: ModalState) {
     super(props, state);
     ReactModal.setAppElement("#appRoot");

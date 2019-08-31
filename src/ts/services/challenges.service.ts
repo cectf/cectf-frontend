@@ -1,26 +1,26 @@
-import * as ChallengesApi from "api/challenges.api";
-import * as State from "state";
+import api from "api";
+import state from "state";
+import { SubmissionStatus } from "types";
 
-export const getChallenges = async function(userId: number): Promise<void> {
-  return ChallengesApi.getChallenges(userId).then(challenges => {
-    State.challenges.setChallenges(challenges);
+const updateChallenges = async function(): Promise<void> {
+  return api.challenges.getChallenges().then(challenges => {
+    state.challenges.setChallenges(challenges);
   });
 };
 
-export const submitFlag = async function(
-  userId: number,
+const submitFlag = async function(
   challengeId: number,
   flag: string
-): Promise<ChallengesApi.SubmissionStatus> {
-  return ChallengesApi.submitFlag(userId, challengeId, flag).then(
-    submission => {
-      console.log("Processing submission");
-      console.log(submission);
-      if (submission.status == ChallengesApi.SubmissionStatus.CORRECT) {
-        console.log("Correct!");
-        State.challenges.setChallenge(submission.challenge);
-      }
-      return submission.status;
+): Promise<SubmissionStatus> {
+  return api.challenges.submitFlag(challengeId, flag).then(submission => {
+    console.log("Processing submission");
+    console.log(submission);
+    if (submission.status == SubmissionStatus.CORRECT) {
+      console.log("Correct!");
+      state.challenges.setChallenge(submission.challenge);
     }
-  );
+    return submission.status;
+  });
 };
+
+export default { updateChallenges, submitFlag };

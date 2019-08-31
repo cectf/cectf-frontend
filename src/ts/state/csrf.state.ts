@@ -1,11 +1,7 @@
-import { StateManager } from "state";
+import { StateManager } from "state/state";
 
-export interface CsrfState {
-  csrf_token: string;
-}
-
-export class CsrfStateManager extends StateManager<CsrfState> {
+export default class CsrfStateManager extends StateManager<string> {
   constructor() {
-    super({ csrf_token: "" });
+    super("");
   }
 }
