@@ -1,8 +1,8 @@
-import api from "api/user.api";
+import api from "api";
 import state from "state";
 
 const updateCurrentUser = async function(): Promise<void> {
-  return api.getCurrentUser().then(user => {
+  return api.user.getCurrentUser().then(user => {
     state.user.nextState(user);
   });
 };
