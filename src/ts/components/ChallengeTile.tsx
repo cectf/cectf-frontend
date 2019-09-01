@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as Modal from "react-modal";
-import { Challenge } from "types";
+import { Challenge, SubmissionStatus } from "types";
 import service from "services";
-import { SubmissionStatus } from "types";
 
 interface ChallengeTileProps {
   challenge: Challenge;

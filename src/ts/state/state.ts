@@ -10,24 +10,24 @@ export class StateManager<State> {
     this.alertListeners = this.alertListeners.bind(this);
     this.nextState = this.nextState.bind(this);
   }
-  addListener(listener: (nextState: State) => void): StateManager<State> {
+  addListener(listener: (nextState: State) => void) {
     this.listeners.push(listener);
-    return this;
+    listener(this.state);
   }
-  removeListener(listener: (nextState: State) => void): StateManager<State> {
+  removeListener(listener: (nextState: State) => void) {
     var index = this.listeners.indexOf(listener);
     if (index > -1) {
       this.listeners.splice(index, 1);
     }
-    return this;
   }
-  alertListeners(): StateManager<State> {
+  alertListeners() {
+    console.log("Alerting %s listeners", this.listeners.length);
     for (var i in this.listeners) {
       this.listeners[i](this.state);
     }
-    return this;
   }
   nextState(nextState: State): State {
+    console.log("Updating state to", nextState);
     this.state = nextState;
     this.alertListeners();
     return this.state;

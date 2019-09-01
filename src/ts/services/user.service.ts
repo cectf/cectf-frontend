@@ -6,5 +6,8 @@ const updateCurrentUser = async function(): Promise<void> {
     state.user.nextState(user);
   });
 };
+const reset = async function() {
+  state.user.nextState(null);
+};
 
-export default { updateCurrentUser };
+export default { updateCurrentUser, reset };

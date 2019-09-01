@@ -16,7 +16,7 @@ export default class AppContent extends React.Component<
 > {
   constructor(props: AppContentProps) {
     super(props);
-    this.state = { navPage: NavPage.ABOUT };
+    this.state = { navPage: state.nav.state };
   }
   componentDidMount() {
     state.nav.addListener(nextState => {

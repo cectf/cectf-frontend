@@ -23,4 +23,8 @@ const submitFlag = async function(
   });
 };
 
-export default { updateChallenges, submitFlag };
+const reset = async function() {
+  state.challenges.nextState([]);
+};
+
+export default { updateChallenges, submitFlag, reset };

@@ -1,11 +1,11 @@
 import api from "api";
 import state from "state";
 
-const getCsrf = async function() {
+const refreshCsrf = async function() {
   return api.csrf
     .getCsrf()
     .then(response => response.json())
-    .then(json => state.csrf.nextState(json));
+    .then(json => state.csrf.nextState(json.csrf_token));
 };
 
-export default { getCsrf };
+export default { refreshCsrf };

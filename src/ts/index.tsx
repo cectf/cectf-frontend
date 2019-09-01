@@ -5,6 +5,6 @@ import service from "services";
 
 export let appRoot = <AppRoot />;
 
-service.csrf.getCsrf().then(() => {
+service.csrf.refreshCsrf().then(() => {
   ReactDOM.render(appRoot, document.getElementById("body"));
 });

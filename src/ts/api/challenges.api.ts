@@ -3,8 +3,8 @@ import { Challenge, Submission } from "types";
 
 const getChallenges = async function(): Promise<Challenge[]> {
   return api.get("/api/challenge").then(async response => {
-    if (!response.ok) {
-      alert("Failed to get challenges");
+    if (response.status != 200) {
+      return [];
     }
     return response.json();
   });

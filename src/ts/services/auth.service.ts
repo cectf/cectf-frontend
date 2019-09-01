@@ -19,8 +19,9 @@ async function login(username: string, password: string): Promise<Response> {
 
 async function logout(): Promise<void> {
   return api.auth.logout().then(() => {
-    userService.updateCurrentUser();
-    challengesService.updateChallenges();
+    console.log("ayy it's out");
+    userService.reset();
+    challengesService.reset();
     state.nav.nextState(NavPage.ABOUT);
   });
 }

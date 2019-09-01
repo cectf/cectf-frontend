@@ -3,8 +3,8 @@ import { User } from "types";
 
 const getCurrentUser = async function(): Promise<User> {
   return api.get("/api/user").then(async response => {
-    if (!response.ok) {
-      alert("Failed to get current user");
+    if (response.status != 200) {
+      return null;
     }
     return response.json();
   });
