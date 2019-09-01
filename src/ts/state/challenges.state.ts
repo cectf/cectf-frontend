@@ -16,8 +16,9 @@ export default class ChallengesStateManager extends StateManager<Challenge[]> {
     var nextState: Challenge[] = [];
     var found = false;
     for (var i in this.state) {
-      if (this.state[i] == challenge) {
+      if (this.state[i].id == challenge.id) {
         nextState.push(challenge);
+        found = true;
       } else {
         nextState.push(this.state[i]);
       }

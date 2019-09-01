@@ -6,5 +6,7 @@ import service from "services";
 export let appRoot = <AppRoot />;
 
 service.csrf.refreshCsrf().then(() => {
+  service.user.updateCurrentUser();
+  service.challenges.updateChallenges();
   ReactDOM.render(appRoot, document.getElementById("body"));
 });
