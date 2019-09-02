@@ -4,43 +4,25 @@ import userService from "services/user.service";
 import challengesService from "services/challenges.service";
 import { NavPage } from "types";
 
-async function login(username: string, password: string): Promise<Response> {
-  return api.auth.login(username, password).then(async response => {
-    if (!response.ok) {
-      return Promise.reject("Unauthorized");
-    }
-    return response.json().then(json => {
-      userService.updateCurrentUser();
-      challengesService.updateChallenges();
-      return json;
-    });
+async function login(username: string, password: string) {
+  return api.auth.login(username, password).then(() => {
+    userService.updateCurrentUser();
+    challengesService.updateChallenges();
   });
 }
 
-async function logout(): Promise<void> {
+async function logout() {
   return api.auth.logout().then(() => {
-    console.log("ayy it's out");
     userService.reset();
     challengesService.reset();
     state.nav.nextState(NavPage.ABOUT);
   });
 }
 
-async function register(
-  email: string,
-  username: string,
-  password: string
-): Promise<Response> {
-  console.log("Registering %s %s %s", email, username, password);
-  return api.auth.register(email, username, password).then(async response => {
-    if (!response.ok) {
-      return Promise.reject("Unauthorized");
-    }
-    return response.json().then(json => {
-      userService.updateCurrentUser();
-      challengesService.updateChallenges();
-      return json;
-    });
+async function register(email: string, username: string, password: string) {
+  return api.auth.register(email, username, password).then(() => {
+    userService.updateCurrentUser();
+    challengesService.updateChallenges();
   });
 }
 

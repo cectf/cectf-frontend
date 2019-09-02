@@ -19,9 +19,6 @@ const submitFlag = async function(
       flag: flag
     })
     .then(async response => {
-      if (!response.ok) {
-        alert("Failed to submit flag");
-      }
       return response.json();
     });
 };

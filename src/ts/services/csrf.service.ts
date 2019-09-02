@@ -4,8 +4,7 @@ import state from "state";
 const refreshCsrf = async function() {
   return api.csrf
     .getCsrf()
-    .then(response => response.json())
-    .then(json => state.csrf.nextState(json.csrf_token));
+    .then(csrf_token => state.csrf.nextState(csrf_token));
 };
 
 export default { refreshCsrf };

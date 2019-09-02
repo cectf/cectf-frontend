@@ -2,21 +2,19 @@ import api from "api";
 import state from "state";
 import { SubmissionStatus } from "types";
 
-const updateChallenges = async function(): Promise<void> {
-  return api.challenges.getChallenges().then(challenges => {
-    state.challenges.setChallenges(challenges);
+const updateChallenges = async function() {
+  api.challenges.getChallenges().then(challenges => {
+    state.challenges.nextState(challenges);
   });
 };
 
 const submitFlag = async function(
   challengeId: number,
   flag: string
+  // TODO make this return void and store SubmissionStatus in a messaging state
 ): Promise<SubmissionStatus> {
   return api.challenges.submitFlag(challengeId, flag).then(submission => {
-    console.log("Processing submission");
-    console.log(submission);
     if (submission.status == SubmissionStatus.CORRECT) {
-      console.log("Correct!");
       state.challenges.setChallenge(submission.challenge);
     }
     return submission.status;

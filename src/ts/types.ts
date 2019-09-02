@@ -35,5 +35,5 @@ export enum SubmissionStatus {
 
 export interface Submission {
   status: SubmissionStatus;
-  challenge: Challenge;
+  challenge?: Challenge;
 }

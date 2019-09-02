@@ -41,6 +41,7 @@ export default class ChallengeTile extends React.Component<
     event.stopPropagation();
     service.challenges
       .submitFlag(this.props.challenge.id, this.state.flagAttempt)
+      // TODO make this use a messaging state instead
       .then(status => {
         if (status == SubmissionStatus.CORRECT) {
           this.setState({ message: "You did it!" });

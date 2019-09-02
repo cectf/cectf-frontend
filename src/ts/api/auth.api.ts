@@ -1,29 +1,51 @@
 import api from "api/api";
 import state from "state";
 
-async function login(username: string, password: string): Promise<Response> {
-  return api.post("/api/login", {
-    username: username,
-    password: password,
-    csrf_token: state.csrf.state
-  });
+interface AuthResponse {
+  succeeded: boolean;
+  message?: string;
 }
 
-async function logout(): Promise<Response> {
-  return api.get("/api/logout");
+async function login(
+  username: string,
+  password: string
+): Promise<AuthResponse> {
+  return api
+    .post("/api/login", {
+      username: username,
+      password: password,
+      csrf_token: state.csrf.state
+    })
+    .then(response => {
+      if (!response.ok) {
+        return { succeeded: false, message: "Login Failed!" };
+      }
+      return { succeeded: true };
+    });
+}
+
+async function logout(): Promise<void> {
+  return api.get("/api/logout").then();
 }
 
 async function register(
   email: string,
   username: string,
   password: string
-): Promise<Response> {
-  return api.post("/api/register", {
-    email: email,
-    username: username,
-    password: password,
-    csrf_token: state.csrf.state
-  });
+): Promise<AuthResponse> {
+  return api
+    .post("/api/register", {
+      email: email,
+      username: username,
+      password: password,
+      csrf_token: state.csrf.state
+    })
+    .then(response => {
+      if (!response.ok) {
+        return { succeeded: false, message: "Registration Failed!" };
+      }
+      return { succeeded: true };
+    });
 }
 
 export default { login, logout, register };
