@@ -106,3 +106,7 @@ venv.bak/
 # Node installation
 /node_modules
 /package-lock.json
+
+# npm test coverage report
+/coverage
+/coverage/*
