@@ -1,4 +1,4 @@
-# topkek-frontend
+# cectf-frontend
 
 You need Python 3, pip, npm, and npx installed to set up this project.
 

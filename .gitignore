@@ -110,3 +110,6 @@ venv.bak/
 # npm test coverage report
 /coverage
 /coverage/*
+
+# Node profile stats
+stats.json
