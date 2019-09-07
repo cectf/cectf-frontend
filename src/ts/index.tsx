@@ -8,5 +8,6 @@ export let appRoot = <AppRoot />;
 service.csrf.refreshCsrf().then(() => {
   service.user.updateCurrentUser();
   service.challenges.updateChallenges();
+  service.challengesAdmin.updateChallenges();
   ReactDOM.render(appRoot, document.getElementById("body"));
 });
