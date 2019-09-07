@@ -28,7 +28,7 @@ it("challenges.api getChallenges found", async () => {
   return challengesApi.getChallenges().then(body => {
     expect(body).toEqual([challenge]);
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/challenges");
+    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges");
   });
 });
 
@@ -39,7 +39,7 @@ it("challenges.api getChallenges not found", async () => {
   return challengesApi.getChallenges().then(body => {
     expect(body).toEqual([]);
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/challenges");
+    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges");
   });
 });
 
@@ -55,7 +55,7 @@ it("challenges.api submitFlag correct", async () => {
       challenge: challenge
     });
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/challenges/1");
+    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges/1");
   });
 });
 
@@ -70,7 +70,7 @@ it("challenges.api submitFlag incorrect", async () => {
       status: SubmissionStatus.INCORRECT
     });
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/challenges/1");
+    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges/1");
   });
 });
 
@@ -85,6 +85,6 @@ it("challenges.api submitFlag already solved", async () => {
       status: SubmissionStatus.ALREADY_SOLVED
     });
     expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/challenges/1");
+    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges/1");
   });
 });
