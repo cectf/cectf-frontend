@@ -1,5 +1,5 @@
 import * as React from "react";
-import AdminChallenges from "components/AdminChallenges";
+import AdminChallenges from "components/admin/AdminChallenges";
 
 interface AdminProps {}
 interface AdminState {}

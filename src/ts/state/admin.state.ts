@@ -1,15 +1,15 @@
 import { StateManager } from "state/state";
-import { Challenge } from "types";
+import { ChallengeStub } from "types";
 
-export class AdminChallengesStateManager extends StateManager<Challenge[]> {
+export class AdminChallengesStateManager extends StateManager<ChallengeStub[]> {
   constructor() {
     super([]);
     this.setChallenge = this.setChallenge.bind(this);
   }
 
-  setChallenge(challenge: Challenge | undefined) {
+  setChallenge(challenge: ChallengeStub | undefined) {
     if (challenge) {
-      var nextState: Challenge[] = [];
+      var nextState: ChallengeStub[] = [];
       var found = false;
       for (var i in this.state) {
         if (this.state[i].id == challenge.id) {
@@ -24,5 +24,15 @@ export class AdminChallengesStateManager extends StateManager<Challenge[]> {
       }
       this.nextState(nextState);
     }
+  }
+
+  deleteChallenge(challenge: ChallengeStub) {
+    var nextState: ChallengeStub[] = this.state;
+    for (var i in this.state) {
+      if (this.state[i].id == challenge.id) {
+        delete nextState[i];
+      }
+    }
+    this.nextState(nextState);
   }
 }

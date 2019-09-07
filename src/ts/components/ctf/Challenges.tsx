@@ -1,23 +1,23 @@
 import * as React from "react";
 import state from "state";
-import AdminChallengeTile from "components/AdminChallengeTile";
+import ChallengeTile from "components/ctf/ChallengeTile";
 import { Challenge } from "types";
 
-interface AdminChallengesProps {}
-interface AdminChallengesState {
+interface ChallengesProps {}
+interface ChallengesState {
   challenges: Challenge[];
 }
 
-export default class AdminChallenges extends React.Component<
-  AdminChallengesProps,
-  AdminChallengesState
+export default class Challenges extends React.Component<
+  ChallengesProps,
+  ChallengesState
 > {
-  constructor(props: AdminChallengesProps) {
+  constructor(props: ChallengesProps) {
     super(props);
-    this.state = { challenges: state.admin.challenges.state };
+    this.state = { challenges: state.challenges.state };
   }
   componentDidMount() {
-    state.admin.challenges.addListener(challenges => {
+    state.challenges.addListener(challenges => {
       this.setState({ challenges: challenges });
     });
   }
@@ -25,9 +25,8 @@ export default class AdminChallenges extends React.Component<
     if (this.state) {
       return (
         <div id="challenges" className="challenges">
-          <button value="CREATE">Create nu</button>
           {this.state.challenges.map(challenge => (
-            <AdminChallengeTile challenge={challenge} />
+            <ChallengeTile challenge={challenge} />
           ))}
         </div>
       );

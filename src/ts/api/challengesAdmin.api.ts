@@ -1,7 +1,7 @@
 import api from "api/api";
-import { Challenge } from "types";
+import { ChallengeStub } from "types";
 
-const getChallenges = async function(): Promise<Challenge[]> {
+const getChallenges = async function(): Promise<ChallengeStub[]> {
   return api.get("/api/admin/challenges").then(async response => {
     console.log("AYY I HAVE GOT DEM ADMIN CHALLENGES");
     console.log(response);
@@ -14,8 +14,8 @@ const getChallenges = async function(): Promise<Challenge[]> {
 };
 
 const createChallenge = async function(
-  challenge: Challenge
-): Promise<Challenge> {
+  challenge: ChallengeStub
+): Promise<ChallengeStub> {
   return api.post("/api/admin/challenges", challenge).then(async response => {
     return response.json();
   });
@@ -23,8 +23,8 @@ const createChallenge = async function(
 
 const updateChallenge = async function(
   challengeId: number,
-  challenge: Challenge
-): Promise<Challenge> {
+  challenge: ChallengeStub
+): Promise<ChallengeStub> {
   return api
     .post("/api/admin/challenges/" + challengeId, challenge)
     .then(async response => {
@@ -32,8 +32,15 @@ const updateChallenge = async function(
     });
 };
 
+const deleteChallenge = async function(challengeId: number): Promise<void> {
+  return api.deleteHttp("/api/admin/challenges/" + challengeId).then(() => {
+    return;
+  });
+};
+
 export default {
   getChallenges,
   createChallenge,
-  updateChallenge
+  updateChallenge,
+  deleteChallenge
 };

@@ -28,4 +28,18 @@ const post = async function(url: string, body: any): Promise<Response> {
   });
 };
 
-export default { get, post };
+const deleteHttp = async function(url: string): Promise<Response> {
+  return fetch(url, {
+    method: "DELETE",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRFToken": state.csrf.state
+    }
+  });
+};
+
+export default { get, post, deleteHttp };

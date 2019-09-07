@@ -9,6 +9,15 @@ export interface Challenge {
   solved: boolean;
 }
 
+export interface ChallengeStub {
+  id?: number;
+  title: string;
+  category: string;
+  body: string;
+  hint: string;
+  solution: string;
+}
+
 export interface User {
   id: number;
   username: string;

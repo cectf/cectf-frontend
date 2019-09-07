@@ -1,6 +1,6 @@
 import * as React from "react";
-import Challenges from "components/Challenges";
-import Admin from "components/Admin";
+import Challenges from "components/ctf/Challenges";
+import Admin from "components/admin/Admin";
 import About from "components/About";
 import state from "state";
 import { NavPage } from "types";
