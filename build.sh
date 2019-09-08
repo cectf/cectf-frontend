@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf dist/*
-npx webpack --config webpack.config.js
+npm build
 if [ $? != 0 ] ; then
   echo "Build failed!"
   exit 1
