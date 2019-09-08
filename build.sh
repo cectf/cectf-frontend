@@ -1,6 +1,7 @@
 #!/bin/sh
 
 rm -rf dist/*
+mkdir dist
 echo "Building!"
 npm build
 echo "Built!"
