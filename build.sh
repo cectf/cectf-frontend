@@ -3,7 +3,7 @@
 rm -rf dist/*
 mkdir dist
 echo "Building!"
-npm build
+npm run build
 echo "Built!"
 ls
 ls dist
