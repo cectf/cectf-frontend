@@ -1,12 +1,16 @@
 language: node_js
 node_js:
   - 7
+script:
+  - npm test
+  - ./build.sh
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
-  target_branch: master
+  target_branch: gh-pages
   repo: cectf/cectf.github.io
+  local_dir: dist
   on:
     branch: master
