@@ -1,7 +1,11 @@
 #!/bin/sh
 
 rm -rf dist/*
+echo "Building!"
 npm build
+echo "Built!"
+ls
+ls dist
 if [ $? != 0 ] ; then
   echo "Build failed!"
   exit 1
