@@ -7,5 +7,7 @@ if [ $? != 0 ] ; then
   exit 1
 fi
 
+mkdir dist
 cp -r src/html/* dist
+mkdir dist/css
 cp -r src/css dist/css
