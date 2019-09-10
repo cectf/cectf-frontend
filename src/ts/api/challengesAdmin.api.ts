@@ -3,9 +3,6 @@ import { ChallengeStub } from "types";
 
 const getChallenges = async function(): Promise<ChallengeStub[]> {
   return api.get("/api/admin/challenges").then(async response => {
-    console.log("AYY I HAVE GOT DEM ADMIN CHALLENGES");
-    console.log(response);
-    console.log(response.status);
     if (response.status != 200) {
       return [];
     }

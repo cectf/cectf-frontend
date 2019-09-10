@@ -1,7 +1,12 @@
 import state from "state";
+import * as Config from "config";
+import * as React from "react";
+
+console.log(Config);
+console.log(Config.CECTF_SERVER_DOMAIN);
 
 const get = async function(url: string): Promise<Response> {
-  return fetch(url, {
+  return fetch(Config.CECTF_SERVER_DOMAIN + url, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -14,7 +19,7 @@ const get = async function(url: string): Promise<Response> {
 };
 
 const post = async function(url: string, body: any): Promise<Response> {
-  return fetch(url, {
+  return fetch(Config.CECTF_SERVER_DOMAIN + url, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -29,7 +34,7 @@ const post = async function(url: string, body: any): Promise<Response> {
 };
 
 const deleteHttp = async function(url: string): Promise<Response> {
-  return fetch(url, {
+  return fetch(Config.CECTF_SERVER_DOMAIN + url, {
     method: "DELETE",
     mode: "cors",
     cache: "no-cache",

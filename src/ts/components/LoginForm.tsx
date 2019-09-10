@@ -43,7 +43,9 @@ export default class LoginForm extends React.Component<LoginProps, LoginState> {
           id="password"
           onChange={this.onChange_password}
         />
-        <button type="submit">Submit</button>
+        <button type="submit" id="login">
+          Submit
+        </button>
       </form>
     );
   }

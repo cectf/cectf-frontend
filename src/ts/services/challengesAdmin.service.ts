@@ -3,10 +3,7 @@ import state from "state";
 import { ChallengeStub } from "types";
 
 const updateChallenges = async function() {
-  console.log("CALLING DAT ADMIN");
   api.challengesAdmin.getChallenges().then(challenges => {
-    console.log("DEM CHALLENGES");
-    console.log(challenges);
     state.admin.challenges.nextState(challenges);
   });
 };

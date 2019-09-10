@@ -21,13 +21,11 @@ export class StateManager<State> {
     }
   }
   alertListeners() {
-    console.log("Alerting %s listeners", this.listeners.length);
     for (var i in this.listeners) {
       this.listeners[i](this.state);
     }
   }
   nextState(nextState: State): State {
-    console.log("Updating state to", nextState);
     this.state = nextState;
     this.alertListeners();
     return this.state;

@@ -20,7 +20,6 @@ export default class AdminChallenges extends React.Component<
     this.state = { modalOpen: false, challenges: state.admin.challenges.state };
     this.openCreateChallengeModal = this.openCreateChallengeModal.bind(this);
     this.createChallenge = this.createChallenge.bind(this);
-    this.onModalClose = this.onModalClose.bind(this);
   }
   componentDidMount() {
     state.admin.challenges.addListener(challenges => {
@@ -34,11 +33,8 @@ export default class AdminChallenges extends React.Component<
   }
   createChallenge(challenge: ChallengeStub) {
     service.challengesAdmin.createChallenge(challenge).then(() => {
-      this.onModalClose();
+      this.setState({ modalOpen: false });
     });
-  }
-  onModalClose() {
-    this.setState({ modalOpen: false });
   }
   render() {
     return [
@@ -53,11 +49,7 @@ export default class AdminChallenges extends React.Component<
           <AdminChallengeTile challenge={challenge} />
         ))}
       </div>,
-      <CreateChallengeModal
-        modalOpen={this.state.modalOpen}
-        onModalClose={this.onModalClose}
-        onSubmit={this.createChallenge}
-      />
+      <CreateChallengeModal parent={this} onSubmit={this.createChallenge} />
     ];
   }
 }

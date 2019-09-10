@@ -1,25 +1,29 @@
 import * as React from "react";
 import * as ReactModal from "react-modal";
 
-interface ModalProps {}
-interface ModalState {
-  isOpen: boolean;
+interface ModalProps {
+  parent: React.Component<{}, { modalOpen: boolean }>;
 }
+interface ModalState {}
 
-export default class Modal extends React.Component<ModalProps, ModalState> {
-  constructor(props: ModalProps, state: ModalState) {
+export default class Modal<P, S> extends React.Component<
+  ModalProps & P,
+  ModalState & S
+> {
+  constructor(props: ModalProps & P, state: ModalState) {
     super(props, state);
-    ReactModal.setAppElement("#appRoot");
 
     this.close = this.close.bind(this);
-    this.state = { isOpen: true };
   }
   close() {
-    this.setState({ isOpen: false });
+    this.props.parent.setState({ modalOpen: false });
   }
   render() {
     return (
-      <ReactModal isOpen={this.state.isOpen} onRequestClose={this.close}>
+      <ReactModal
+        isOpen={this.props.parent.state.modalOpen}
+        onRequestClose={this.close}
+      >
         {this.props.children}
       </ReactModal>
     );

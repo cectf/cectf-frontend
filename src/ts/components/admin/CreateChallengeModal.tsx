@@ -1,11 +1,10 @@
 import * as React from "react";
-import * as Modal from "react-modal";
-import service from "services";
+//import * as Modal from "react-modal";
+import Modal from "components/Modal";
 import { ChallengeStub } from "types";
 
 interface AdminChallengeTileProps {
-  modalOpen: boolean;
-  onModalClose: () => void;
+  parent: React.Component<{}, { modalOpen: boolean }>;
   onSubmit: (challenge: ChallengeStub) => void;
   challenge?: ChallengeStub;
 }
@@ -18,7 +17,7 @@ interface AdminChallengeTileState {
   solution: string;
 }
 
-export default class CreateChallengeModal extends React.Component<
+export default class CreateChallengeModal extends Modal<
   AdminChallengeTileProps,
   AdminChallengeTileState
 > {
@@ -68,16 +67,11 @@ export default class CreateChallengeModal extends React.Component<
   onSubmit(event: React.FormEvent) {
     event.preventDefault();
     event.stopPropagation();
-    service.challengesAdmin.createChallenge(this.state).then(() => {
-      this.props.onModalClose();
-    });
+    this.props.onSubmit(this.state);
   }
   render() {
     return (
-      <Modal
-        isOpen={this.props.modalOpen}
-        onRequestClose={this.props.onModalClose}
-      >
+      <Modal parent={this.props.parent}>
         <div>
           <form onSubmit={this.onSubmit}>
             <div>
@@ -131,7 +125,7 @@ export default class CreateChallengeModal extends React.Component<
             </button>
           </form>
         </div>
-        <button onClick={this.props.onModalClose}>Close</button>
+        <button onClick={this.close}>Close</button>
       </Modal>
     );
   }
