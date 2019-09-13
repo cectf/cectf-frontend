@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as Modal from "react-modal";
-import { Challenge, SubmissionStatus } from "types";
+import { Challenge, SubmissionStatus, FileDescriptor } from "types";
 import service from "services";
+import api from "api";
 
 interface ChallengeTileProps {
   challenge: Challenge;
@@ -9,6 +10,7 @@ interface ChallengeTileProps {
 interface ChallengeTileState {
   modalOpen: boolean;
   message: string;
+  files: FileDescriptor[];
   flagAttempt: string;
 }
 
@@ -21,6 +23,7 @@ export default class ChallengeTile extends React.Component<
     this.state = {
       modalOpen: false,
       message: "",
+      files: [],
       flagAttempt: ""
     };
     this.onClick = this.onClick.bind(this);
@@ -29,6 +32,9 @@ export default class ChallengeTile extends React.Component<
     this.onModalClose = this.onModalClose.bind(this);
   }
   onClick() {
+    api.challengeFiles.getFiles(this.props.challenge.id).then(files => {
+      this.setState({ files: files });
+    });
     this.setState({ modalOpen: true });
   }
   onFlagFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -69,6 +75,15 @@ export default class ChallengeTile extends React.Component<
       </div>,
       <Modal isOpen={this.state.modalOpen} onRequestClose={this.onModalClose}>
         <div>{this.props.challenge.body}</div>
+        <div>
+          <ul>
+            {this.state.files.map(file => (
+              <li>
+                <a href={file.url}>{file.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
         <div>
           <form onSubmit={this.onFlagSubmit}>
             <input type="text" id="flag" onChange={this.onFlagFieldChange} />

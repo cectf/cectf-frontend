@@ -1,6 +1,6 @@
 import api from "api";
 import state from "state";
-import { ChallengeStub } from "types";
+import { AdminChallenge, NewAdminChallenge } from "types";
 
 const updateChallenges = async function() {
   api.challengesAdmin.getChallenges().then(challenges => {
@@ -9,8 +9,8 @@ const updateChallenges = async function() {
 };
 
 const createChallenge = async function(
-  challenge: ChallengeStub
-): Promise<ChallengeStub> {
+  challenge: NewAdminChallenge
+): Promise<AdminChallenge> {
   return api.challengesAdmin.createChallenge(challenge).then(challenge => {
     state.admin.challenges.setChallenge(challenge);
     return challenge;
@@ -19,8 +19,8 @@ const createChallenge = async function(
 
 const updateChallenge = async function(
   challengeId: number,
-  challenge: ChallengeStub
-): Promise<ChallengeStub> {
+  challenge: AdminChallenge | NewAdminChallenge
+): Promise<AdminChallenge> {
   return api.challengesAdmin
     .updateChallenge(challengeId, challenge)
     .then(challenge => {
@@ -30,14 +30,11 @@ const updateChallenge = async function(
 };
 
 const deleteChallenge = async function(
-  challenge: ChallengeStub
+  challenge: AdminChallenge
 ): Promise<void> {
-  if (challenge.id) {
-    return api.challengesAdmin.deleteChallenge(challenge.id).then(() => {
-      state.admin.challenges.deleteChallenge(challenge);
-    });
-  }
-  return;
+  return api.challengesAdmin.deleteChallenge(challenge.id).then(() => {
+    state.admin.challenges.deleteChallenge(challenge);
+  });
 };
 
 const reset = async function() {

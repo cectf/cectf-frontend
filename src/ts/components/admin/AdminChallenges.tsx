@@ -3,12 +3,12 @@ import state from "state";
 import service from "services";
 import AdminChallengeTile from "components/admin/AdminChallengeTile";
 import CreateChallengeModal from "components/admin/CreateChallengeModal";
-import { ChallengeStub } from "types";
+import { AdminChallenge, NewAdminChallenge } from "types";
 
 interface AdminChallengesProps {}
 interface AdminChallengesState {
   modalOpen: boolean;
-  challenges: ChallengeStub[];
+  challenges: AdminChallenge[];
 }
 
 export default class AdminChallenges extends React.Component<
@@ -31,7 +31,7 @@ export default class AdminChallenges extends React.Component<
     event.stopPropagation();
     this.setState({ modalOpen: true });
   }
-  createChallenge(challenge: ChallengeStub) {
+  createChallenge(challenge: NewAdminChallenge) {
     service.challengesAdmin.createChallenge(challenge).then(() => {
       this.setState({ modalOpen: false });
     });

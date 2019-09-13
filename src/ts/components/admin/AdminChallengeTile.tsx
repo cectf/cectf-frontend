@@ -1,13 +1,15 @@
 import * as React from "react";
-import { ChallengeStub } from "types";
+import { AdminChallenge, NewAdminChallenge, FileDescriptor } from "types";
 import CreateChallengeModal from "components/admin/CreateChallengeModal";
 import service from "services";
+import api from "api";
 
 interface AdminChallengeTileProps {
-  challenge: ChallengeStub;
+  challenge: AdminChallenge;
 }
 interface AdminChallengeTileState {
   modalOpen: boolean;
+  files: FileDescriptor[];
 }
 
 export default class AdminChallengeTile extends React.Component<
@@ -17,32 +19,64 @@ export default class AdminChallengeTile extends React.Component<
   constructor(props: AdminChallengeTileProps, state: AdminChallengeTileState) {
     super(props, state);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      files: []
     };
-    this.onClick = this.onClick.bind(this);
-    this.updateChallenge = this.updateChallenge.bind(this);
-    this.deleteChallenge = this.deleteChallenge.bind(this);
   }
-  onClick(event: React.MouseEvent) {
+  componentDidMount() {
+    api.challengeFiles.getFiles(this.props.challenge.id).then(files => {
+      this.setState({ files: files });
+    });
+  }
+  editChallenge = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     this.setState({ modalOpen: true });
-  }
-  updateChallenge(challenge: ChallengeStub) {
-    if (this.props.challenge.id) {
-      service.challengesAdmin
-        .updateChallenge(this.props.challenge.id, challenge)
-        .then(() => {
-          this.setState({ modalOpen: false });
-        });
-    }
-  }
-  deleteChallenge() {
+  };
+  updateChallenge = (challenge: NewAdminChallenge) => {
+    service.challengesAdmin
+      .updateChallenge(this.props.challenge.id, challenge)
+      .then(() => {
+        this.setState({ modalOpen: false });
+      });
+  };
+  deleteChallenge = () => {
     service.challengesAdmin.deleteChallenge(this.props.challenge);
-  }
+  };
+  uploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (this.props.challenge.id) {
+      var files = event.target.files;
+      console.log(files);
+      if (files) {
+        for (var i = 0; i < files.length; i++) {
+          console.log("Uploading");
+          console.log(files[i]);
+          api.challengeFiles
+            .uploadFile(this.props.challenge.id, files[i])
+            .then(() => {
+              api.challengeFiles
+                .getFiles(this.props.challenge.id)
+                .then(files => {
+                  this.setState({ files: files });
+                });
+            });
+        }
+      }
+    }
+  };
+  deleteFile = (event: React.MouseEvent, file: FileDescriptor) => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (this.props.challenge.id) {
+      api.challengeFiles.deleteFile(this.props.challenge.id, file);
+      api.challengeFiles.getFiles(this.props.challenge.id).then(files => {
+        this.setState({ files: files });
+      });
+    }
+  };
   render() {
     return [
-      <div className="challenge-tile" onClick={this.onClick}>
+      <div className="challenge-tile">
         <div className="challenge-tile__title">
           {this.props.challenge.title}
         </div>
@@ -51,7 +85,27 @@ export default class AdminChallengeTile extends React.Component<
         </div>
         <div>Hint: {this.props.challenge.hint}</div>
         <div>Solution: {this.props.challenge.solution}</div>
-        <button onClick={this.deleteChallenge}>Delete</button>
+        <button onClick={this.editChallenge}> Edit Challenge</button>
+        <div>
+          <ul>
+            {this.state.files.map(file => (
+              <li>
+                <a href={file.url}>{file.name}</a>
+                <button onClick={e => this.deleteFile(e, file)}>
+                  Delete File
+                </button>
+              </li>
+            ))}
+          </ul>
+          <input
+            type="file"
+            onChange={this.uploadFile}
+            onClick={event => {
+              event.stopPropagation();
+            }}
+          />
+        </div>
+        <button onClick={this.deleteChallenge}>Delete Challenge</button>
       </div>,
       <CreateChallengeModal
         parent={this}

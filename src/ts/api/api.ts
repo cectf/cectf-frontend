@@ -33,6 +33,21 @@ const post = async function(url: string, body: any): Promise<Response> {
   });
 };
 
+const upload = async function(url: string, file: File): Promise<Response> {
+  var formData = new FormData();
+  formData.append("file", file);
+  return fetch(Config.CECTF_SERVER_DOMAIN + url, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "include",
+    headers: {
+      "X-CSRFToken": state.csrf.state
+    },
+    body: formData
+  });
+};
+
 const deleteHttp = async function(url: string): Promise<Response> {
   return fetch(Config.CECTF_SERVER_DOMAIN + url, {
     method: "DELETE",
@@ -47,4 +62,4 @@ const deleteHttp = async function(url: string): Promise<Response> {
   });
 };
 
-export default { get, post, deleteHttp };
+export default { get, post, upload, deleteHttp };

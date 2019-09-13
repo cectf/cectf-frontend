@@ -1,8 +1,8 @@
 import { NavPage } from "types";
-import { StateManager } from "state/state";
+import { CookieStateManager } from "state/state";
 
-export default class NavStateManager extends StateManager<NavPage> {
+export default class NavStateManager extends CookieStateManager<NavPage> {
   constructor() {
-    super(NavPage.ABOUT);
+    super("nav", NavPage.ABOUT);
   }
 }

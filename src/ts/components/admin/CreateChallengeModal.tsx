@@ -1,12 +1,12 @@
 import * as React from "react";
 //import * as Modal from "react-modal";
 import Modal from "components/Modal";
-import { ChallengeStub } from "types";
+import { NewAdminChallenge } from "types";
 
 interface AdminChallengeTileProps {
   parent: React.Component<{}, { modalOpen: boolean }>;
-  onSubmit: (challenge: ChallengeStub) => void;
-  challenge?: ChallengeStub;
+  onSubmit: (challenge: NewAdminChallenge) => void;
+  challenge?: NewAdminChallenge;
 }
 interface AdminChallengeTileState {
   message: string;
