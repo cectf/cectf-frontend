@@ -2,7 +2,8 @@
 
 if [ -z $CECTF_SERVER_DOMAIN ]; then
   echo "Assuming default value for CECTF_SERVER_DOMAIN"
-  set "http://localhost:5001"
+  #set "http://localhost:5001"
+  set "";
 fi
 
 if [ -n "$1" ]; then
