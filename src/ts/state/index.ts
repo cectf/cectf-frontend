@@ -13,3 +13,8 @@ export default {
     challenges: new AdminChallengesStateManager()
   }
 };
+
+import { createStore } from 'redux';
+import reduxApp from 'state/reducers';
+
+export const store = createStore(reduxApp);

@@ -1,5 +1,5 @@
 import api from "api/api";
-import state from "state";
+import { store } from "state";
 
 interface AuthResponse {
   succeeded: boolean;
@@ -14,7 +14,7 @@ async function login(
     .post("/api/login", {
       username: username,
       password: password,
-      csrf_token: state.csrf.state
+      csrf_token: store.getState().csrf
     })
     .then(response => {
       if (!response.ok) {
@@ -38,7 +38,7 @@ async function register(
       email: email,
       username: username,
       password: password,
-      csrf_token: state.csrf.state
+      csrf_token: store.getState().csrf
     })
     .then(response => {
       if (!response.ok) {

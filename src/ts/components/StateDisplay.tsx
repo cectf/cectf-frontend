@@ -1,5 +1,5 @@
 import * as React from "react";
-import state from "state";
+import state, { store } from "state";
 
 interface StateDisplayProps {}
 interface StateDisplayState {
@@ -48,6 +48,7 @@ export default class StateDisplay extends React.Component<
         <div>CSRF: {this.state.csrfState}</div>
         <div>Nav: {this.state.navState}</div>
         <div>User: {this.state.userState}</div>
+        <div>True state: {JSON.stringify(store.getState())}</div>
       </div>
     );
   }

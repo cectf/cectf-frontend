@@ -1,4 +1,4 @@
-import state from "state";
+import state, { store } from "state";
 import * as Config from "config";
 import * as React from "react";
 
@@ -14,7 +14,7 @@ const get = async function(url: string): Promise<Response> {
     credentials: "include",
     headers: {
       Accept: "application/json",
-      "X-CSRFToken": state.csrf.state
+      "X-CSRFToken": store.getState().csrf
     }
   });
 };
@@ -29,7 +29,7 @@ const post = async function(url: string, body: any): Promise<Response> {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "X-CSRFToken": state.csrf.state
+      "X-CSRFToken": store.getState().csrf
     },
     body: JSON.stringify(body)
   });
@@ -45,7 +45,7 @@ const upload = async function(url: string, file: File): Promise<Response> {
     cache: "no-cache",
     credentials: "include",
     headers: {
-      "X-CSRFToken": state.csrf.state
+      "X-CSRFToken": store.getState().csrf
     },
     body: formData
   });
@@ -61,7 +61,7 @@ const deleteHttp = async function(url: string): Promise<Response> {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "X-CSRFToken": state.csrf.state
+      "X-CSRFToken": store.getState().csrf
     }
   });
 };
