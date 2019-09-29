@@ -1,5 +1,6 @@
 import api from "api";
-import state from "state";
+import state, { store } from "state";
+import { reset } from "state/actions";
 import userService from "services/user.service";
 import challengesService from "services/challenges.service";
 import challengesAdminService from "services/challengesAdmin.service";
@@ -15,10 +16,7 @@ async function login(username: string, password: string) {
 
 async function logout() {
   return api.auth.logout().then(() => {
-    userService.reset();
-    challengesService.reset();
-    challengesAdminService.reset();
-    state.nav.nextState(NavPage.ABOUT);
+    store.dispatch(reset());
   });
 }
 

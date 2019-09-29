@@ -35,6 +35,12 @@ it("set CSRF", () => {
     expect(store.getState().csrf).toEqual('new_csrf_token')
 });
 
+it("set challenges", () => {
+    expect(store.getState().challenges).toEqual([]);
+    store.dispatch(actions.setChallenges([challenge1, challenge2]));
+    expect(store.getState().challenges).toEqual([challenge1, challenge2]);
+});
+
 it("add challenge", () => {
     expect(store.getState().challenges).toEqual([]);
     store.dispatch(actions.addChallenge(challenge1));

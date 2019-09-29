@@ -1,6 +1,7 @@
 import api from "api/challenges.api";
 import service from "services/challenges.service";
-import state from "state";
+import { store } from "state";
+import * as actions from "state/actions";
 import { Challenge, SubmissionStatus } from "types";
 
 var challenge: Challenge = {
@@ -17,14 +18,14 @@ var challenge: Challenge = {
 it("challenges.service updateChallenges", async () => {
   var getChallenges = jest.fn(() => Promise.resolve([challenge]));
   api.getChallenges = getChallenges;
-  var nextState = jest.fn();
-  state.challenges.nextState = nextState;
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
 
   expect.assertions(3);
   return service.updateChallenges().then(() => {
     expect(getChallenges.mock.calls.length).toEqual(1);
-    expect(nextState.mock.calls.length).toEqual(1);
-    expect(nextState.mock.calls[0][0]).toEqual([challenge]);
+    expect(dispatch.mock.calls.length).toEqual(1);
+    expect(dispatch.mock.calls[0][0]).toEqual(actions.setChallenges([challenge]));
   });
 });
 
@@ -33,15 +34,15 @@ it("challenges.service submitFlag correct", () => {
     Promise.resolve({ status: SubmissionStatus.CORRECT, challenge: challenge })
   );
   api.submitFlag = submitFlag;
-  var setChallenge = jest.fn();
-  state.challenges.setChallenge = setChallenge;
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
 
   expect.assertions(4);
-  service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
+  return service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
     expect(submissionStatus).toEqual(SubmissionStatus.CORRECT);
     expect(submitFlag.mock.calls.length).toEqual(1);
-    expect(setChallenge.mock.calls.length).toEqual(1);
-    expect(setChallenge.mock.calls[0][0]).toEqual(challenge);
+    expect(dispatch.mock.calls.length).toEqual(1);
+    expect(dispatch.mock.calls[0][0]).toEqual(actions.updateChallenge(challenge));
   });
 });
 
@@ -50,14 +51,14 @@ it("challenges.service submitFlag incorrect", () => {
     Promise.resolve({ status: SubmissionStatus.INCORRECT })
   );
   api.submitFlag = submitFlag;
-  var setChallenge = jest.fn();
-  state.challenges.setChallenge = setChallenge;
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
 
   expect.assertions(3);
-  service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
+  return service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
     expect(submissionStatus).toEqual(SubmissionStatus.INCORRECT);
     expect(submitFlag.mock.calls.length).toEqual(1);
-    expect(setChallenge.mock.calls.length).toEqual(0);
+    expect(dispatch.mock.calls.length).toEqual(0);
   });
 });
 
@@ -66,24 +67,13 @@ it("challenges.service submitFlag already solved", () => {
     Promise.resolve({ status: SubmissionStatus.ALREADY_SOLVED })
   );
   api.submitFlag = submitFlag;
-  var setChallenge = jest.fn();
-  state.challenges.setChallenge = setChallenge;
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
 
   expect.assertions(3);
-  service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
+  return service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
     expect(submissionStatus).toEqual(SubmissionStatus.ALREADY_SOLVED);
     expect(submitFlag.mock.calls.length).toEqual(1);
-    expect(setChallenge.mock.calls.length).toEqual(0);
-  });
-});
-
-it("challenges.service reset", async () => {
-  var nextState = jest.fn();
-  state.challenges.nextState = nextState;
-
-  expect.assertions(2);
-  return service.reset().then(() => {
-    expect(nextState.mock.calls.length).toEqual(1);
-    expect(nextState.mock.calls[0][0]).toEqual([]);
+    expect(dispatch.mock.calls.length).toEqual(0);
   });
 });

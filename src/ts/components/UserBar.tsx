@@ -5,10 +5,10 @@ import RegisterForm from "components/RegisterForm";
 import { User } from "types";
 import state from "state";
 
-interface UserBarProps {}
-interface UserBarState {
+interface UserBarProps {
   user: User | null;
 }
+interface UserBarState {}
 
 export default class UserBar extends React.Component<
   UserBarProps,
@@ -16,25 +16,18 @@ export default class UserBar extends React.Component<
 > {
   constructor(props: UserBarProps) {
     super(props);
-    this.state = { user: null };
-    this.onLogout = this.onLogout.bind(this);
   }
-  componentDidMount() {
-    state.user.addListener(user => {
-      this.setState({ user: user });
-    });
-  }
-  onLogout(event: React.MouseEvent) {
+  onLogout = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     service.auth.logout();
   }
 
   render() {
-    if (this.state.user) {
+    if (this.props.user) {
       return (
         <div id="userBar">
-          Welcome, user {this.state.user.username}!
+          Welcome, user {this.props.user.username}!
           <div id="logout">
             <a href="/" onClick={this.onLogout}>
               Log out

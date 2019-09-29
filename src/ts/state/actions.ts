@@ -1,4 +1,4 @@
-import { Challenge, SubmissionStatus } from "types";
+import { Challenge, User } from "types";
 
 /*
  * action types
@@ -13,6 +13,7 @@ export const enum ActionId {
     RESET,
     SET_CSRF,
     SET_NAV_TAB,
+    SET_CHALLENGES,
     ADD_CHALLENGE,
     UPDATE_CHALLENGE,
     DELETE_CHALLENGE,
@@ -31,6 +32,9 @@ export function setCsrf(csrfToken: string): Action<string> {
     return { type: ActionId.SET_CSRF, value: csrfToken }
 }
 
+export function setChallenges(challenges: Challenge[]): Action<Challenge[]> {
+    return {type: ActionId.SET_CHALLENGES, value: challenges}
+}
 export function addChallenge(challenge: Challenge): Action<Challenge> {
     return { type: ActionId.ADD_CHALLENGE, value: challenge }
 }
@@ -39,4 +43,8 @@ export function updateChallenge(challenge: Challenge): Action<Challenge> {
     return { type: ActionId.UPDATE_CHALLENGE, value: challenge }
 }
 
-export default { setCsrf, addChallenge, updateChallenge };
+// TODO deleteChallenge
+
+export function setUser(user: User | null): Action<User | null> {
+    return {type: ActionId.SET_USER, value: user};
+}

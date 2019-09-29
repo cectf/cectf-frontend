@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { Action, ActionId } from './actions';
-import { Challenge, SubmissionStatus } from "types";
+import { Challenge, User } from "types";
 
 function csrf(state = "", action: Action<string>): string {
     switch (action.type) {
@@ -11,8 +11,10 @@ function csrf(state = "", action: Action<string>): string {
     }
 }
 
-function challenges(state: Challenge[] = [], action: Action<Challenge>): Challenge[] {
+function challenges(state: Challenge[] = [], action: Action<Challenge & Challenge[]>): Challenge[] {
     switch (action.type) {
+        case ActionId.SET_CHALLENGES:
+            return action.value;
         case ActionId.ADD_CHALLENGE:
             return [
                 ...state,
@@ -30,10 +32,19 @@ function challenges(state: Challenge[] = [], action: Action<Challenge>): Challen
     }
 }
 
+function user(state: User | null = null, action: Action<User | null> ): User | null {
+    switch (action.type) {
+        case ActionId.SET_USER:
+            return action.value;
+        default:
+            return state;
+    }
+}
 
 const combinedReducers = combineReducers({
     csrf,
-    challenges
+    challenges,
+    user
 });
 
 const reduxApp = (state: any, action: Action<any>) => {

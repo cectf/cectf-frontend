@@ -1,13 +1,11 @@
 import api from "api";
-import state from "state";
+import { store } from "state";
+import { setUser } from "state/actions";
 
-const updateCurrentUser = async function(): Promise<void> {
+const updateCurrentUser = async function (): Promise<void> {
   return api.user.getCurrentUser().then(user => {
-    state.user.nextState(user);
+    store.dispatch(setUser(user));
   });
 };
-const reset = async function() {
-  state.user.nextState(null);
-};
 
-export default { updateCurrentUser, reset };
+export default { updateCurrentUser };

@@ -37,14 +37,9 @@ const deleteChallenge = async function(
   });
 };
 
-const reset = async function() {
-  state.challenges.nextState([]);
-};
-
 export default {
   updateChallenges,
   createChallenge,
   updateChallenge,
-  deleteChallenge,
-  reset
+  deleteChallenge
 };

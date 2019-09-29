@@ -1,5 +1,5 @@
 import * as React from "react";
-import Challenges from "components/ctf/Challenges";
+import ChallengesContainer from "containers/ChallengesContainer";
 import Admin from "components/admin/Admin";
 import About from "components/About";
 import state from "state";
@@ -29,7 +29,7 @@ export default class AppContent extends React.Component<
       content = <About />;
     }
     if (this.state.navPage === NavPage.CTF) {
-      content = <Challenges />;
+      content = <ChallengesContainer />;
     }
     if (this.state.navPage === NavPage.ADMIN) {
       content = <Admin />;
