@@ -1,47 +1,40 @@
 import * as React from "react";
 import { NavPage } from "types";
-import state from "state";
 
 interface NavTabProps {
   page: NavPage;
+  isActive: boolean;
+  switch: ()=>void;
 }
 interface NavTabState {}
 
 export default class NavTab extends React.Component<NavTabProps, NavTabState> {
-  constructor(props: NavTabProps) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-    this.getId = this.getId.bind(this);
-    this.getText = this.getText.bind(this);
-  }
 
-  onClick(e: React.MouseEvent) {
+  onClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    state.nav.nextState(this.props.page);
+    this.props.switch();
   }
 
-  getId() {
-    if (this.props.page == NavPage.ABOUT) {
-      return "nav-about";
-    }
-    if (this.props.page == NavPage.CTF) {
-      return "nav-ctf";
-    }
-    if (this.props.page == NavPage.ADMIN) {
-      return "nav-admin";
+  getId = (): string => {
+    switch(this.props.page) {
+      case NavPage.ABOUT:
+        return "nav-about";
+      case NavPage.CTF:
+        return "nav-ctf";
+      case NavPage.ADMIN:
+        return "nav-admin";
     }
   }
 
-  getText() {
-    if (this.props.page == NavPage.ABOUT) {
-      return "About";
-    }
-    if (this.props.page == NavPage.CTF) {
-      return "CTF";
-    }
-    if (this.props.page == NavPage.ADMIN) {
-      return "Admin";
+  getText = (): string => {
+    switch(this.props.page) {
+      case NavPage.ABOUT:
+        return "About";
+      case NavPage.CTF:
+        return "CTF";
+      case NavPage.ADMIN:
+        return "Admin";
     }
   }
 

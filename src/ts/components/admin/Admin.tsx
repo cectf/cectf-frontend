@@ -1,5 +1,5 @@
 import * as React from "react";
-import AdminChallenges from "components/admin/AdminChallenges";
+import AdminChallengesContainer from "containers/AdminChallengesContainer";
 
 interface AdminProps {}
 interface AdminState {}
@@ -12,7 +12,7 @@ export default class Admin extends React.Component<AdminProps, AdminState> {
     return (
       <div>
         <div>This is the admin page!</div>
-        <AdminChallenges />
+        <AdminChallengesContainer />
       </div>
     );
   }

@@ -3,10 +3,9 @@ import service from "services";
 import LoginForm from "components/LoginForm";
 import RegisterForm from "components/RegisterForm";
 import { User } from "types";
-import state from "state";
 
 interface UserBarProps {
-  user: User | null;
+  user?: User;
 }
 interface UserBarState {}
 

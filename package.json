@@ -25,6 +25,11 @@
     },
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"
+    ],
+    "collectCoverageFrom": [
+      "src/ts/api/**",
+      "src/ts/services/**",
+      "src/ts/state/**"
     ]
   },
   "devDependencies": {

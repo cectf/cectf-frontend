@@ -1,40 +1,43 @@
 import api from "api";
-import state from "state";
+import { store, adminSetChallenges, adminAddChallenge, adminUpdateChallenge, adminDeleteChallenge } from "state";
 import { AdminChallenge, NewAdminChallenge } from "types";
 
-const updateChallenges = async function() {
-  api.challengesAdmin.getChallenges().then(challenges => {
-    state.admin.challenges.nextState(challenges);
-  });
+const updateChallenges = async function () {
+  api.challengesAdmin.getChallenges()
+    .then(challenges => {
+      store.dispatch(adminSetChallenges(challenges));
+    });
 };
 
-const createChallenge = async function(
+const createChallenge = async function (
   challenge: NewAdminChallenge
 ): Promise<AdminChallenge> {
-  return api.challengesAdmin.createChallenge(challenge).then(challenge => {
-    state.admin.challenges.setChallenge(challenge);
-    return challenge;
-  });
+  return api.challengesAdmin.createChallenge(challenge)
+    .then(challenge => {
+      store.dispatch(adminAddChallenge(challenge));
+      return challenge;
+    });
 };
 
-const updateChallenge = async function(
+const updateChallenge = async function (
   challengeId: number,
   challenge: AdminChallenge | NewAdminChallenge
 ): Promise<AdminChallenge> {
   return api.challengesAdmin
     .updateChallenge(challengeId, challenge)
     .then(challenge => {
-      state.admin.challenges.setChallenge(challenge);
+      store.dispatch(adminUpdateChallenge(challenge));
       return challenge;
     });
 };
 
-const deleteChallenge = async function(
+const deleteChallenge = async function (
   challenge: AdminChallenge
 ): Promise<void> {
-  return api.challengesAdmin.deleteChallenge(challenge.id).then(() => {
-    state.admin.challenges.deleteChallenge(challenge);
-  });
+  return api.challengesAdmin.deleteChallenge(challenge.id)
+    .then(() => {
+      store.dispatch(adminDeleteChallenge(challenge));
+    });
 };
 
 export default {

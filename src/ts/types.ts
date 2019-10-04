@@ -59,3 +59,11 @@ export interface Submission {
   status: SubmissionStatus;
   challenge?: Challenge;
 }
+
+export interface State {
+  csrf: string;
+  challenges: Challenge[];
+  adminChallenges: AdminChallenge[];
+  user: User | null;
+  navPage: NavPage;
+}

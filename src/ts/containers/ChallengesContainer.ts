@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import Challenges from "components/ctf/Challenges";
-import { Challenge } from "types";
+import { State, Challenge } from "types";
 
 
-const mapStateToProps = (state: any, ownProps: any): { challenges: Challenge[] } => {
+const mapStateToProps = (state: State, ownProps: any): { challenges: Challenge[] } => {
     return {
         challenges: state.challenges
     };

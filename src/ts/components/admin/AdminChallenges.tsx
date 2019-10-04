@@ -1,30 +1,25 @@
 import * as React from "react";
-import state from "state";
 import service from "services";
 import AdminChallengeTile from "components/admin/AdminChallengeTile";
 import CreateChallengeModal from "components/admin/CreateChallengeModal";
 import { AdminChallenge, NewAdminChallenge } from "types";
 
-interface AdminChallengesProps {}
+interface AdminChallengesProps {
+  challenges: AdminChallenge[];
+}
 interface AdminChallengesState {
   modalOpen: boolean;
-  challenges: AdminChallenge[];
 }
 
 export default class AdminChallenges extends React.Component<
   AdminChallengesProps,
   AdminChallengesState
-> {
+  > {
   constructor(props: AdminChallengesProps) {
     super(props);
-    this.state = { modalOpen: false, challenges: state.admin.challenges.state };
+    this.state = { modalOpen: false };
     this.openCreateChallengeModal = this.openCreateChallengeModal.bind(this);
     this.createChallenge = this.createChallenge.bind(this);
-  }
-  componentDidMount() {
-    state.admin.challenges.addListener(challenges => {
-      this.setState({ challenges: challenges });
-    });
   }
   openCreateChallengeModal(event: React.MouseEvent) {
     event.preventDefault();
@@ -45,7 +40,7 @@ export default class AdminChallenges extends React.Component<
         >
           Create New Challenge
         </button>
-        {this.state.challenges.map(challenge => (
+        {this.props.challenges.map(challenge => (
           <AdminChallengeTile challenge={challenge} />
         ))}
       </div>,

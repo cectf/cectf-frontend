@@ -1,12 +1,6 @@
-import state, { store } from "state";
-import * as Config from "config";
-import * as React from "react";
-
-console.log(Config);
-console.log(Config.CECTF_SERVER_DOMAIN);
+import { store } from "state";
 
 const get = async function(url: string): Promise<Response> {
-  //return fetch(Config.CECTF_SERVER_DOMAIN + url, {
   return fetch(url, {
     method: "GET",
     mode: "cors",
@@ -20,7 +14,6 @@ const get = async function(url: string): Promise<Response> {
 };
 
 const post = async function(url: string, body: any): Promise<Response> {
-  //return fetch(Config.CECTF_SERVER_DOMAIN + url, {
   return fetch(url, {
     method: "POST",
     mode: "cors",
@@ -38,7 +31,6 @@ const post = async function(url: string, body: any): Promise<Response> {
 const upload = async function(url: string, file: File): Promise<Response> {
   var formData = new FormData();
   formData.append("file", file);
-  //return fetch(Config.CECTF_SERVER_DOMAIN + url, {
   return fetch(url, {
     method: "POST",
     mode: "cors",
@@ -52,7 +44,6 @@ const upload = async function(url: string, file: File): Promise<Response> {
 };
 
 const deleteHttp = async function(url: string): Promise<Response> {
-  //return fetch(Config.CECTF_SERVER_DOMAIN + url, {
   return fetch(url, {
     method: "DELETE",
     mode: "cors",

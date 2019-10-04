@@ -1,8 +1,8 @@
 import * as React from "react";
-import AppContent from "components/AppContent";
+import AppContentContainer from "containers/AppContentContainer";
 import UserBarContainer from "containers/UserBarContainer";
 import NavBarContainer from "containers/NavBarContainer";
-import StateDisplay from "components/StateDisplay";
+import StateDisplayContainer from "containers/StateDisplayContainer";
 
 export default class AppRoot extends React.Component<{}, {}> {
   render() {
@@ -10,8 +10,8 @@ export default class AppRoot extends React.Component<{}, {}> {
       <div id="app" className="app">
         <UserBarContainer />
         <NavBarContainer />
-        <AppContent />
-        <StateDisplay />
+        <AppContentContainer />
+        <StateDisplayContainer />
       </div>
     );
   }

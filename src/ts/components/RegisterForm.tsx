@@ -2,7 +2,7 @@ import * as React from "react";
 import service from "services";
 import * as Modal from "react-modal";
 
-interface RegisterProps {}
+interface RegisterProps { }
 interface RegisterState {
   modalOpen: boolean;
   email: string;
@@ -13,7 +13,7 @@ interface RegisterState {
 export default class RegisterForm extends React.Component<
   RegisterProps,
   RegisterState
-> {
+  > {
   constructor(props: RegisterProps) {
     super(props);
 
@@ -61,12 +61,17 @@ export default class RegisterForm extends React.Component<
 
   render() {
     return [
-      <div className="register-pls">
+      <div
+        key={1}
+        className="register-pls" >
         <a href="/" onClick={this.onClick}>
           Sign up!
         </a>
       </div>,
-      <Modal isOpen={this.state.modalOpen} onRequestClose={this.onModalClose}>
+      <Modal
+        key={2}
+        isOpen={this.state.modalOpen}
+        onRequestClose={this.onModalClose}>
         <div>
           <form onSubmit={this.onSubmit}>
             <input

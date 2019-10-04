@@ -1,5 +1,4 @@
 import * as React from "react";
-//import * as Modal from "react-modal";
 import Modal from "components/Modal";
 import { NewAdminChallenge } from "types";
 

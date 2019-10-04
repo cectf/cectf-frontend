@@ -2,41 +2,31 @@ import * as React from "react";
 import ChallengesContainer from "containers/ChallengesContainer";
 import Admin from "components/admin/Admin";
 import About from "components/About";
-import state from "state";
 import { NavPage } from "types";
 
-interface AppContentProps {}
-interface AppContentState {
+interface AppContentProps {
   navPage: NavPage;
 }
+interface AppContentState { }
 
 export default class AppContent extends React.Component<
   AppContentProps,
   AppContentState
-> {
-  constructor(props: AppContentProps) {
-    super(props);
-    this.state = { navPage: state.nav.state };
-  }
-  componentDidMount() {
-    state.nav.addListener(nextState => {
-      this.setState({ navPage: nextState });
-    });
+  > {
+  content = () => {
+    switch (this.props.navPage) {
+      case (NavPage.ABOUT):
+        return <About />;
+      case (NavPage.CTF):
+        return <ChallengesContainer />;
+      case (NavPage.ADMIN):
+        return <Admin />;
+    }
   }
   render() {
-    var content: JSX.Element | null = null;
-    if (this.state.navPage === NavPage.ABOUT) {
-      content = <About />;
-    }
-    if (this.state.navPage === NavPage.CTF) {
-      content = <ChallengesContainer />;
-    }
-    if (this.state.navPage === NavPage.ADMIN) {
-      content = <Admin />;
-    }
     return (
       <div id="app-content" className="app__content">
-        {content}
+        {this.content()}
       </div>
     );
   }

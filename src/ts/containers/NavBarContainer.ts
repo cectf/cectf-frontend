@@ -1,48 +1,35 @@
 import { connect } from "react-redux";
 import NavBar from "components/NavBar";
-import { Role, NavPage, User } from "types";
+import { State, NavPage } from "types";
+import { setNavPage } from "state";
 
-/*
-getNavPages(): NavPage[] {
-    var roles = this.state.roles;
+const mapStateToProps = (state: State) => {
     var navPages: NavPage[] = [NavPage.ABOUT];
-    for (var i in roles) {
-        if (roles[i].name === "contestant") {
-            if (!(NavPage.CTF in navPages)) {
-                navPages.push(NavPage.CTF);
-            }
-        }
-        if (roles[i].name === "admin") {
-            if (!(NavPage.ADMIN in navPages)) {
-                navPages.push(NavPage.ADMIN);
-            }
-        }
-    }
-    return navPages;
-}
-*/
-
-const mapStateToProps = (state: any, ownProps: any): NavPage[] => {
     if (state.user) {
-        return state.user.roles.map((role: Role) => {
-            challenges: state.challenges
-        });
-    } else {
-        return [];
+        for (var i in state.user.roles) {
+            if (state.user.roles[i].name === "contestant") {
+                if (!(NavPage.CTF in navPages)) {
+                    navPages.push(NavPage.CTF);
+                }
+            }
+            if (state.user.roles[i].name === "admin") {
+                if (!(NavPage.ADMIN in navPages)) {
+                    navPages.push(NavPage.ADMIN);
+                }
+            }
+        }
     }
+    return { navPages: navPages, navPage: state.navPage };
 }
-/* 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        onClick: () => {
-            dispatch(ownProps.filter)
+        switchTo: (navPage: NavPage) => {
+            return () => { dispatch(setNavPage(navPage)); };
         }
     };
 }
-*/
 
-const NavBarContainer = connect(
-    mapStateToProps)
-    //mapDispatchToProps)
-    (NavBar);
+
+const NavBarContainer = connect(mapStateToProps, mapDispatchToProps)(NavBar);
 export default NavBarContainer;

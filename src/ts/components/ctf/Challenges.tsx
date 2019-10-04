@@ -5,7 +5,7 @@ import { Challenge } from "types";
 interface ChallengesProps {
   challenges: Challenge[];
 }
-interface ChallengesState {}
+interface ChallengesState { }
 
 export default class Challenges extends React.Component<
   ChallengesProps,
@@ -18,7 +18,10 @@ export default class Challenges extends React.Component<
     return (
       <div id="challenges" className="challenges">
         {this.props.challenges.map(challenge => (
-          <ChallengeTile challenge={challenge} />
+          <ChallengeTile
+            key={challenge.id}
+            challenge={challenge}
+          />
         ))}
       </div>
     );
