@@ -7,12 +7,12 @@ import { User } from "types";
 interface UserBarProps {
   user?: User;
 }
-interface UserBarState {}
+interface UserBarState { }
 
 export default class UserBar extends React.Component<
   UserBarProps,
   UserBarState
-> {
+  > {
   constructor(props: UserBarProps) {
     super(props);
   }
@@ -25,10 +25,18 @@ export default class UserBar extends React.Component<
   render() {
     if (this.props.user) {
       return (
-        <div id="userBar">
-          Welcome, user {this.props.user.username}!
-          <div id="logout">
-            <a href="/" onClick={this.onLogout}>
+        <div id="user-bar"
+          className="user-bar user-bar--logged-in"
+          data-logged-in={true}
+          data-username={this.props.user.username}>
+          <div id="user-bar__welcome"
+            className="user-bar__welcome">
+            Welcome, user {this.props.user.username}!
+          </div>
+          <div id="user-bar__logout"
+            className="user-bar__logout">
+            <a id="logout"
+              href="/" onClick={this.onLogout}>
               Log out
             </a>
           </div>
@@ -36,7 +44,9 @@ export default class UserBar extends React.Component<
       );
     } else {
       return (
-        <div id="userBar">
+        <div id="user-bar"
+          className="user-bar user-bar--logged-out"
+          data-logged-in={false}>
           <LoginForm />
           <RegisterForm />
         </div>
