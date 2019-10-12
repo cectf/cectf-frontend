@@ -74,24 +74,33 @@ export default class RegisterForm extends React.Component<
         onRequestClose={this.onModalClose}>
         <div>
           <form onSubmit={this.onSubmit}>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              onChange={this.onChange_email}
-            />
-            <input
-              type="text"
-              id="username"
-              name="username"
-              onChange={this.onChange_username}
-            />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={this.onChange_password}
-            />
+            <div>
+              <span>Email:</span>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                onChange={this.onChange_email}
+              />
+            </div>
+            <div>
+              <span>Username:</span>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                onChange={this.onChange_username}
+              />
+            </div>
+            <div>
+              <span>Password:</span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                onChange={this.onChange_password}
+              />
+            </div>
             <button type="submit" id="submit">
               Submit
             </button>
