@@ -25,7 +25,9 @@ export default class AppContent extends React.Component<
   }
   render() {
     return (
-      <div id="app-content" className="app__content">
+      <div id="app-content"
+        className="app__content"
+        data-content={this.props.navPage}>
         {this.content()}
       </div>
     );

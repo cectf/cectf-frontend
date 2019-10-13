@@ -17,7 +17,7 @@ interface ChallengeTileState {
 export default class ChallengeTile extends React.Component<
   ChallengeTileProps,
   ChallengeTileState
-> {
+  > {
   constructor(props: ChallengeTileProps, state: ChallengeTileState) {
     super(props, state);
     this.state = {
@@ -62,18 +62,42 @@ export default class ChallengeTile extends React.Component<
     this.setState({ modalOpen: false, message: "" });
   }
   render() {
+
+    var hint = undefined;
+    var solution = undefined;
+
+    if (this.props.challenge.hinted) {
+      hint = <div data-id="hint"
+        className="challenge-tile__hint">
+        {this.props.challenge.hint}
+      </div>;
+    }
+    if (this.props.challenge.solved) {
+      solution = <div data-id="solution"
+        className="challenge-tile__soution">
+        {this.props.challenge.solution}
+      </div>;
+    }
+
     return [
-      <div className="challenge-tile" onClick={this.onClick}>
-        <div className="challenge-tile__title">
+      <div key={1}
+        data-id={String(this.props.challenge.id)}
+        className="challenge-tile"
+        onClick={this.onClick}>
+        <div data-id="title"
+          className="challenge-tile__title">
           {this.props.challenge.title}
         </div>
-        <div className="challenge-tile__category">
+        <div data-id="category"
+          className="challenge-tile__category">
           {this.props.challenge.category}
         </div>
-        <div>{this.props.challenge.hint}</div>
-        <div>{this.props.challenge.solution}</div>
+        {hint}
+        {solution}
       </div>,
-      <Modal isOpen={this.state.modalOpen} onRequestClose={this.onModalClose}>
+      <Modal key={2}
+        isOpen={this.state.modalOpen}
+        onRequestClose={this.onModalClose}>
         <div>{this.props.challenge.body}</div>
         <div>
           <ul>

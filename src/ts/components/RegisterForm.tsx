@@ -61,15 +61,16 @@ export default class RegisterForm extends React.Component<
 
   render() {
     return [
-      <div
-        key={1}
-        className="register-pls" >
-        <a href="/" onClick={this.onClick}>
+      <div key={1}
+        id="register"
+        className="register" >
+        <a id="register__link"
+          href="/"
+          onClick={this.onClick}>
           Sign up!
         </a>
       </div>,
-      <Modal
-        key={2}
+      <Modal key={2}
         isOpen={this.state.modalOpen}
         onRequestClose={this.onModalClose}>
         <div>
@@ -78,7 +79,7 @@ export default class RegisterForm extends React.Component<
               <span>Email:</span>
               <input
                 type="text"
-                id="email"
+                id="register-modal__email"
                 name="email"
                 onChange={this.onChange_email}
               />
@@ -87,7 +88,7 @@ export default class RegisterForm extends React.Component<
               <span>Username:</span>
               <input
                 type="text"
-                id="username"
+                id="register-modal__username"
                 name="username"
                 onChange={this.onChange_username}
               />
@@ -96,12 +97,14 @@ export default class RegisterForm extends React.Component<
               <span>Password:</span>
               <input
                 type="password"
-                id="password"
+                id="register-modal__password"
                 name="password"
                 onChange={this.onChange_password}
               />
             </div>
-            <button type="submit" id="submit">
+            <button
+              type="submit"
+              id="register-modal__submit">
               Submit
             </button>
           </form>

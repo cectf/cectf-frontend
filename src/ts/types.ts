@@ -44,9 +44,9 @@ export interface Role {
 }
 
 export enum NavPage {
-  ABOUT,
-  CTF,
-  ADMIN
+  ABOUT = "ABOUT",
+  CTF = "CTF",
+  ADMIN = "ADMIN"
 }
 
 export enum SubmissionStatus {
