@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdminChallenge, NewAdminChallenge, FileDescriptor } from "@cectf/types";
-import CreateChallengeModal from "@cectf/components/admin/CreateChallengeModal";
+import CreateChallengeModal from "@cectf/components/content/admin/CreateChallengeModal";
 import service from "@cectf/services";
 import api from "@cectf/api";
 

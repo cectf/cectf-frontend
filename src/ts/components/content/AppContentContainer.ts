@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import AppContent from "@cectf/components/AppContent";
+import AppContent from "@cectf/components/content/AppContent";
 import { State, NavPage } from "@cectf/types";
 
 const mapStateToProps = (state: State) => {

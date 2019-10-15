@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import NavBar from "@cectf/components/NavBar";
+import NavBar from "@cectf/components/navBar/NavBar";
 import { State, NavPage } from "@cectf/types";
 import { setNavPage } from "@cectf/state";
 

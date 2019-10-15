@@ -1,5 +1,5 @@
 import * as React from "react";
-import AdminChallengesContainer from "@cectf/containers/AdminChallengesContainer";
+import AdminChallengesContainer from "@cectf/components/content/admin/AdminChallengesContainer";
 
 interface AdminProps {}
 interface AdminState {}

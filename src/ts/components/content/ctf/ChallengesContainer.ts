@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Challenges from "@cectf/components/ctf/Challenges";
+import Challenges from "@cectf/components/content/ctf/Challenges";
 import { State, Challenge } from "@cectf/types";
 
 

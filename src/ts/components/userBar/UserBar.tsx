@@ -1,7 +1,7 @@
 import * as React from "react";
 import service from "@cectf/services";
-import LoginForm from "@cectf/components/LoginForm";
-import RegisterForm from "@cectf/components/RegisterForm";
+import LoginForm from "@cectf/components/userBar/LoginForm";
+import RegisterForm from "@cectf/components/userBar/RegisterForm";
 import { User } from "@cectf/types";
 
 interface UserBarProps {

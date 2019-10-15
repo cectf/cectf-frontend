@@ -1,7 +1,7 @@
 import * as React from "react";
 import services from "@cectf/services";
-import AdminChallengeTile from "@cectf/components/admin/AdminChallengeTile";
-import CreateChallengeModal from "@cectf/components/admin/CreateChallengeModal";
+import AdminChallengeTile from "@cectf/components/content/admin/AdminChallengeTile";
+import CreateChallengeModal from "@cectf/components/content/admin/CreateChallengeModal";
 import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
 interface AdminChallengesProps {

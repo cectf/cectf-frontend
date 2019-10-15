@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import AdminChallenges from "@cectf/components/admin/AdminChallenges";
+import AdminChallenges from "@cectf/components/content/admin/AdminChallenges";
 import { State, AdminChallenge } from "@cectf/types";
 
 

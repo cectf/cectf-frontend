@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import UserBar from "@cectf/components/UserBar";
+import UserBar from "@cectf/components/userBar/UserBar";
 import { State, User } from "@cectf/types";
 
 

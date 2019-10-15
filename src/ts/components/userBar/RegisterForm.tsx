@@ -1,7 +1,7 @@
 import * as React from "react";
 import service from "@cectf/services";
 import * as Modal from "react-modal";
-import PopupsContainer from "@cectf/containers/PopupsContainer";
+import PopupsContainer from "@cectf/components/popups/PopupsContainer";
 
 interface RegisterProps { }
 interface RegisterState {

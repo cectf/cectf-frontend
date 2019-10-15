@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Popups from "@cectf/components/Popups";
+import Popups from "@cectf/components/popups/Popups";
 import * as types from "@cectf/types";
 import { clearPopups } from "@cectf/state";
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import ChallengeTile from "@cectf/components/ctf/ChallengeTile";
+import ChallengeTile from "@cectf/components/content/ctf/ChallengeTile";
 import { Challenge } from "@cectf/types";
 import services from "@cectf/services";
 
