@@ -1,5 +1,7 @@
 # cectf-frontend
 
+[![Build Status](https://travis-ci.com/cectf/cectf-frontend.svg?branch=master)](https://travis-ci.com/cectf/cectf-frontend)
+
 You need Python 3, pip, npm, and npx installed to set up this project.
 
 Navigate to the project repository and run `./setup_workspace.sh`. This will set up the python virtual environment, install the python dependencies, and install the npm dependencies.
