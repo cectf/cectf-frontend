@@ -1,13 +1,25 @@
-const webpack = require('webpack');
 const path = require('path');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = env => {
   return {
     target: 'web',
     devtool: 'source-map',
+    optimization: {
+      minimizer: [new TerserJSPlugin({}), new OptimizeCssAssetsPlugin({})],
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+    ],
     module: {
-      rules: [{
-          test: /\.tsx?$/,
+      rules: [
+        {
+          test: /\.(ts|tsx)$/,
           use: 'ts-loader',
           exclude: path.resolve(__dirname, 'node_modules'),
         },
@@ -20,12 +32,15 @@ module.exports = env => {
     },
     resolve: {
       modules: ['src/ts/', 'node_modules'],
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.tsx', '.ts', '.js', '.scss', '.css'],
+      alias: {
+        '@cectf': path.resolve(__dirname, 'src/ts/'),
+        '@styles': path.resolve(__dirname, 'src/styles/'),
+      }
     },
     externals: {
       'react': 'React',
       'react-dom': 'ReactDOM',
-      'config': JSON.stringify(env),
     },
     stats: {
       errorDetails: true

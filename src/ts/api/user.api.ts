@@ -1,5 +1,5 @@
-import api from "api/api";
-import { User } from "types";
+import api from "@cectf/api/api";
+import { User } from "@cectf/types";
 
 const getCurrentUser = async function(): Promise<User | null> {
   return api.get("/api/user").then(async response => {

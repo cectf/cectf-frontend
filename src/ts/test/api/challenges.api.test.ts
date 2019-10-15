@@ -1,8 +1,7 @@
-import api from "api/api";
-import challengesApi from "api/challenges.api";
-import { Challenge } from "types";
+import api from "@cectf/api/api";
+import challengesApi from "@cectf/api/challenges.api";
+import { Challenge, SubmissionStatus } from "@cectf/types";
 import { FetchMock } from "jest-fetch-mock";
-import { SubmissionStatus } from "types";
 
 var fetch: FetchMock = require("jest-fetch-mock");
 

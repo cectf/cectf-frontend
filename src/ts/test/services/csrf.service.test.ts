@@ -1,7 +1,7 @@
-import api from "api/csrf.api";
-import service from "services/csrf.service";
-import { store } from "state";
-import * as actions from "state/actions";
+import api from "@cectf/api/csrf.api";
+import service from "@cectf/services/csrf.service";
+import { store } from "@cectf/state";
+import * as actions from "@cectf/state/actions";
 
 var csrfToken = "abc123"
 

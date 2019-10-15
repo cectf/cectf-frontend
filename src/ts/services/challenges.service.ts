@@ -1,6 +1,6 @@
-import api from "api";
-import { store, ctfSetChallenges, ctfUpdateChallenge } from "state";
-import { SubmissionStatus } from "types";
+import api from "@cectf/api";
+import { store, ctfSetChallenges, ctfUpdateChallenge } from "@cectf/state";
+import { SubmissionStatus } from "@cectf/types";
 
 const updateChallenges = async function () {
   api.challenges.getChallenges().then(challenges => {

@@ -1,4 +1,4 @@
-import { Challenge, AdminChallenge, User, NavPage } from "types";
+import { Challenge, AdminChallenge, User, NavPage, Popup } from "@cectf/types";
 
 /*
  * action types
@@ -19,7 +19,10 @@ export const enum ActionId {
     ADMIN_ADD_CHALLENGE,
     ADMIN_UPDATE_CHALLENGE,
     ADMIN_DELETE_CHALLENGE,
-    SET_USER
+    SET_USER,
+    ADD_POPUP,
+    REMOVE_POPUP,
+    CLEAR_POPUPS
 }
 
 /*
@@ -64,4 +67,16 @@ export function adminDeleteChallenge(challenge: AdminChallenge): Action<AdminCha
 
 export function setUser(user: User | null): Action<User | null> {
     return { type: ActionId.SET_USER, value: user };
+}
+
+export function addPopup(popup: Popup): Action<Popup> {
+    return { type: ActionId.ADD_POPUP, value: popup };
+}
+
+export function removePopup(popup: Popup): Action<Popup> {
+    return { type: ActionId.REMOVE_POPUP, value: popup };
+}
+
+export function clearPopups(): Action<undefined> {
+    return { type: ActionId.CLEAR_POPUPS, value: undefined };
 }

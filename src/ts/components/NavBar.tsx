@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavPage } from "types";
-import NavTab from "components/NavTab";
+import NavTab from "@cectf/components/NavTab";
 
 interface NavBarProps {
   navPages: NavPage[];

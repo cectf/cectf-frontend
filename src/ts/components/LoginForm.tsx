@@ -1,5 +1,5 @@
 import * as React from "react";
-import service from "services";
+import service from "@cectf/services";
 
 interface LoginProps {}
 interface LoginState {

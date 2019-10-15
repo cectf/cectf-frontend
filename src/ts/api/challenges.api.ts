@@ -1,5 +1,5 @@
-import api from "api/api";
-import { Challenge, Submission } from "types";
+import api from "@cectf/api/api";
+import { Challenge, Submission } from "@cectf/types";
 
 const getChallenges = async function(): Promise<Challenge[]> {
   return api.get("/api/ctf/challenges").then(async response => {

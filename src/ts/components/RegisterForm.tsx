@@ -1,6 +1,7 @@
 import * as React from "react";
-import service from "services";
+import service from "@cectf/services";
 import * as Modal from "react-modal";
+import PopupsContainer from "@cectf/containers/PopupsContainer";
 
 interface RegisterProps { }
 interface RegisterState {
@@ -110,6 +111,7 @@ export default class RegisterForm extends React.Component<
           </form>
         </div>
         <button onClick={this.onModalClose}>Close</button>
+        <PopupsContainer />
       </Modal>
     ];
   }

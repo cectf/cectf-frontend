@@ -1,6 +1,6 @@
-import api from "api";
-import { store, adminSetChallenges, adminAddChallenge, adminUpdateChallenge, adminDeleteChallenge } from "state";
-import { AdminChallenge, NewAdminChallenge } from "types";
+import api from "@cectf/api";
+import { store, adminSetChallenges, adminAddChallenge, adminUpdateChallenge, adminDeleteChallenge } from "@cectf/state";
+import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
 const updateChallenges = async function () {
   api.challengesAdmin.getChallenges()

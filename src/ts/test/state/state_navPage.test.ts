@@ -1,7 +1,7 @@
 
-import * as actions from "state/actions";
-import { store } from "state";
-import { NavPage } from "types";
+import * as actions from "@cectf/state/actions";
+import { store } from "@cectf/state";
+import { NavPage } from "@cectf/types";
 
 afterEach(() => {
     store.dispatch(actions.reset());

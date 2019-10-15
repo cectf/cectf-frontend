@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { Action, ActionId } from './actions';
-import { State, Challenge, AdminChallenge, User, NavPage } from "types";
+import { Action, ActionId } from '@cectf/state/actions';
+import { State, Challenge, AdminChallenge, User, NavPage, Popup } from "@cectf/types";
 
 function csrf(state = "", action: Action<string>): string {
     switch (action.type) {
@@ -73,12 +73,30 @@ function navPage(state: NavPage = NavPage.ABOUT, action: Action<NavPage>): NavPa
     }
 }
 
+function popups(state: Popup[] = [], action: Action<Popup>): Popup[] {
+    switch (action.type) {
+        case ActionId.ADD_POPUP:
+            return state.concat(action.value);
+        case ActionId.REMOVE_POPUP:
+            var index = state.indexOf(action.value);
+            if (index > -1) {
+                return state.slice(0, index).concat(state.slice(index + 1, state.length));
+            }
+            return state;
+        case ActionId.CLEAR_POPUPS:
+            return [];
+        default:
+            return state;
+    }
+}
+
 const combinedReducers = combineReducers({
     csrf,
     challenges,
     adminChallenges,
     user,
-    navPage
+    navPage,
+    popups
 });
 
 const reduxApp = (state: State | undefined, action: Action<any>): State => {

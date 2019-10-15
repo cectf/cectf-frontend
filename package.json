@@ -8,8 +8,8 @@
   "license": "ISC",
   "scripts": {
     "test": "jest --coverage",
-    "build-dev": "webpack --config webpack.dev.js --env.CECTF_SERVER_DOMAIN $CECTF_SERVER_DOMAIN",
-    "build-prod": "webpack --config webpack.prod.js --env.CECTF_SERVER_DOMAIN $CECTF_SERVER_DOMAIN"
+    "build-dev": "webpack --config webpack.dev.js",
+    "build-prod": "webpack --config webpack.prod.js"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -20,6 +20,9 @@
     "modulePaths": [
       "<rootDir>/src/ts"
     ],
+    "moduleNameMapper": {
+      "^@cectf/(.*)$": "<rootDir>/src/ts/$1"
+    },
     "transform": {
       "\\.(ts|tsx)$": "ts-jest"
     },
@@ -43,24 +46,28 @@
     "@types/react-redux": "^7.1.4",
     "@types/react-test-renderer": "^16.9.0",
     "babel-runtime": "^6.26.0",
+    "css-loader": "^1.0.0",
     "jest": "^24.9.0",
     "jest-fetch-mock": "^2.1.2",
+    "mini-css-extract-plugin": "^0.8.0",
     "nightmare": "^3.0.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "react-test-renderer": "^16.9.0",
-    "redux": "^4.0.4",
     "rxjs": "^6.5.2",
+    "sass": "^1.23.0",
+    "sass-loader": "^8.0.0",
     "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.4",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3",
+    "typings-for-css-modules-loader": "^1.7.0",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "js-cookie": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-modal": "^3.9.1",

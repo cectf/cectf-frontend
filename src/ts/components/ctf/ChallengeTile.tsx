@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as Modal from "react-modal";
-import { Challenge, SubmissionStatus, FileDescriptor } from "types";
-import service from "services";
-import api from "api";
+import { Challenge, SubmissionStatus, FileDescriptor } from "@cectf/types";
+import service from "@cectf/services";
+import api from "@cectf/api";
+import * as styles from "@styles/challenge-tile.scss";
 
 interface ChallengeTileProps {
   challenge: Challenge;
@@ -82,7 +83,7 @@ export default class ChallengeTile extends React.Component<
     return [
       <div key={1}
         data-id={String(this.props.challenge.id)}
-        className="challenge-tile"
+        className={styles.challengeTile}
         onClick={this.onClick}>
         <div data-id="title"
           className="challenge-tile__title">

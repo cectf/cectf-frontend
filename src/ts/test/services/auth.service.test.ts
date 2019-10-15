@@ -1,26 +1,20 @@
-import api from "api/auth.api";
-import service from "services/auth.service";
-import services from "services";
-import { store } from "state";
-import * as actions from "state/actions";
+import api from "@cectf/api/auth.api";
+import service from "@cectf/services/auth.service";
+import services from "@cectf/services";
+import { store } from "@cectf/state";
+import * as actions from "@cectf/state/actions";
 
 
 it("login", async () => {
-  var login = jest.fn(() => Promise.resolve({ succeeded: true }));
+  var login = jest.fn(() => Promise.resolve());
   api.login = login;
   var updateCurrentUser = jest.fn();
   services.user.updateCurrentUser = updateCurrentUser;
-  var updateCtfChallenges = jest.fn();
-  services.challenges.updateChallenges = updateCtfChallenges;
-  var updateAdminChallenges = jest.fn();
-  services.challengesAdmin.updateChallenges = updateAdminChallenges;
 
-  expect.assertions(4);
+  expect.assertions(2);
   return service.login("username", "password").then(() => {
     expect(login.mock.calls.length).toEqual(1);
     expect(updateCurrentUser.mock.calls.length).toEqual(1);
-    expect(updateCtfChallenges.mock.calls.length).toEqual(1);
-    expect(updateAdminChallenges.mock.calls.length).toEqual(1);
   });
 });
 
@@ -42,20 +36,14 @@ it("logout", async () => {
 });
 
 it("register", async () => {
-  var register = jest.fn(() => Promise.resolve({ succeeded: true }));
+  var register = jest.fn(() => Promise.resolve());
   api.register = register;
   var updateCurrentUser = jest.fn();
   services.user.updateCurrentUser = updateCurrentUser;
-  var updateCtfChallenges = jest.fn();
-  services.challenges.updateChallenges = updateCtfChallenges;
-  var updateAdminChallenges = jest.fn();
-  services.challengesAdmin.updateChallenges = updateAdminChallenges;
 
-  expect.assertions(4);
+  expect.assertions(2);
   return service.register("username@email.com", "username", "password").then(() => {
     expect(register.mock.calls.length).toEqual(1);
     expect(updateCurrentUser.mock.calls.length).toEqual(1);
-    expect(updateCtfChallenges.mock.calls.length).toEqual(1);
-    expect(updateAdminChallenges.mock.calls.length).toEqual(0);
   });
 });

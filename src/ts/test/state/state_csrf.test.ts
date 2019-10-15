@@ -1,6 +1,6 @@
 
-import * as actions from "state/actions";
-import { store } from "state";
+import * as actions from "@cectf/state/actions";
+import { store } from "@cectf/state";
 
 
 afterEach(() => {

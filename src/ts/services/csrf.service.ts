@@ -1,5 +1,5 @@
-import api from "api";
-import { store , setCsrf } from "state"
+import api from "@cectf/api";
+import { store , setCsrf } from "@cectf/state"
 
 const refreshCsrf = async function () {
   return api.csrf

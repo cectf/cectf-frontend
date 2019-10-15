@@ -1,8 +1,8 @@
-import api from "api/user.api";
-import service from "services/user.service";
-import { store } from "state";
-import * as actions from "state/actions";
-import { User } from "types";
+import api from "@cectf/api/user.api";
+import service from "@cectf/services/user.service";
+import { store } from "@cectf/state";
+import * as actions from "@cectf/state/actions";
+import { User } from "@cectf/types";
 
 var user: User = {
   id: 1,

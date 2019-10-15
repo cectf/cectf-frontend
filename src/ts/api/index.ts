@@ -1,9 +1,9 @@
-import auth from "api/auth.api";
-import challenges from "api/challenges.api";
-import challengesAdmin from "api/challengesAdmin.api";
-import challengeFiles from "api/challengeFiles.api";
-import csrf from "api/csrf.api";
-import user from "api/user.api";
+import auth from "@cectf/api/auth.api";
+import challenges from "@cectf/api/challenges.api";
+import challengesAdmin from "@cectf/api/challengesAdmin.api";
+import challengeFiles from "@cectf/api/challengeFiles.api";
+import csrf from "@cectf/api/csrf.api";
+import user from "@cectf/api/user.api";
 
 export default {
   auth,

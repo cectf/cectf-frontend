@@ -1,7 +1,7 @@
 
-import * as actions from "state/actions";
-import { store } from "state";
-import { AdminChallenge } from "types";
+import * as actions from "@cectf/state/actions";
+import { store } from "@cectf/state";
+import { AdminChallenge } from "@cectf/types";
 
 var challenge1: AdminChallenge = {
     id: 1,

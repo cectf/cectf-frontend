@@ -1,6 +1,6 @@
-import * as actions from "state/actions";
-import { store } from "state";
-import { User } from "types";
+import * as actions from "@cectf/state/actions";
+import { store } from "@cectf/state";
+import { User } from "@cectf/types";
 
 var admin: User = {
     id: 1,

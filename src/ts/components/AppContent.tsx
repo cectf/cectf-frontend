@@ -1,8 +1,8 @@
 import * as React from "react";
-import ChallengesContainer from "containers/ChallengesContainer";
-import Admin from "components/admin/Admin";
-import About from "components/About";
-import { NavPage } from "types";
+import ChallengesContainer from "@cectf/containers/ChallengesContainer";
+import Admin from "@cectf/components/admin/Admin";
+import About from "@cectf/components/About";
+import { NavPage } from "@cectf/types";
 
 interface AppContentProps {
   navPage: NavPage;

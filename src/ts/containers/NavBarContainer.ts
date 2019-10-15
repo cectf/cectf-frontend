@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import NavBar from "components/NavBar";
-import { State, NavPage } from "types";
-import { setNavPage } from "state";
+import NavBar from "@cectf/components/NavBar";
+import { State, NavPage } from "@cectf/types";
+import { setNavPage } from "@cectf/state";
 
 const mapStateToProps = (state: State) => {
     var navPages: NavPage[] = [NavPage.ABOUT];

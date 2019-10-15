@@ -1,19 +1,19 @@
-import api from "api";
-import { store , reset } from "state";
-import userService from "services/user.service";
-import challengesService from "services/challenges.service";
-import challengesAdminService from "services/challengesAdmin.service";
-import csrfService from "services/csrf.service";
+import api from "@cectf/api";
+import { store, reset } from "@cectf/state";
+import userService from "@cectf/services/user.service";
+import csrfService from "@cectf/services/csrf.service";
+import popupService from "@cectf/services/popup.service";
 
 async function login(username: string, password: string) {
-  return api.auth.login(username, password).then(() => {
-    userService.updateCurrentUser();
-    challengesService.updateChallenges();
-    challengesAdminService.updateChallenges();
-  });
+  return api.auth.login(username, password)
+    .then(() => {
+      userService.updateCurrentUser();
+    }).catch(error => {
+      popupService.error(error);
+    });
 }
 
-async function logout() {
+async function logout(): Promise<void> {
   return api.auth.logout().then(() => {
     store.dispatch(reset());
     csrfService.refreshCsrf();
@@ -23,7 +23,8 @@ async function logout() {
 async function register(email: string, username: string, password: string) {
   return api.auth.register(email, username, password).then(() => {
     userService.updateCurrentUser();
-    challengesService.updateChallenges();
+  }).catch(error => {
+    popupService.error(error);
   });
 }
 

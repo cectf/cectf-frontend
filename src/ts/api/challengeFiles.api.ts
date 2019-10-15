@@ -1,5 +1,5 @@
-import api from "api/api";
-import { FileDescriptor } from "types";
+import api from "@cectf/api/api";
+import { FileDescriptor } from "@cectf/types";
 
 const getFiles = async function(
   challengeId: number

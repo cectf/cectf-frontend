@@ -1,15 +1,11 @@
-import api from "api/api";
-import { store } from "state";
-
-interface AuthResponse {
-  succeeded: boolean;
-  message?: string;
-}
+import api from "@cectf/api/api";
+import { store } from "@cectf/state";
+import { Popup } from "@cectf/types";
 
 async function login(
   username: string,
   password: string
-): Promise<AuthResponse> {
+): Promise<void> {
   return api
     .post("/api/login", {
       username: username,
@@ -17,10 +13,19 @@ async function login(
       csrf_token: store.getState().csrf
     })
     .then(response => {
-      if (!response.ok) {
-        return { succeeded: false, message: "Login Failed!" };
+      if (response.ok) {
+        return;
+      } else {
+        return response.json().then(json => {
+          if (json.response.errors.email) {
+            throw json.response.errors.email;
+          }
+          if (json.response.errors.password) {
+            throw json.response.errors.password;
+          }
+          throw "Login failed";
+        });
       }
-      return { succeeded: true };
     });
 }
 
@@ -32,7 +37,7 @@ async function register(
   email: string,
   username: string,
   password: string
-): Promise<AuthResponse> {
+): Promise<void> {
   return api
     .post("/api/register", {
       email: email,
@@ -41,10 +46,20 @@ async function register(
       csrf_token: store.getState().csrf
     })
     .then(response => {
-      if (!response.ok) {
-        return { succeeded: false, message: "Registration Failed!" };
+      if (response.ok) {
+        return;
+      } else {
+        return response.json().then(json => {
+          if (json.response.errors.email) {
+            throw json.response.errors.email;
+          }
+          if (json.response.errors.password) {
+            throw json.response.errors.password;
+          }
+          throw "Registration failed";
+        });
       }
-      return { succeeded: true };
+      return;
     });
 }
 

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import UserBar from "components/UserBar";
-import { State, User } from "types";
+import UserBar from "@cectf/components/UserBar";
+import { State, User } from "@cectf/types";
 
 
 const mapStateToProps = (state: State): { user?: User } => {

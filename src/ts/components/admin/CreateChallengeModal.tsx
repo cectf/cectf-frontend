@@ -1,6 +1,6 @@
 import * as React from "react";
-import Modal from "components/Modal";
-import { NewAdminChallenge } from "types";
+import Modal from "@cectf/components/Modal";
+import { NewAdminChallenge } from "@cectf/types";
 
 interface AdminChallengeTileProps {
   parent: React.Component<{}, { modalOpen: boolean }>;

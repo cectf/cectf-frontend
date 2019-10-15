@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavPage } from "types";
+import { NavPage } from "@cectf/types";
 
 interface NavTabProps {
   page: NavPage;

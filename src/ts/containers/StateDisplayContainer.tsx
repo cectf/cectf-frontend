@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import * as React from "react";
-import { State } from "types";
+import { State } from "@cectf/types";
 
 interface StateDisplayProps {
   currentState: State

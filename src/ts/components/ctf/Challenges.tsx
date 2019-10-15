@@ -1,6 +1,12 @@
 import * as React from "react";
-import ChallengeTile from "components/ctf/ChallengeTile";
-import { Challenge } from "types";
+import ChallengeTile from "@cectf/components/ctf/ChallengeTile";
+import { Challenge } from "@cectf/types";
+import services from "@cectf/services";
+
+import * as styles from "@styles/challenges.scss";
+
+console.log("Stylish!");
+console.log(styles);
 
 interface ChallengesProps {
   challenges: Challenge[];
@@ -13,10 +19,12 @@ export default class Challenges extends React.Component<
   > {
   constructor(props: ChallengesProps) {
     super(props);
+    services.challenges.updateChallenges();
   }
   render() {
     return (
-      <div id="challenges" className="challenges">
+      <div id="challenges"
+        className={styles.challenges}>
         {this.props.challenges.map(challenge => (
           <ChallengeTile
             key={challenge.id}

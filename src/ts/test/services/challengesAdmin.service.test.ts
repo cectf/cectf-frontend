@@ -1,8 +1,8 @@
-import api from "api/challengesAdmin.api";
-import service from "services/challengesAdmin.service";
-import { store } from "state";
-import * as actions from "state/actions";
-import { AdminChallenge, NewAdminChallenge } from "types";
+import api from "@cectf/api/challengesAdmin.api";
+import service from "@cectf/services/challengesAdmin.service";
+import { store } from "@cectf/state";
+import * as actions from "@cectf/state/actions";
+import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
 var challenge: AdminChallenge = {
   id: 1,

@@ -1,8 +1,8 @@
 import * as React from "react";
-import service from "services";
-import AdminChallengeTile from "components/admin/AdminChallengeTile";
-import CreateChallengeModal from "components/admin/CreateChallengeModal";
-import { AdminChallenge, NewAdminChallenge } from "types";
+import services from "@cectf/services";
+import AdminChallengeTile from "@cectf/components/admin/AdminChallengeTile";
+import CreateChallengeModal from "@cectf/components/admin/CreateChallengeModal";
+import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
 interface AdminChallengesProps {
   challenges: AdminChallenge[];
@@ -17,6 +17,7 @@ export default class AdminChallenges extends React.Component<
   > {
   constructor(props: AdminChallengesProps) {
     super(props);
+    services.challengesAdmin.updateChallenges();
     this.state = { modalOpen: false };
     this.openCreateChallengeModal = this.openCreateChallengeModal.bind(this);
     this.createChallenge = this.createChallenge.bind(this);
@@ -27,7 +28,7 @@ export default class AdminChallenges extends React.Component<
     this.setState({ modalOpen: true });
   }
   createChallenge(challenge: NewAdminChallenge) {
-    service.challengesAdmin.createChallenge(challenge).then(() => {
+    services.challengesAdmin.createChallenge(challenge).then(() => {
       this.setState({ modalOpen: false });
     });
   }

@@ -1,4 +1,4 @@
-import api from "api/api";
+import api from "@cectf/api/api";
 
 const getCsrf = async function() {
   return api

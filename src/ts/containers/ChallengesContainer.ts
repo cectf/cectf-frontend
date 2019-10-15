@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import Challenges from "components/ctf/Challenges";
-import { State, Challenge } from "types";
+import Challenges from "@cectf/components/ctf/Challenges";
+import { State, Challenge } from "@cectf/types";
 
 
 const mapStateToProps = (state: State, ownProps: any): { challenges: Challenge[] } => {

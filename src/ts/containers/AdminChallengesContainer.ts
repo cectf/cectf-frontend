@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import AdminChallenges from "components/admin/AdminChallenges";
-import { State, AdminChallenge } from "types";
+import AdminChallenges from "@cectf/components/admin/AdminChallenges";
+import { State, AdminChallenge } from "@cectf/types";
 
 
 const mapStateToProps = (state: State, ownProps: any): { challenges: AdminChallenge[] } => {

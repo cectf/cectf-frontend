@@ -60,10 +60,23 @@ export interface Submission {
   challenge?: Challenge;
 }
 
+
+export enum PopupLevel {
+  ERROR = "error",
+  INFO = "info"
+}
+
+export interface Popup {
+  date: Date;
+  level: PopupLevel;
+  text: string;
+}
+
 export interface State {
   csrf: string;
   challenges: Challenge[];
   adminChallenges: AdminChallenge[];
   user: User | null;
   navPage: NavPage;
+  popups: Popup[]
 }
