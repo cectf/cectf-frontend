@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NavPage } from "@cectf/types";
 import NavTab from "@cectf/components/navBar/NavTab";
+import * as styles from "@styles/navBar/navBar.scss";
 
 interface NavBarProps {
   navPages: NavPage[];
@@ -15,7 +16,8 @@ export default class NavBar extends React.Component<NavBarProps, NavBarState> {
   }
   render() {
     return (
-      <div id="nav-bar">
+      <div id="nav-bar"
+        className={styles.navBar}>
         {this.props.navPages.map(navPage => (
           <NavTab
             key={navPage}

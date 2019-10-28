@@ -3,6 +3,7 @@ import ChallengesContainer from "@cectf/components/content/ctf/ChallengesContain
 import Admin from "@cectf/components/content/admin/Admin";
 import About from "@cectf/components/content/About";
 import { NavPage } from "@cectf/types";
+import * as styles from "@styles/content/appContent.scss";
 
 interface AppContentProps {
   navPage: NavPage;
@@ -26,7 +27,7 @@ export default class AppContent extends React.Component<
   render() {
     return (
       <div id="app-content"
-        className="app__content"
+        className={styles.appContent}
         data-content={this.props.navPage}>
         {this.content()}
       </div>

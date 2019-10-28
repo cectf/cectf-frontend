@@ -1,7 +1,8 @@
 import * as React from "react";
 import service from "@cectf/services";
+import * as styles from "@styles/userBar/loginForm.scss";
 
-interface LoginProps {}
+interface LoginProps { }
 interface LoginState {
   username: string;
   password: string;
@@ -36,17 +37,50 @@ export default class LoginForm extends React.Component<LoginProps, LoginState> {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} name="login_user_form">
-        <input type="text" id="username" onChange={this.onChange_username} />
-        <input
-          type="password"
-          id="password"
-          onChange={this.onChange_password}
-        />
-        <button type="submit" id="login">
-          Submit
-        </button>
-      </form>
+      <div id="login-form"
+        className={styles.loginForm}>
+        <form name="login-form"
+          onSubmit={this.onSubmit} >
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <span className={styles.loginFormUsername}>
+                    <label htmlFor="username"> Username: </label>
+                  </span>
+                </td>
+                <td>
+                  <input id="username"
+                    type="text"
+                    onChange={this.onChange_username} />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className={styles.loginFormPassword}>
+                    <label htmlFor="password"> Password: </label>
+                  </span>
+                </td>
+                <td>
+                  <input id="password"
+                    type="password"
+                    onChange={this.onChange_password}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button id="login"
+                    className={styles.loginFormSubmit}
+                    type="submit">
+                    Log in
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
     );
   }
 }

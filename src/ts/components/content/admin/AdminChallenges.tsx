@@ -34,7 +34,7 @@ export default class AdminChallenges extends React.Component<
   }
   render() {
     return [
-      <div id="challenges" className="challenges">
+      <div id="challenges">
         <button
           id="create-challenge-button"
           onClick={this.openCreateChallengeModal}

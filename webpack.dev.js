@@ -27,5 +27,6 @@ module.exports = env => {
         }
       ]
     },
+    watch: false
   });
 };

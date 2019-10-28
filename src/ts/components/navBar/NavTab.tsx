@@ -1,5 +1,6 @@
 import * as React from "react";
 import { NavPage } from "@cectf/types";
+import * as styles from "@styles/navBar/navTab.scss";
 
 interface NavTabProps {
   page: NavPage;
@@ -41,7 +42,7 @@ export default class NavTab extends React.Component<NavTabProps, NavTabState> {
   render() {
     return (
       <div
-        className="nav-bar__nav-tab nav-tab"
+        className={ (this.props.isActive)? styles.navTabActive : styles.navTabInactive}
         id={this.getId()}
         onClick={this.onClick}
       >

@@ -3,7 +3,8 @@ import * as Modal from "react-modal";
 import { Challenge, SubmissionStatus, FileDescriptor } from "@cectf/types";
 import service from "@cectf/services";
 import api from "@cectf/api";
-import * as styles from "@styles/challenge-tile.scss";
+import * as styles from "@styles/content/ctf/challengeTile.scss";
+import * as modalStyles from "@styles/modal/challenge.scss";
 
 interface ChallengeTileProps {
   challenge: Challenge;
@@ -64,61 +65,62 @@ export default class ChallengeTile extends React.Component<
   }
   render() {
 
-    var hint = undefined;
+    if (this.props.challenge.solved) {
+      var className = styles.challengeTileSolved;
+    } else {
+      var className = styles.challengeTileUnsolved;
+    }
+
     var solution = undefined;
 
-    if (this.props.challenge.hinted) {
-      hint = <div data-id="hint"
-        className="challenge-tile__hint">
-        {this.props.challenge.hint}
-      </div>;
-    }
     if (this.props.challenge.solved) {
       solution = <div data-id="solution"
-        className="challenge-tile__soution">
-        {this.props.challenge.solution}
+        className={styles.challengeTileFlag}>
+        Flag: {this.props.challenge.solution}
       </div>;
     }
 
     return [
       <div key={1}
         data-id={String(this.props.challenge.id)}
-        className={styles.challengeTile}
+        className={className}
         onClick={this.onClick}>
         <div data-id="title"
-          className="challenge-tile__title">
+          className={styles.challengeTileTitle}>
           {this.props.challenge.title}
         </div>
         <div data-id="category"
-          className="challenge-tile__category">
+          className={styles.challengeTileCategory}>
           {this.props.challenge.category}
         </div>
-        {hint}
         {solution}
       </div>,
       <Modal key={2}
+        className={modalStyles.challengeModal}
         isOpen={this.state.modalOpen}
         onRequestClose={this.onModalClose}>
-        <div>{this.props.challenge.body}</div>
-        <div>
-          <ul>
-            {this.state.files.map(file => (
-              <li>
-                <a href={file.url}>{file.name}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <form onSubmit={this.onFlagSubmit}>
-            <input type="text" id="flag" onChange={this.onFlagFieldChange} />
-            <div className="modal__message">{this.state.message}</div>
-            <button type="submit" id="submit">
-              Submit
+        <div className={modalStyles.challengeModalContent}>
+          <div>{this.props.challenge.body}</div>
+          <div>
+            <ul>
+              {this.state.files.map(file => (
+                <li>
+                  <a href={file.url}>{file.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <form onSubmit={this.onFlagSubmit}>
+              <input type="text" id="flag" onChange={this.onFlagFieldChange} />
+              <div className="modal__message">{this.state.message}</div>
+              <button type="submit" id="submit">
+                Submit
             </button>
-          </form>
+            </form>
+          </div>
+          <button onClick={this.onModalClose}>Close</button>
         </div>
-        <button onClick={this.onModalClose}>Close</button>
       </Modal>
     ];
   }

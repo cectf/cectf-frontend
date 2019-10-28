@@ -1,0 +1,22 @@
+@use '../appRoot';
+
+.user-bar {
+  @include appRoot.bar;
+  display:flex;
+}
+.user-bar--logged-in {
+  @extend .user-bar;
+}
+.user-bar--logged-out {
+  @extend .user-bar;
+}
+
+.user-bar__welcome {
+  margin-left: 6px;
+  flex-grow: 1;
+  font-size: 24px;
+  text-align: left;
+}
+.user-bar__logout {
+  font-size: 24px;
+}

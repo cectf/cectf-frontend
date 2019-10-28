@@ -1,0 +1,6 @@
+@use '../appRoot';
+
+.nav-bar {
+  @include appRoot.bar;
+  display: flex;
+}

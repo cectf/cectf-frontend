@@ -1,0 +1,20 @@
+@mixin modal {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  overflow: auto;
+  border-radius: 4px;
+  outline: currentcolor none medium;
+  padding: 20px;
+  text-align: center;
+}
+
+@mixin modal-content {
+  display: inline-block;
+  left: auto;
+  right: auto;
+}

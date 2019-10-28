@@ -2,8 +2,7 @@ import * as React from "react";
 import ChallengeTile from "@cectf/components/content/ctf/ChallengeTile";
 import { Challenge } from "@cectf/types";
 import services from "@cectf/services";
-
-import * as styles from "@styles/challenges.scss";
+import * as styles from "@styles/content/ctf/challenges.scss";
 
 console.log("Stylish!");
 console.log(styles);

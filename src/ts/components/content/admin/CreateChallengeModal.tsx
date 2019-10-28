@@ -1,6 +1,7 @@
 import * as React from "react";
 import Modal from "@cectf/components/Modal";
 import { NewAdminChallenge } from "@cectf/types";
+import * as modalStyles from "@styles/modal/challengeAdmin.scss";
 
 interface AdminChallengeTileProps {
   parent: React.Component<{}, { modalOpen: boolean }>;
@@ -19,7 +20,7 @@ interface AdminChallengeTileState {
 export default class CreateChallengeModal extends Modal<
   AdminChallengeTileProps,
   AdminChallengeTileState
-> {
+  > {
   constructor(props: AdminChallengeTileProps, state: AdminChallengeTileState) {
     super(props, state);
     if (this.props.challenge) {
@@ -70,8 +71,10 @@ export default class CreateChallengeModal extends Modal<
   }
   render() {
     return (
-      <Modal parent={this.props.parent}>
-        <div>
+      <Modal
+        className={modalStyles.challengeAdminModal}
+        parent={this.props.parent}>
+        <div className={modalStyles.challengeAdminModalContent}>
           <form onSubmit={this.onSubmit}>
             <div>
               Title:

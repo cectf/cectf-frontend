@@ -3,6 +3,7 @@ import service from "@cectf/services";
 import LoginForm from "@cectf/components/userBar/LoginForm";
 import RegisterForm from "@cectf/components/userBar/RegisterForm";
 import { User } from "@cectf/types";
+import * as styles from "@styles/userBar/userBar.scss";
 
 interface UserBarProps {
   user?: User;
@@ -26,15 +27,15 @@ export default class UserBar extends React.Component<
     if (this.props.user) {
       return (
         <div id="user-bar"
-          className="user-bar user-bar--logged-in"
+          className={styles.userBarLoggedIn}
           data-logged-in={true}
           data-username={this.props.user.username}>
           <div id="user-bar__welcome"
-            className="user-bar__welcome">
+            className={styles.userBarWelcome}>
             Welcome, user {this.props.user.username}!
           </div>
           <div id="user-bar__logout"
-            className="user-bar__logout">
+            className={styles.userBarLogout}>
             <a id="logout"
               href="/" onClick={this.onLogout}>
               Log out
@@ -45,7 +46,7 @@ export default class UserBar extends React.Component<
     } else {
       return (
         <div id="user-bar"
-          className="user-bar user-bar--logged-out"
+          className={styles.userBarLoggedOut}
           data-logged-in={false}>
           <LoginForm />
           <RegisterForm />

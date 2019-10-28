@@ -1,0 +1,6 @@
+@use '../appRoot';
+
+.app-content {
+  @include appRoot.bar;
+  flex-grow: 1;
+}

@@ -18,4 +18,5 @@ if [ $? != 0 ] ; then
 fi
 
 cp -r src/html/* dist
-#cp -r src/css dist/css
+mkdir dist/fonts
+cp -r src/fonts/* dist/fonts

@@ -2,6 +2,8 @@ import * as React from "react";
 import service from "@cectf/services";
 import * as Modal from "react-modal";
 import PopupsContainer from "@cectf/components/popups/PopupsContainer";
+import * as styles from "@styles/userBar/register.scss";
+import * as modalStyles from "@styles/modal/register.scss";
 
 interface RegisterProps { }
 interface RegisterState {
@@ -64,53 +66,63 @@ export default class RegisterForm extends React.Component<
     return [
       <div key={1}
         id="register"
-        className="register" >
-        <a id="register__link"
-          href="/"
+        className={styles.register}>
+        <button id="register__link"
           onClick={this.onClick}>
           Sign up!
-        </a>
+        </button>
       </div>,
       <Modal key={2}
+        className={modalStyles.registerModal}
         isOpen={this.state.modalOpen}
         onRequestClose={this.onModalClose}>
-        <div>
+        <div className={modalStyles.registerModalContent}>
           <form onSubmit={this.onSubmit}>
-            <div>
-              <span>Email:</span>
-              <input
-                type="text"
-                id="register-modal__email"
-                name="email"
-                onChange={this.onChange_email}
-              />
-            </div>
-            <div>
-              <span>Username:</span>
-              <input
-                type="text"
-                id="register-modal__username"
-                name="username"
-                onChange={this.onChange_username}
-              />
-            </div>
-            <div>
-              <span>Password:</span>
-              <input
-                type="password"
-                id="register-modal__password"
-                name="password"
-                onChange={this.onChange_password}
-              />
-            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Email:</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="register-modal__email"
+                      name="email"
+                      onChange={this.onChange_email}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Username:</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="register-modal__username"
+                      name="username"
+                      onChange={this.onChange_username}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Password:</td>
+                  <td>
+                    <input
+                      type="password"
+                      id="register-modal__password"
+                      name="password"
+                      onChange={this.onChange_password}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <button
               type="submit"
               id="register-modal__submit">
               Submit
             </button>
           </form>
+          <button onClick={this.onModalClose}>Close</button>
         </div>
-        <button onClick={this.onModalClose}>Close</button>
         <PopupsContainer />
       </Modal>
     ];

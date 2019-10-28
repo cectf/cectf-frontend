@@ -6,14 +6,16 @@ import AppRoot from "@cectf/components/AppRoot"
 //import AppRoot from "@cectf/components/AppRoot";
 import service from "@cectf/services";
 import { store } from "@cectf/state";
-import "@styles/app.scss";
+import "@styles/appRoot.scss";
 
-ReactModal.setAppElement("#body");
+ReactModal.setAppElement("#root");
 
 service.csrf.refreshCsrf().then(() => {
   service.user.updateCurrentUser();
 });
 
 ReactDOM.render(
-  <Provider store={store}><AppRoot /></Provider>,
-  document.getElementById("body"));
+  <Provider store={store}>
+    <AppRoot />
+  </Provider>,
+  document.getElementById("root"));

@@ -1,0 +1,9 @@
+@use 'modal';
+
+.register-modal {
+  @include modal.modal;
+}
+
+.register-modal__content {
+  @include modal.modal-content;
+}

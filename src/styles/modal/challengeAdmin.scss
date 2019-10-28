@@ -1,0 +1,9 @@
+@use 'modal';
+
+.challenge-admin-modal {
+  @include modal.modal;
+}
+
+.challenge-admin-modal__content {
+  @include modal.modal-content;
+}

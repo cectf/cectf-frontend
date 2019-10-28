@@ -16,4 +16,4 @@ Run `npm test` to run the frontend tests.
 
 Configuration of the flask server can be done by adding variables to `instance/config.py`.
 
-To generate an interactive dependency graph, run `npx webpack --profile --json > stats.json`, then upload `stats.json` to http://webpack.github.io/analyse/#modules.
+To generate an interactive dependency graph, run `npx webpack --config webpack.prod.js --profile --json > stats.json`, then upload `stats.json` to http://webpack.github.io/analyse/#modules.

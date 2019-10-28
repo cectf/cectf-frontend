@@ -1,0 +1,30 @@
+@use '../../colors';
+
+@mixin challenge-tile {
+  margin: 5px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: colors.$challenge-tile-border;
+}
+
+.challenge-tile__solved {
+  @include challenge-tile;
+  background-color: colors.$challenge-tile-solved;
+}
+
+.challenge-tile__unsolved {
+  @include challenge-tile;
+  background-color: colors.$challenge-tile-unsolved;
+}
+
+.challenge-tile__title {
+  font-size: 30px;
+}
+
+.challenge-tile__category {
+  font-size: 11px;
+}
+
+.challenge-tile__flag {
+  font-size: 18px;
+}

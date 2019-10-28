@@ -1,0 +1,9 @@
+@use 'modal';
+
+.challenge-modal {
+  @include modal.modal;
+}
+
+.challenge-modal__content {
+  @include modal.modal-content;
+}
