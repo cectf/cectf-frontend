@@ -1,17 +1,17 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import services from "@cectf/services";
 import AdminChallengeTile from "@cectf/components/content/admin/AdminChallengeTile";
 import CreateChallengeModal from "@cectf/components/content/admin/CreateChallengeModal";
-import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
+import { State, AdminChallenge, NewAdminChallenge, ModalID } from "@cectf/types";
+import { store, closeModal, openModal } from "@cectf/state";
 
 interface AdminChallengesProps {
   challenges: AdminChallenge[];
 }
-interface AdminChallengesState {
-  modalOpen: boolean;
-}
+interface AdminChallengesState {}
 
-export default class AdminChallenges extends React.Component<
+class AdminChallengesComponent extends React.Component<
   AdminChallengesProps,
   AdminChallengesState
   > {
@@ -25,11 +25,11 @@ export default class AdminChallenges extends React.Component<
   openCreateChallengeModal(event: React.MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ modalOpen: true });
+    store.dispatch(openModal(ModalID.ADMIN_CHALLENGE));
   }
   createChallenge(challenge: NewAdminChallenge) {
     services.challengesAdmin.createChallenge(challenge).then(() => {
-      this.setState({ modalOpen: false });
+      store.dispatch(closeModal());
     });
   }
   render() {
@@ -45,7 +45,17 @@ export default class AdminChallenges extends React.Component<
           <AdminChallengeTile challenge={challenge} />
         ))}
       </div>,
-      <CreateChallengeModal parent={this} onSubmit={this.createChallenge} />
+      <CreateChallengeModal onSubmit={this.createChallenge} />
     ];
   }
 }
+
+const mapStateToProps = (state: State, ownProps: any): { challenges: AdminChallenge[] } => {
+  return {
+    challenges: state.adminChallenges
+  };
+}
+
+
+const AdminChallenges = connect(mapStateToProps)(AdminChallengesComponent);
+export default AdminChallenges;

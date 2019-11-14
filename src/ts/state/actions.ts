@@ -1,4 +1,4 @@
-import { Challenge, AdminChallenge, User, NavPage, Popup } from "@cectf/types";
+import { Challenge, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey } from "@cectf/types";
 
 /*
  * action types
@@ -22,7 +22,11 @@ export const enum ActionId {
     SET_USER,
     ADD_POPUP,
     REMOVE_POPUP,
-    CLEAR_POPUPS
+    CLEAR_POPUPS,
+    START_REQUEST,
+    FINISH_REQUEST,
+    OPEN_MODAL,
+    CLOSE_MODAL
 }
 
 /*
@@ -79,4 +83,24 @@ export function removePopup(popup: Popup): Action<Popup> {
 
 export function clearPopups(): Action<undefined> {
     return { type: ActionId.CLEAR_POPUPS, value: undefined };
+}
+
+export function startRequest(requestName: string): Action<string> {
+    return { type: ActionId.START_REQUEST, value: requestName };
+}
+
+export function finishRequest(requestName: string): Action<string> {
+    return { type: ActionId.FINISH_REQUEST, value: requestName };
+}
+
+export function openModal(id: ModalID): Action<ModalKey> {
+    return { type: ActionId.OPEN_MODAL, value: { id: id, index: undefined } };
+}
+
+export function openModalKey(id: ModalID, index: number | string): Action<ModalKey> {
+    return { type: ActionId.OPEN_MODAL, value: { id: id, index: index } };
+}
+
+export function closeModal(): Action<undefined> {
+    return { type: ActionId.CLOSE_MODAL, value: undefined };
 }

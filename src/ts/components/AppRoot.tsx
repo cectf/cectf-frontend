@@ -1,10 +1,10 @@
 import * as React from "react";
 import Title from "@cectf/components/Title"
-import AppContentContainer from "@cectf/components/content/AppContentContainer";
-import UserBarContainer from "@cectf/components/userBar/UserBarContainer";
-import NavBarContainer from "@cectf/components/navBar/NavBarContainer";
-import PopupsContainer from "@cectf/components/popups/PopupsContainer";
-// import StateDisplayContainer from "@cectf/components/StateDisplayContainer";
+import AppContent from "@cectf/components/content/AppContent";
+import UserBar from "@cectf/components/userBar/UserBar";
+import Popups from "@cectf/components/popups/Popups";
+import NavBar from "@cectf/components/navBar/NavBar";
+import StateDisplay from "@cectf/components/StateDisplay";
 import Footer from "@cectf/components/Footer";
 import * as styles from "@styles/appRoot.scss";
 
@@ -14,14 +14,15 @@ export default class AppRoot extends React.Component<{}, {}> {
       <div className={styles.background}>
         <div id="app" className={styles.appRoot}>
           <Title />
-          <UserBarContainer />
-          <PopupsContainer />
-          <NavBarContainer />
-          <AppContentContainer />
+          <UserBar />
+          <Popups />
+          <NavBar />
+          <AppContent />
           <Footer />
+          <StateDisplay />
         </div>
       </div>
     );
-    // <StateDisplayContainer />
+    
   }
 }

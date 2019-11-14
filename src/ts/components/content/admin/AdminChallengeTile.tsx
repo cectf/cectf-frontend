@@ -1,25 +1,24 @@
 import * as React from "react";
-import { AdminChallenge, NewAdminChallenge, FileDescriptor } from "@cectf/types";
+import { AdminChallenge, NewAdminChallenge, FileDescriptor, ModalID } from "@cectf/types";
 import CreateChallengeModal from "@cectf/components/content/admin/CreateChallengeModal";
 import service from "@cectf/services";
 import api from "@cectf/api";
+import { store, openModalKey, closeModal } from "@cectf/state";
 
 interface AdminChallengeTileProps {
   challenge: AdminChallenge;
 }
 interface AdminChallengeTileState {
-  modalOpen: boolean;
   files: FileDescriptor[];
 }
 
 export default class AdminChallengeTile extends React.Component<
   AdminChallengeTileProps,
   AdminChallengeTileState
-> {
+  > {
   constructor(props: AdminChallengeTileProps, state: AdminChallengeTileState) {
     super(props, state);
     this.state = {
-      modalOpen: false,
       files: []
     };
   }
@@ -31,13 +30,13 @@ export default class AdminChallengeTile extends React.Component<
   editChallenge = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ modalOpen: true });
+    store.dispatch(openModalKey(ModalID.ADMIN_CHALLENGE, this.props.challenge.id));
   };
   updateChallenge = (challenge: NewAdminChallenge) => {
     service.challengesAdmin
       .updateChallenge(this.props.challenge.id, challenge)
       .then(() => {
-        this.setState({ modalOpen: false });
+        store.dispatch(closeModal());
       });
   };
   deleteChallenge = () => {
@@ -46,11 +45,8 @@ export default class AdminChallengeTile extends React.Component<
   uploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (this.props.challenge.id) {
       var files = event.target.files;
-      console.log(files);
       if (files) {
         for (var i = 0; i < files.length; i++) {
-          console.log("Uploading");
-          console.log(files[i]);
           api.challengeFiles
             .uploadFile(this.props.challenge.id, files[i])
             .then(() => {
@@ -108,7 +104,6 @@ export default class AdminChallengeTile extends React.Component<
         <button onClick={this.deleteChallenge}>Delete Challenge</button>
       </div>,
       <CreateChallengeModal
-        parent={this}
         onSubmit={this.updateChallenge}
         challenge={this.props.challenge}
       />

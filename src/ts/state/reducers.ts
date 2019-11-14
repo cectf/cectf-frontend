@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { Action, ActionId } from '@cectf/state/actions';
-import { State, Challenge, AdminChallenge, User, NavPage, Popup } from "@cectf/types";
+import { State, Challenge, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey } from "@cectf/types";
 
 function csrf(state = "", action: Action<string>): string {
     switch (action.type) {
@@ -90,13 +90,43 @@ function popups(state: Popup[] = [], action: Action<Popup>): Popup[] {
     }
 }
 
+function activeRequests(state: string[] = [], action: Action<string>): string[] {
+    switch (action.type) {
+        case ActionId.START_REQUEST:
+            return state.concat(action.value);
+        case ActionId.FINISH_REQUEST:
+            var index = state.indexOf(action.value);
+            if (index > -1) {
+                return state.slice(0, index).concat(state.slice(index + 1, state.length));
+            }
+            return state;
+        default:
+            return state;
+    }
+}
+
+function modal(state: ModalKey | null = null, action: Action<ModalKey | undefined>): ModalKey | null {
+    switch (action.type) {
+        case ActionId.OPEN_MODAL:
+            console.log("OPEN", state, action.value);
+            return action.value || null;
+        case ActionId.CLOSE_MODAL:
+            console.log("CLOSE", state, action.value);
+            return null;
+        default:
+            return state;
+    }
+}
+
 const combinedReducers = combineReducers({
     csrf,
     challenges,
     adminChallenges,
     user,
     navPage,
-    popups
+    popups,
+    activeRequests,
+    modal
 });
 
 const reduxApp = (state: State | undefined, action: Action<any>): State => {

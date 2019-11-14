@@ -1,29 +1,30 @@
 import * as React from "react";
-import * as Modal from "react-modal";
-import { Challenge, SubmissionStatus, FileDescriptor } from "@cectf/types";
+import { connect } from "react-redux";
+import { State, Challenge, SubmissionStatus, FileDescriptor, ModalID } from "@cectf/types";
 import service from "@cectf/services";
 import api from "@cectf/api";
+import Modal from "@cectf/components/Modal";
 import * as styles from "@styles/content/ctf/challengeTile.scss";
 import * as modalStyles from "@styles/modal/challenge.scss";
+import { store, openModalKey } from "@cectf/state";
 
 interface ChallengeTileProps {
+  loading: boolean;
   challenge: Challenge;
 }
 interface ChallengeTileState {
-  modalOpen: boolean;
   message: string;
   files: FileDescriptor[];
   flagAttempt: string;
 }
 
-export default class ChallengeTile extends React.Component<
+class ChallengeTileComponent extends React.Component<
   ChallengeTileProps,
   ChallengeTileState
   > {
   constructor(props: ChallengeTileProps, state: ChallengeTileState) {
     super(props, state);
     this.state = {
-      modalOpen: false,
       message: "",
       files: [],
       flagAttempt: ""
@@ -31,13 +32,12 @@ export default class ChallengeTile extends React.Component<
     this.onClick = this.onClick.bind(this);
     this.onFlagFieldChange = this.onFlagFieldChange.bind(this);
     this.onFlagSubmit = this.onFlagSubmit.bind(this);
-    this.onModalClose = this.onModalClose.bind(this);
   }
   onClick() {
     api.challengeFiles.getFiles(this.props.challenge.id).then(files => {
       this.setState({ files: files });
     });
-    this.setState({ modalOpen: true });
+    store.dispatch(openModalKey(ModalID.CHALLENGE, this.props.challenge.id));
   }
   onFlagFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
@@ -60,28 +60,21 @@ export default class ChallengeTile extends React.Component<
         }
       });
   }
-  onModalClose() {
-    this.setState({ modalOpen: false, message: "" });
-  }
   render() {
 
-    if (this.props.challenge.solved) {
-      var className = styles.challengeTileSolved;
-    } else {
-      var className = styles.challengeTileUnsolved;
-    }
+    var className = (this.props.challenge.solved)
+      ? styles.challengeTileSolved
+      : styles.challengeTileUnsolved;
 
-    var solution = undefined;
-
-    if (this.props.challenge.solved) {
-      solution = <div data-id="solution"
+    var solution = (this.props.challenge.solved)
+      ? <div data-id="solution"
         className={styles.challengeTileFlag}>
         Flag: {this.props.challenge.solution}
-      </div>;
-    }
+      </div>
+      : undefined;
 
     return [
-      <div key={1}
+      <div key="tile"
         data-id={String(this.props.challenge.id)}
         className={className}
         onClick={this.onClick}>
@@ -95,10 +88,10 @@ export default class ChallengeTile extends React.Component<
         </div>
         {solution}
       </div>,
-      <Modal key={2}
-        className={modalStyles.challengeModal}
-        isOpen={this.state.modalOpen}
-        onRequestClose={this.onModalClose}>
+      <Modal key="modal"
+        id={ModalID.CHALLENGE}
+        index={this.props.challenge.id}
+        className={modalStyles.challengeModal}>
         <div className={modalStyles.challengeModalContent}>
           <div>{this.props.challenge.body}</div>
           <div>
@@ -114,14 +107,20 @@ export default class ChallengeTile extends React.Component<
             <form onSubmit={this.onFlagSubmit}>
               <input type="text" id="flag" onChange={this.onFlagFieldChange} />
               <div className="modal__message">{this.state.message}</div>
-              <button type="submit" id="submit">
+              <button type="submit" id="submit" disabled={this.props.loading}>
                 Submit
             </button>
             </form>
           </div>
-          <button onClick={this.onModalClose}>Close</button>
         </div>
       </Modal>
     ];
   }
 }
+
+const mapStateToProps = (state: State, ownProps: { challenge: Challenge }): { loading: boolean } => {
+  return { loading: state.activeRequests.includes("/api/ctf/challenges/" + ownProps.challenge.id) };
+}
+
+const ChallengeTile = connect(mapStateToProps)(ChallengeTileComponent);
+export default ChallengeTile;

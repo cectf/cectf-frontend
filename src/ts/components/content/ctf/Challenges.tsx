@@ -1,18 +1,16 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import ChallengeTile from "@cectf/components/content/ctf/ChallengeTile";
-import { Challenge } from "@cectf/types";
+import { State, Challenge } from "@cectf/types";
 import services from "@cectf/services";
 import * as styles from "@styles/content/ctf/challenges.scss";
-
-console.log("Stylish!");
-console.log(styles);
 
 interface ChallengesProps {
   challenges: Challenge[];
 }
 interface ChallengesState { }
 
-export default class Challenges extends React.Component<
+class ChallengesComponent extends React.Component<
   ChallengesProps,
   ChallengesState
   > {
@@ -34,3 +32,12 @@ export default class Challenges extends React.Component<
     );
   }
 }
+
+const mapStateToProps = (state: State, ownProps: any): { challenges: Challenge[] } => {
+  return {
+    challenges: state.challenges
+  };
+}
+
+const Challenges = connect(mapStateToProps)(ChallengesComponent);
+export default Challenges;

@@ -7,7 +7,7 @@ interface StateDisplayProps {
 }
 interface StateDisplayState { }
 
-export class StateDisplay extends React.Component<
+class StateDisplayComponent extends React.Component<
   StateDisplayProps,
   StateDisplayState
   > {
@@ -31,5 +31,5 @@ const mapStateToProps = (state: State, ownProps: any): StateDisplayProps => {
   return { currentState: state };
 }
 
-var StateDisplayContainer = connect(mapStateToProps)(StateDisplay)
-export default StateDisplayContainer;
+var StateDisplay = connect(mapStateToProps)(StateDisplayComponent)
+export default StateDisplay;

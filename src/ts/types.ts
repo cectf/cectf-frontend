@@ -72,11 +72,24 @@ export interface Popup {
   text: string;
 }
 
+export enum ModalID {
+  REGISTER = "register-modal",
+  CHALLENGE = "challenge-modal",
+  ADMIN_CHALLENGE = "admin-challenge-modal"
+}
+
+export interface ModalKey {
+  id: ModalID;
+  index: number | string | undefined;
+}
+
 export interface State {
   csrf: string;
   challenges: Challenge[];
   adminChallenges: AdminChallenge[];
   user: User | null;
   navPage: NavPage;
-  popups: Popup[]
+  popups: Popup[];
+  activeRequests: string[];
+  modal: ModalKey | null;
 }

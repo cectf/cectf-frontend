@@ -1,12 +1,11 @@
 import * as React from "react";
 import Modal from "@cectf/components/Modal";
-import { NewAdminChallenge } from "@cectf/types";
+import { AdminChallenge, NewAdminChallenge, ModalID } from "@cectf/types";
 import * as modalStyles from "@styles/modal/challengeAdmin.scss";
 
 interface AdminChallengeTileProps {
-  parent: React.Component<{}, { modalOpen: boolean }>;
   onSubmit: (challenge: NewAdminChallenge) => void;
-  challenge?: NewAdminChallenge;
+  challenge?: AdminChallenge;
 }
 interface AdminChallengeTileState {
   message: string;
@@ -17,7 +16,7 @@ interface AdminChallengeTileState {
   solution: string;
 }
 
-export default class CreateChallengeModal extends Modal<
+export default class CreateChallengeModal extends React.Component<
   AdminChallengeTileProps,
   AdminChallengeTileState
   > {
@@ -42,38 +41,36 @@ export default class CreateChallengeModal extends Modal<
         solution: ""
       };
     }
-    this.onChange_title = this.onChange_title.bind(this);
-    this.onChange_category = this.onChange_category.bind(this);
-    this.onChange_body = this.onChange_body.bind(this);
-    this.onChange_hint = this.onChange_hint.bind(this);
-    this.onChange_solution = this.onChange_solution.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
-  onChange_title(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_title = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: event.target.value });
   }
-  onChange_category(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_category = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ category: event.target.value });
   }
-  onChange_body(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_body = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ body: event.target.value });
   }
-  onChange_hint(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_hint = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ hint: event.target.value });
   }
-  onChange_solution(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_solution = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ solution: event.target.value });
   }
-  onSubmit(event: React.FormEvent) {
+  onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
     this.props.onSubmit(this.state);
   }
   render() {
+    var index = (this.props.challenge !== undefined)
+      ? this.props.challenge.id
+      : undefined;
     return (
       <Modal
-        className={modalStyles.challengeAdminModal}
-        parent={this.props.parent}>
+        id={ModalID.ADMIN_CHALLENGE}
+        index={index}
+        className={modalStyles.challengeAdminModal}>
         <div className={modalStyles.challengeAdminModalContent}>
           <form onSubmit={this.onSubmit}>
             <div>
@@ -127,7 +124,6 @@ export default class CreateChallengeModal extends Modal<
             </button>
           </form>
         </div>
-        <button onClick={this.close}>Close</button>
       </Modal>
     );
   }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import AdminChallengesContainer from "@cectf/components/content/admin/AdminChallengesContainer";
+import AdminChallenges from "@cectf/components/content/admin/AdminChallenges";
 
 interface AdminProps {}
 interface AdminState {}
@@ -12,7 +12,7 @@ export default class Admin extends React.Component<AdminProps, AdminState> {
     return (
       <div>
         <div>This is the admin page!</div>
-        <AdminChallengesContainer />
+        <AdminChallenges />
       </div>
     );
   }

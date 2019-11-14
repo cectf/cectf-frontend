@@ -1,14 +1,18 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import service from "@cectf/services";
+import { State } from "@cectf/types";
 import * as styles from "@styles/userBar/loginForm.scss";
 
-interface LoginProps { }
+interface LoginProps {
+  loading: boolean;
+}
 interface LoginState {
   username: string;
   password: string;
 }
 
-export default class LoginForm extends React.Component<LoginProps, LoginState> {
+class LoginFormComponent extends React.Component<LoginProps, LoginState> {
   constructor(props: LoginProps) {
     super(props);
 
@@ -69,8 +73,10 @@ export default class LoginForm extends React.Component<LoginProps, LoginState> {
                 </td>
               </tr>
               <tr>
+                <td></td>
                 <td>
                   <button id="login"
+                    disabled={this.props.loading}
                     className={styles.loginFormSubmit}
                     type="submit">
                     Log in
@@ -84,3 +90,10 @@ export default class LoginForm extends React.Component<LoginProps, LoginState> {
     );
   }
 }
+
+const mapStateToProps = (state: State): { loading: boolean } => {
+  return { loading: state.activeRequests.includes("/api/auth/login") };
+}
+
+const LoginForm = connect(mapStateToProps)(LoginFormComponent);
+export default LoginForm;
