@@ -1,31 +1,53 @@
 import * as React from "react";
 import * as ReactModal from "react-modal";
+import { connect } from "react-redux";
+import { store, closeModal } from "@cectf/state";
+import { State, ModalID } from "@cectf/types";
 
 interface ModalProps {
-  parent: React.Component<{}, { modalOpen: boolean }>;
+  id: ModalID;
+  index: number | string | undefined;
+  isOpen: boolean;
+  className?: string;
+  children: React.ReactNode | React.ReactNode[];
 }
-interface ModalState {}
+interface ModalState { }
 
-export default class Modal<P, S> extends React.Component<
-  ModalProps & P,
-  ModalState & S
-> {
-  constructor(props: ModalProps & P, state: ModalState) {
+class ModalComponent extends React.Component<ModalProps, ModalState> {
+  constructor(props: ModalProps, state: ModalState) {
     super(props, state);
-
-    this.close = this.close.bind(this);
   }
-  close() {
-    this.props.parent.setState({ modalOpen: false });
+  close = () => {
+    store.dispatch(closeModal())
   }
   render() {
     return (
       <ReactModal
-        isOpen={this.props.parent.state.modalOpen}
+        className={this.props.className}
+        isOpen={this.props.isOpen}
         onRequestClose={this.close}
       >
         {this.props.children}
+        <div>
+          <button id="modal-close" onClick={this.close}>Close</button>
+        </div>
       </ReactModal>
     );
   }
 }
+
+const mapStateToProps = (state: State, ownProps: { id: ModalID, index: number | string | undefined }): { isOpen: boolean } => {
+  if (state.modal !== null) {
+    if (ownProps.index === undefined) {
+      console.log("nondex ", state.modal.id, ownProps.id, ownProps);
+      return { isOpen: state.modal.id === ownProps.id };
+    }
+    console.log("dexd ", state.modal.id, ownProps.id, state.modal.index, ownProps.index);
+    return { isOpen: state.modal.id === ownProps.id && state.modal.index === ownProps.index };
+  }
+  console.log("nopne", ownProps);
+  return { isOpen: false };
+}
+
+const Modal = connect(mapStateToProps)(ModalComponent);
+export default Modal;

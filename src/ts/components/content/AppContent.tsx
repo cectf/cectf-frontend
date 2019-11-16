@@ -1,8 +1,9 @@
 import * as React from "react";
-import ChallengesContainer from "@cectf/components/content/ctf/ChallengesContainer";
+import { connect } from "react-redux";
+import Challenges from "@cectf/components/content/ctf/Challenges";
 import Admin from "@cectf/components/content/admin/Admin";
 import About from "@cectf/components/content/About";
-import { NavPage } from "@cectf/types";
+import { State, NavPage } from "@cectf/types";
 import * as styles from "@styles/content/appContent.scss";
 
 interface AppContentProps {
@@ -10,7 +11,7 @@ interface AppContentProps {
 }
 interface AppContentState { }
 
-export default class AppContent extends React.Component<
+class AppContentComponent extends React.Component<
   AppContentProps,
   AppContentState
   > {
@@ -19,7 +20,7 @@ export default class AppContent extends React.Component<
       case (NavPage.ABOUT):
         return <About />;
       case (NavPage.CTF):
-        return <ChallengesContainer />;
+        return <Challenges />;
       case (NavPage.ADMIN):
         return <Admin />;
     }
@@ -34,3 +35,10 @@ export default class AppContent extends React.Component<
     );
   }
 }
+
+const mapStateToProps = (state: State) => {
+  return { navPage: state.navPage };
+}
+
+const AppContent = connect(mapStateToProps)(AppContentComponent);
+export default AppContent;

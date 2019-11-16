@@ -1,19 +1,23 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import service from "@cectf/services";
-import * as Modal from "react-modal";
-import PopupsContainer from "@cectf/components/popups/PopupsContainer";
+import Modal from "@cectf/components/Modal";
+import Popups from "@cectf/components/popups/Popups";
+import { State, ModalID } from "@cectf/types";
 import * as styles from "@styles/userBar/register.scss";
 import * as modalStyles from "@styles/modal/register.scss";
+import { store, openModal } from "@cectf/state";
 
-interface RegisterProps { }
+interface RegisterProps {
+  loading: boolean;
+}
 interface RegisterState {
-  modalOpen: boolean;
   email: string;
   username: string;
   password: string;
 }
 
-export default class RegisterForm extends React.Component<
+class RegisterFormComponent extends React.Component<
   RegisterProps,
   RegisterState
   > {
@@ -21,38 +25,27 @@ export default class RegisterForm extends React.Component<
     super(props);
 
     this.state = {
-      modalOpen: false,
       email: "",
       username: "",
       password: ""
     };
-
-    this.onClick = this.onClick.bind(this);
-    this.onModalClose = this.onModalClose.bind(this);
-    this.onChange_email = this.onChange_email.bind(this);
-    this.onChange_username = this.onChange_username.bind(this);
-    this.onChange_password = this.onChange_password.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
-  onClick(event: React.MouseEvent) {
+  onClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ modalOpen: true });
-  }
-  onModalClose() {
-    this.setState({ modalOpen: false });
+    store.dispatch(openModal(ModalID.REGISTER));
   }
 
-  onChange_email(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_email = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ email: event.target.value });
   }
-  onChange_username(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_username = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ username: event.target.value });
   }
-  onChange_password(event: React.ChangeEvent<HTMLInputElement>) {
+  onChange_password = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ password: event.target.value });
   }
-  onSubmit(event: React.FormEvent) {
+  onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
     service.auth.register(
@@ -64,7 +57,7 @@ export default class RegisterForm extends React.Component<
 
   render() {
     return [
-      <div key={1}
+      <div key="register"
         id="register"
         className={styles.register}>
         <button id="register__link"
@@ -72,10 +65,10 @@ export default class RegisterForm extends React.Component<
           Sign up!
         </button>
       </div>,
-      <Modal key={2}
-        className={modalStyles.registerModal}
-        isOpen={this.state.modalOpen}
-        onRequestClose={this.onModalClose}>
+      <Modal key="modal"
+        id={ModalID.REGISTER}
+        index={undefined}
+        className={modalStyles.registerModal}>
         <div className={modalStyles.registerModalContent}>
           <form onSubmit={this.onSubmit}>
             <table>
@@ -115,16 +108,24 @@ export default class RegisterForm extends React.Component<
                 </tr>
               </tbody>
             </table>
-            <button
+            <button id="register-modal__submit"
               type="submit"
-              id="register-modal__submit">
+              disabled={this.props.loading}>
               Submit
             </button>
           </form>
-          <button onClick={this.onModalClose}>Close</button>
         </div>
-        <PopupsContainer />
+        <Popups />
       </Modal>
     ];
   }
 }
+
+const mapStateToProps = (state: State): { loading: boolean } => {
+  return { loading: state.activeRequests.includes("/api/auth/register") };
+}
+
+const RegisterForm = connect(
+  mapStateToProps)
+  (RegisterFormComponent);
+export default RegisterForm;

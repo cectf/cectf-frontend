@@ -7,7 +7,7 @@ async function login(
   password: string
 ): Promise<void> {
   return api
-    .post("/api/login", {
+    .post("/api/auth/login", {
       username: username,
       password: password,
       csrf_token: store.getState().csrf
@@ -17,11 +17,8 @@ async function login(
         return;
       } else {
         return response.json().then(json => {
-          if (json.response.errors.email) {
-            throw json.response.errors.email;
-          }
-          if (json.response.errors.password) {
-            throw json.response.errors.password;
+          if (json.error) {
+            throw json.error;
           }
           throw "Login failed";
         });
@@ -30,7 +27,7 @@ async function login(
 }
 
 async function logout(): Promise<void> {
-  return api.get("/api/logout").then();
+  return api.get("/api/auth/logout").then();
 }
 
 async function register(
@@ -39,7 +36,7 @@ async function register(
   password: string
 ): Promise<void> {
   return api
-    .post("/api/register", {
+    .post("/api/auth/register", {
       email: email,
       username: username,
       password: password,
@@ -50,11 +47,8 @@ async function register(
         return;
       } else {
         return response.json().then(json => {
-          if (json.response.errors.email) {
-            throw json.response.errors.email;
-          }
-          if (json.response.errors.password) {
-            throw json.response.errors.password;
+          if (json.error) {
+            throw json.error;
           }
           throw "Registration failed";
         });
