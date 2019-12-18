@@ -7,17 +7,19 @@ var challenge1: AdminChallenge = {
     id: 1,
     title: "First",
     category: "crypto",
+    author: "ad4m",
     body: "Do it",
-    hint: "hint",
-    solution: "CTF{flag}"
+    solution: "CTF{flag}",
+    previousChallenge: null
 };
 var challenge2: AdminChallenge = {
     id: 2,
     title: "Second",
     category: "reversing",
+    author: "ad4m",
     body: "Do it harder better faster",
-    hint: "hinty",
-    solution: "CTF{F14g}"
+    solution: "CTF{F14g}",
+    previousChallenge: null
 };
 
 afterEach(() => {

@@ -108,10 +108,8 @@ function activeRequests(state: string[] = [], action: Action<string>): string[] 
 function modal(state: ModalKey | null = null, action: Action<ModalKey | undefined>): ModalKey | null {
     switch (action.type) {
         case ActionId.OPEN_MODAL:
-            console.log("OPEN", state, action.value);
             return action.value || null;
         case ActionId.CLOSE_MODAL:
-            console.log("CLOSE", state, action.value);
             return null;
         default:
             return state;

@@ -7,6 +7,7 @@ import { store, openModalKey, closeModal } from "@cectf/state";
 
 interface AdminChallengeTileProps {
   challenge: AdminChallenge;
+  existingChallenges: AdminChallenge[];
 }
 interface AdminChallengeTileState {
   files: FileDescriptor[];
@@ -72,14 +73,16 @@ export default class AdminChallengeTile extends React.Component<
   };
   render() {
     return [
-      <div className="challenge-tile">
+      <div className="challenge-tile" key="challenge-tile">
         <div className="challenge-tile__title">
           {this.props.challenge.title}
         </div>
         <div className="challenge-tile__category">
           {this.props.challenge.category}
         </div>
-        <div>Hint: {this.props.challenge.hint}</div>
+        <div className="challenge-tile__author">
+          {this.props.challenge.author}
+        </div>
         <div>Solution: {this.props.challenge.solution}</div>
         <button onClick={this.editChallenge}> Edit Challenge</button>
         <div>
@@ -104,8 +107,10 @@ export default class AdminChallengeTile extends React.Component<
         <button onClick={this.deleteChallenge}>Delete Challenge</button>
       </div>,
       <CreateChallengeModal
+        key="modal"
         onSubmit={this.updateChallenge}
         challenge={this.props.challenge}
+        existingChallenges={this.props.existingChallenges.filter(existingChallenge => existingChallenge.id !== this.props.challenge.id)}
       />
     ];
   }

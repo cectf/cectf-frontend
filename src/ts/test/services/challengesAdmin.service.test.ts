@@ -8,17 +8,19 @@ var challenge: AdminChallenge = {
   id: 1,
   title: "First",
   category: "crypto",
+  author: "ad4m",
   body: "Do it",
-  hint: "hint",
-  solution: "CTF{flag}"
+  solution: "CTF{flag}",
+  previousChallenge: null
 };
 
 var newChallenge: NewAdminChallenge = {
   title: "First",
   category: "crypto",
+  author: "ad4m",
   body: "Do it",
-  hint: "hint",
-  solution: "CTF{flag}"
+  solution: "CTF{flag}",
+  previousChallenge: null
 };
 
 it("updateChallenges", async () => {

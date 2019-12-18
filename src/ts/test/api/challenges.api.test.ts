@@ -9,10 +9,8 @@ var challenge: Challenge = {
   id: 1,
   title: "First",
   category: "crypto",
+  author: "ad4m",
   body: "Do it",
-  hint: "hint",
-  solution: "CTF{flag}",
-  hinted: false,
   solved: true
 };
 

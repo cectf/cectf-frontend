@@ -1,11 +1,11 @@
+import { Identifier } from "@babel/types";
+
 export interface Challenge {
   id: number;
   title: string;
   category: string;
+  author: string;
   body: string;
-  hint: string;
-  solution: string;
-  hinted: boolean;
   solved: boolean;
 }
 
@@ -13,17 +13,19 @@ export interface AdminChallenge {
   id: number;
   title: string;
   category: string;
+  author: string;
   body: string;
-  hint: string;
   solution: string;
+  previousChallenge: number | null;
 }
 
 export interface NewAdminChallenge {
   title: string;
   category: string;
+  author: string;
   body: string;
-  hint: string;
   solution: string;
+  previousChallenge: number | null;
 }
 
 export interface FileDescriptor {

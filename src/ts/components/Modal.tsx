@@ -39,13 +39,10 @@ class ModalComponent extends React.Component<ModalProps, ModalState> {
 const mapStateToProps = (state: State, ownProps: { id: ModalID, index: number | string | undefined }): { isOpen: boolean } => {
   if (state.modal !== null) {
     if (ownProps.index === undefined) {
-      console.log("nondex ", state.modal.id, ownProps.id, ownProps);
       return { isOpen: state.modal.id === ownProps.id };
     }
-    console.log("dexd ", state.modal.id, ownProps.id, state.modal.index, ownProps.index);
     return { isOpen: state.modal.id === ownProps.id && state.modal.index === ownProps.index };
   }
-  console.log("nopne", ownProps);
   return { isOpen: false };
 }
 

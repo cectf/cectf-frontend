@@ -7,20 +7,16 @@ var challenge1: Challenge = {
     id: 1,
     title: "First",
     category: "crypto",
+    author: "ad4m",
     body: "Do it",
-    hint: "hint",
-    solution: "CTF{flag}",
-    hinted: false,
     solved: true
 };
 var challenge2: Challenge = {
     id: 2,
     title: "Second",
     category: "reversing",
+    author: "ad4m",
     body: "Do it harder better faster",
-    hint: "hinty",
-    solution: "CTF{F14g}",
-    hinted: true,
     solved: false
 };
 

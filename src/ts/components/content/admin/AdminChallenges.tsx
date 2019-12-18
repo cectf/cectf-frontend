@@ -9,7 +9,7 @@ import { store, closeModal, openModal } from "@cectf/state";
 interface AdminChallengesProps {
   challenges: AdminChallenge[];
 }
-interface AdminChallengesState {}
+interface AdminChallengesState { }
 
 class AdminChallengesComponent extends React.Component<
   AdminChallengesProps,
@@ -34,7 +34,7 @@ class AdminChallengesComponent extends React.Component<
   }
   render() {
     return [
-      <div id="challenges">
+      <div id="challenges" key="challenges">
         <button
           id="create-challenge-button"
           onClick={this.openCreateChallengeModal}
@@ -42,10 +42,12 @@ class AdminChallengesComponent extends React.Component<
           Create New Challenge
         </button>
         {this.props.challenges.map(challenge => (
-          <AdminChallengeTile challenge={challenge} />
+          <AdminChallengeTile key={challenge.id} challenge={challenge} existingChallenges={this.props.challenges} />
         ))}
       </div>,
-      <CreateChallengeModal onSubmit={this.createChallenge} />
+      <div key="modal">
+        <CreateChallengeModal onSubmit={this.createChallenge} existingChallenges={this.props.challenges} />
+      </div>
     ];
   }
 }

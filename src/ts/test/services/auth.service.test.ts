@@ -18,6 +18,21 @@ it("login", async () => {
   });
 });
 
+it("login failed", async () => {
+  var failureMessage = "failure";
+  var login = jest.fn(() => Promise.reject(failureMessage));
+  api.login = login;
+  var error = jest.fn();
+  services.popup.error = error;
+
+  expect.assertions(3);
+  return service.login("username", "password").then(() => {
+    expect(login.mock.calls.length).toEqual(1);
+    expect(error.mock.calls.length).toEqual(1);
+    expect(error.mock.calls[0][0]).toEqual(failureMessage);
+  });
+});
+
 it("logout", async () => {
   var logout = jest.fn(() => Promise.resolve());
   api.logout = logout;
@@ -45,5 +60,20 @@ it("register", async () => {
   return service.register("username@email.com", "username", "password").then(() => {
     expect(register.mock.calls.length).toEqual(1);
     expect(updateCurrentUser.mock.calls.length).toEqual(1);
+  });
+});
+
+it("register failed", async () => {
+  var failureMessage = "failure";
+  var register = jest.fn(() => Promise.reject(failureMessage));
+  api.register = register;
+  var error = jest.fn();
+  services.popup.error = error;
+
+  expect.assertions(3);
+  return service.register("username@email.com", "username", "password").then(() => {
+    expect(register.mock.calls.length).toEqual(1);
+    expect(error.mock.calls.length).toEqual(1);
+    expect(error.mock.calls[0][0]).toEqual(failureMessage);
   });
 });

@@ -66,13 +66,6 @@ class ChallengeTileComponent extends React.Component<
       ? styles.challengeTileSolved
       : styles.challengeTileUnsolved;
 
-    var solution = (this.props.challenge.solved)
-      ? <div data-id="solution"
-        className={styles.challengeTileFlag}>
-        Flag: {this.props.challenge.solution}
-      </div>
-      : undefined;
-
     return [
       <div key="tile"
         data-id={String(this.props.challenge.id)}
@@ -86,7 +79,6 @@ class ChallengeTileComponent extends React.Component<
           className={styles.challengeTileCategory}>
           {this.props.challenge.category}
         </div>
-        {solution}
       </div>,
       <Modal key="modal"
         id={ModalID.CHALLENGE}
@@ -94,6 +86,7 @@ class ChallengeTileComponent extends React.Component<
         className={modalStyles.challengeModal}>
         <div className={modalStyles.challengeModalContent}>
           <div>{this.props.challenge.body}</div>
+          <div>Brought to you by {this.props.challenge.author}</div>
           <div>
             <ul>
               {this.state.files.map(file => (

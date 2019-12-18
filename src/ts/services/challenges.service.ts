@@ -16,6 +16,7 @@ const submitFlag = async function (
   return api.challenges.submitFlag(challengeId, flag).then(submission => {
     if (submission.status == SubmissionStatus.CORRECT && submission.challenge) {
       store.dispatch(ctfUpdateChallenge(submission.challenge));
+      updateChallenges();
     }
     return submission.status;
   });
