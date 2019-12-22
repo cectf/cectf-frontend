@@ -36,7 +36,7 @@ class AppContentComponent extends React.Component<
   }
 }
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: State): AppContentProps => {
   return { navPage: state.navPage };
 }
 

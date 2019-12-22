@@ -1,4 +1,4 @@
-import { Challenge, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey } from "@cectf/types";
+import { Challenge, Config, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey } from "@cectf/types";
 
 /*
  * action types
@@ -10,6 +10,7 @@ export interface Action<T> {
 }
 
 export const enum ActionId {
+    UPDATE_CONFIG,
     RESET,
     SET_CSRF,
     SET_NAV_PAGE,
@@ -32,6 +33,10 @@ export const enum ActionId {
 /*
  * action creators
  */
+
+export function updateConfig(config: Config): Action<Config> {
+    return {type: ActionId.UPDATE_CONFIG, value: config}
+}
 
 export function reset(): Action<null> {
     return { type: ActionId.RESET, value: null };

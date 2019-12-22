@@ -32,15 +32,18 @@ it("submitFlag correct", () => {
     Promise.resolve({ status: SubmissionStatus.CORRECT, challenge: challenge })
   );
   api.submitFlag = submitFlag;
+  var getChallenges = jest.fn(() => Promise.resolve([challenge]));
+  api.getChallenges = getChallenges;
   var dispatch = jest.fn();
   store.dispatch = dispatch;
 
-  expect.assertions(4);
+  expect.assertions(5);
   return service.submitFlag(1, "CTF{flag}").then(submissionStatus => {
     expect(submissionStatus).toEqual(SubmissionStatus.CORRECT);
     expect(submitFlag.mock.calls.length).toEqual(1);
+    expect(getChallenges.mock.calls.length).toEqual(1);
     expect(dispatch.mock.calls.length).toEqual(1);
-    expect(dispatch.mock.calls[0]).toEqual([actions.ctfUpdateChallenge(challenge)]);
+    expect(dispatch.mock.calls[0]).toEqual([actions.ctfSetChallenges([challenge])]);
   });
 });
 

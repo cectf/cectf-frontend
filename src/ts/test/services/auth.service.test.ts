@@ -36,17 +36,28 @@ it("login failed", async () => {
 it("logout", async () => {
   var logout = jest.fn(() => Promise.resolve());
   api.logout = logout;
-  var dispatch = jest.fn();
-  store.dispatch = dispatch;
-  var refreshCsrf = jest.fn();
-  services.csrf.refreshCsrf = refreshCsrf;
+  var resetApp = jest.fn(() => Promise.resolve());
+  services.reset.resetApp = resetApp;
 
-  expect.assertions(4);
+  expect.assertions(2);
   return service.logout().then(() => {
     expect(logout.mock.calls.length).toEqual(1);
-    expect(dispatch.mock.calls.length).toEqual(1);
-    expect(dispatch.mock.calls[0][0]).toEqual(actions.reset());
-    expect(refreshCsrf.mock.calls.length).toEqual(1);
+    expect(resetApp.mock.calls.length).toEqual(1);
+  });
+});
+
+it("logout failed", async () => {
+  var failureMessage = "failure";
+  var logout = jest.fn(() => Promise.reject(failureMessage));
+  api.logout = logout;
+  var error = jest.fn();
+  services.popup.error = error;
+
+  expect.assertions(3);
+  return service.logout().then(() => {
+    expect(logout.mock.calls.length).toEqual(1);
+    expect(error.mock.calls.length).toEqual(1);
+    expect(error.mock.calls[0][0]).toEqual(failureMessage);
   });
 });
 

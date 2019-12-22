@@ -1,24 +1,34 @@
-
+import * as log from 'loglevel';
 import { store, addPopup, removePopup } from "@cectf/state";
 import { Popup, PopupLevel } from "@cectf/types";
 
-const pop = function (popup: Popup) {
-    popup.date = new Date();
-    store.dispatch(addPopup(popup));
-    setTimeout(() => {
-        store.dispatch(removePopup(popup));
-    }, 3000);
+var timeout: number = 5000;
+
+const setPopupTimeout = (newTimeout: number) => {
+    timeout = newTimeout;
 }
 
-const info = function (error: string) {
+const pop = function (popup: Popup) {
+    store.dispatch(addPopup(popup));
+    return new Promise(resolve => {
+        setTimeout(() => {
+            store.dispatch(removePopup(popup));
+            resolve();
+        }, timeout)
+    });
+}
+
+const info = function (info: string) {
+    log.debug("Popping info \"%s\"", info);
     return pop({
         date: new Date(),
         level: PopupLevel.INFO,
-        text: error
+        text: info
     });
 }
 
 const error = function (error: string) {
+    log.debug("Popping error \"%s\"", error);
     return pop({
         date: new Date(),
         level: PopupLevel.ERROR,
@@ -26,4 +36,4 @@ const error = function (error: string) {
     });
 }
 
-export default { info, error };
+export default { info, error, setPopupTimeout };

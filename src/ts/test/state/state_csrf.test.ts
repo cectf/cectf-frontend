@@ -10,5 +10,5 @@ afterEach(() => {
 it("set CSRF", () => {
     expect(store.getState().csrf).toEqual('');
     store.dispatch(actions.setCsrf('new_csrf_token'));
-    expect(store.getState().csrf).toEqual('new_csrf_token')
+    expect(store.getState().csrf).toEqual('new_csrf_token');
 });

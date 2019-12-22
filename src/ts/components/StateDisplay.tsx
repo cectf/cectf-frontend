@@ -3,7 +3,7 @@ import * as React from "react";
 import { State } from "@cectf/types";
 
 interface StateDisplayProps {
-  currentState: State
+  currentState: State;
 }
 interface StateDisplayState { }
 
@@ -15,15 +15,18 @@ class StateDisplayComponent extends React.Component<
     super(props);
   }
   render() {
-    return (
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div>Current state: {JSON.stringify(this.props.currentState)}</div>
-      </div>
-    );
+    if (this.props.currentState.config.production) {
+      return null;
+    } else {
+      return (
+        <div>
+          <hr />
+          <div>Current Redux State:
+            <pre>{JSON.stringify(this.props.currentState, null, 2)}</pre>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

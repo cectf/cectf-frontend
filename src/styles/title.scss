@@ -1,6 +1,18 @@
+@use 'colors';
 
 .title {
   font-family: 'Bungee Inline', 'Courier New', Courier, monospace;
   font-size: 66px;
   text-align: center;
+}
+
+.title-staging {
+  font-family: 'Bungee Inline', 'Courier New', Courier, monospace;
+  font-size: 66px;
+  text-align: center;
+  color: colors.$staging-title;
+}
+
+.title-staging--tilt {
+  transform: skewY(-5deg);
 }

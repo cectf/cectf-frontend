@@ -12,7 +12,9 @@ interface PopupsState { }
 class PopupsComponent extends React.Component<PopupsProps, PopupsState> {
     render() {
         return <div id="popups">
-            {this.props.popups.map((popup) => { return <Popup popup={popup} /> })}
+            {this.props.popups.map((popup) => {
+                return <Popup key={popup.date.toString()} popup={popup} />
+            })}
         </div>;
     }
 }

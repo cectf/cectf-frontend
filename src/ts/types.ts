@@ -1,5 +1,13 @@
 import { Identifier } from "@babel/types";
 
+export interface Config {
+  production: boolean;
+}
+
+export var DEFAULT_CONFIG : Config = {
+  production: true
+}
+
 export interface Challenge {
   id: number;
   title: string;
@@ -86,6 +94,7 @@ export interface ModalKey {
 }
 
 export interface State {
+  config: Config;
   csrf: string;
   challenges: Challenge[];
   adminChallenges: AdminChallenge[];

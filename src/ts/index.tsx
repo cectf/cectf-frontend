@@ -10,7 +10,7 @@ import "@styles/appRoot.scss";
 
 ReactModal.setAppElement("#root");
 
-service.csrf.refreshCsrf().then(() => {
+service.reset.resetApp().then(() => {
   service.user.updateCurrentUser();
 });
 

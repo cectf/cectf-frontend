@@ -16,5 +16,5 @@ it("refreshCsrf", async () => {
     expect(getCsrf.mock.calls.length).toEqual(1);
     expect(dispatch.mock.calls.length).toEqual(1);
     expect(dispatch.mock.calls[0]).toEqual([actions.setCsrf(csrfToken)]);
-  });
+  }).then(() => {});
 });
