@@ -25,10 +25,12 @@ const get = async function (url: string): Promise<Response> {
       Accept: "application/json",
       "X-CSRFToken": store.getState().csrf
     }
-  }).finally(() => {
-    store.dispatch(finishRequest(url));
   }).then(response => {
+    store.dispatch(finishRequest(url));
     return handleError(response);
+  }).catch(error => {
+    store.dispatch(finishRequest(url));
+    throw error;
   });
 };
 
@@ -45,10 +47,12 @@ const post = async function (url: string, body: any): Promise<Response> {
       "X-CSRFToken": store.getState().csrf
     },
     body: JSON.stringify(body)
-  }).finally(() => {
-    store.dispatch(finishRequest(url));
   }).then(response => {
+    store.dispatch(finishRequest(url));
     return handleError(response);
+  }).catch(error => {
+    store.dispatch(finishRequest(url));
+    throw error;
   });
 };
 
@@ -65,10 +69,12 @@ const upload = async function (url: string, file: File): Promise<Response> {
       "X-CSRFToken": store.getState().csrf
     },
     body: formData
-  }).finally(() => {
-    store.dispatch(finishRequest(url));
   }).then(response => {
+    store.dispatch(finishRequest(url));
     return handleError(response);
+  }).catch(error => {
+    store.dispatch(finishRequest(url));
+    throw error;
   });
 };
 
@@ -84,10 +90,12 @@ const deleteHttp = async function (url: string): Promise<Response> {
       "Content-Type": "application/json",
       "X-CSRFToken": store.getState().csrf
     }
-  }).finally(() => {
-    store.dispatch(finishRequest(url));
   }).then(response => {
+    store.dispatch(finishRequest(url));
     return handleError(response);
+  }).catch(error => {
+    store.dispatch(finishRequest(url));
+    throw error;
   });
 };
 
