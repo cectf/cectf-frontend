@@ -13,7 +13,7 @@ class PopupsComponent extends React.Component<PopupsProps, PopupsState> {
     render() {
         return <div id="popups">
             {this.props.popups.map((popup) => {
-                return <Popup key={popup.date.toString()} popup={popup} />
+                return <Popup key={popup.key} popup={popup} />
             })}
         </div>;
     }

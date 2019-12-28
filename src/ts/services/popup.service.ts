@@ -2,6 +2,7 @@ import * as log from 'loglevel';
 import { store, addPopup, removePopup } from "@cectf/state";
 import { Popup, PopupLevel } from "@cectf/types";
 
+var popupKey = 0;
 var timeout: number = 5000;
 
 const setPopupTimeout = (newTimeout: number) => {
@@ -21,6 +22,7 @@ const pop = function (popup: Popup) {
 const info = function (info: string) {
     log.debug("Popping info \"%s\"", info);
     return pop({
+        key: popupKey++,
         date: new Date(),
         level: PopupLevel.INFO,
         text: info
@@ -30,6 +32,7 @@ const info = function (info: string) {
 const error = function (error: string) {
     log.debug("Popping error \"%s\"", error);
     return pop({
+        key: popupKey++,
         date: new Date(),
         level: PopupLevel.ERROR,
         text: error

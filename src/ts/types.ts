@@ -77,6 +77,7 @@ export enum PopupLevel {
 }
 
 export interface Popup {
+  key: number;
   date: Date;
   level: PopupLevel;
   text: string;

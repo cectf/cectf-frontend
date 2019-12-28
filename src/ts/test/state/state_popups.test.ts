@@ -4,12 +4,14 @@ import { store } from "@cectf/state";
 import { Popup, PopupLevel } from "@cectf/types";
 
 var popup1: Popup = {
+    key: 0,
     date: new Date(),
     level: PopupLevel.INFO,
     text: "Informative"
 }
 
 var popup2: Popup = {
+    key: 1,
     date: new Date(),
     level: PopupLevel.ERROR,
     text: "Erroneous"

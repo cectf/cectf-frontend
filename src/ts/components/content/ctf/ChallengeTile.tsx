@@ -69,6 +69,7 @@ class ChallengeTileComponent extends React.Component<
     return [
       <div key="tile"
         data-id={String(this.props.challenge.id)}
+        data-solved={this.props.challenge.solved}
         className={className}
         onClick={this.onClick}>
         <div data-id="title"

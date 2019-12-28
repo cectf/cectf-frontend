@@ -19,7 +19,7 @@ export default class Popup extends React.Component<PopupProps, PopupState> {
             default:
                 className = styles.error;
         }
-        return <div className={className}>
+        return <div className={className} data-level={this.props.popup.level}>
             {this.props.popup.text}
         </div >;
     }
