@@ -4,7 +4,7 @@ import { store } from "@cectf/state";
 import * as actions from "@cectf/state/actions";
 import { User } from "@cectf/types";
 
-var user: User = {
+const user: User = {
   id: 1,
   username: "admin",
   email: "admin@email.com",

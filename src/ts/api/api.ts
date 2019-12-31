@@ -26,8 +26,11 @@ const get = async function (url: string): Promise<Response> {
       "X-CSRFToken": store.getState().csrf
     }
   }).then(response => {
-    store.dispatch(finishRequest(url));
-    return handleError(response);
+    return handleError(response)
+    .then(response => {
+      store.dispatch(finishRequest(url));
+      return response;
+    });
   }).catch(error => {
     store.dispatch(finishRequest(url));
     throw error;
@@ -48,8 +51,11 @@ const post = async function (url: string, body: any): Promise<Response> {
     },
     body: JSON.stringify(body)
   }).then(response => {
-    store.dispatch(finishRequest(url));
-    return handleError(response);
+    return handleError(response)
+    .then(response => {
+      store.dispatch(finishRequest(url));
+      return response;
+    });
   }).catch(error => {
     store.dispatch(finishRequest(url));
     throw error;
@@ -70,8 +76,11 @@ const upload = async function (url: string, file: File): Promise<Response> {
     },
     body: formData
   }).then(response => {
-    store.dispatch(finishRequest(url));
-    return handleError(response);
+    return handleError(response)
+    .then(response => {
+      store.dispatch(finishRequest(url));
+      return response;
+    });
   }).catch(error => {
     store.dispatch(finishRequest(url));
     throw error;
@@ -91,8 +100,11 @@ const deleteHttp = async function (url: string): Promise<Response> {
       "X-CSRFToken": store.getState().csrf
     }
   }).then(response => {
-    store.dispatch(finishRequest(url));
-    return handleError(response);
+    return handleError(response)
+    .then(response => {
+      store.dispatch(finishRequest(url));
+      return response;
+    });
   }).catch(error => {
     store.dispatch(finishRequest(url));
     throw error;

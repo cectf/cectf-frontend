@@ -1,6 +1,6 @@
 import api from "@cectf/api/api";
 
-const getCsrf = async function () {
+const getCsrf = async function (): Promise<string> {
   return api.get("/api/auth/csrf")
     .then(response => response.json())
     .then(json => json.csrf_token);

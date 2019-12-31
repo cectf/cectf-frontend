@@ -1,11 +1,13 @@
-import api from "@cectf/api/api";
 import challengesApi from "@cectf/api/challenges.api";
 import { Challenge, SubmissionStatus } from "@cectf/types";
-import { FetchMock } from "jest-fetch-mock";
 
-var fetch: FetchMock = require("jest-fetch-mock");
+import fetchMock = require("fetch-mock");
 
-var challenge: Challenge = {
+afterEach(() => {
+  fetchMock.reset();
+});
+
+const challenge: Challenge = {
   id: 1,
   title: "First",
   category: "crypto",
@@ -14,74 +16,75 @@ var challenge: Challenge = {
   solved: true
 };
 
-afterEach(() => {
-  fetch.mockReset();
-});
-
-it("challenges.api getChallenges found", async () => {
-  api.get = fetch.mockResponseOnce(JSON.stringify([challenge]));
+it("getChallenges found", async () => {
+  fetchMock.getOnce("/api/ctf/challenges", [challenge]);
 
   expect.assertions(3);
-  return challengesApi.getChallenges().then(body => {
-    expect(body).toEqual([challenge]);
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges");
-  });
+  return challengesApi.getChallenges()
+    .then(body => {
+      expect(body).toEqual([challenge]);
+      expect(fetchMock.calls().length).toEqual(1);
+      expect(fetchMock.calls()[0][0]).toEqual("/api/ctf/challenges");
+    });
 });
 
-it("challenges.api getChallenges not found", async () => {
-  api.get = fetch.mockResponseOnce("", { status: 404 });
+it("getChallenges not found", async () => {
+  fetchMock.getOnce("/api/ctf/challenges", 400);
 
   expect.assertions(3);
-  return challengesApi.getChallenges().then(body => {
-    expect(body).toEqual([]);
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges");
-  });
+  return challengesApi.getChallenges()
+    .then(body => {
+      expect(body).toEqual([]);
+      expect(fetchMock.calls().length).toEqual(1);
+      expect(fetchMock.calls()[0][0]).toEqual("/api/ctf/challenges");
+    });
 });
 
-it("challenges.api submitFlag correct", async () => {
-  api.post = fetch.mockResponseOnce(
-    JSON.stringify({ status: SubmissionStatus.CORRECT, challenge: challenge })
+it("submitFlag correct", async () => {
+  fetchMock.postOnce("/api/ctf/challenges/1",
+    { status: SubmissionStatus.CORRECT, challenge: challenge }
   );
 
   expect.assertions(3);
-  return challengesApi.submitFlag(1, "CTF{flag}").then(body => {
-    expect(body).toEqual({
-      status: SubmissionStatus.CORRECT,
-      challenge: challenge
+  return challengesApi.submitFlag(1, "CTF{flag}")
+    .then(body => {
+      expect(body).toEqual({
+        status: SubmissionStatus.CORRECT,
+        challenge: challenge
+      });
+      expect(fetchMock.calls().length).toEqual(1);
+      expect(fetchMock.calls()[0][0]).toEqual("/api/ctf/challenges/1");
     });
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges/1");
-  });
 });
 
-it("challenges.api submitFlag incorrect", async () => {
-  api.post = fetch.mockResponseOnce(
-    JSON.stringify({ status: SubmissionStatus.INCORRECT })
+it("submitFlag incorrect", async () => {
+  fetchMock.postOnce("/api/ctf/challenges/1",
+    { status: SubmissionStatus.INCORRECT }
   );
 
   expect.assertions(3);
-  return challengesApi.submitFlag(1, "CTF{FLAG}").then(body => {
-    expect(body).toEqual({
-      status: SubmissionStatus.INCORRECT
+  return challengesApi.submitFlag(1, "CTF{FLAG}")
+    .then(body => {
+      expect(body).toEqual({
+        status: SubmissionStatus.INCORRECT
+      });
+      expect(fetchMock.calls().length).toEqual(1);
+      expect(fetchMock.calls()[0][0]).toEqual("/api/ctf/challenges/1");
     });
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges/1");
-  });
 });
 
-it("challenges.api submitFlag already solved", async () => {
-  api.post = fetch.mockResponseOnce(
-    JSON.stringify({ status: SubmissionStatus.ALREADY_SOLVED })
+it("submitFlag already solved", async () => {
+  fetchMock.postOnce("/api/ctf/challenges/1",
+    { body: { status: SubmissionStatus.ALREADY_SOLVED } }
   );
 
   expect.assertions(3);
-  return challengesApi.submitFlag(1, "CTF{flag}").then(body => {
-    expect(body).toEqual({
-      status: SubmissionStatus.ALREADY_SOLVED
+  return challengesApi.submitFlag(1, "CTF{flag}")
+    .then(body => {
+      expect(body).toEqual({
+        status: SubmissionStatus.ALREADY_SOLVED
+      });
+      expect(fetchMock.calls().length).toEqual(1);
+      expect(fetchMock.calls()[0][0]).toEqual("/api/ctf/challenges/1");
     });
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("/api/ctf/challenges/1");
-  });
 });

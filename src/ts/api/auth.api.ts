@@ -16,12 +16,16 @@ async function login(
       if (response.ok) {
         return;
       } else {
-        return response.json().then(json => {
-          if (json.error) {
-            throw json.error;
-          }
-          throw "Login failed";
-        });
+        return response.json()
+          .catch(error => {
+            throw "error parsing response";
+          })
+          .then(json => {
+            if (json.error) {
+              throw json.error;
+            }
+            throw "weirdly formatted response";
+          });
       }
     });
 }
@@ -46,14 +50,16 @@ async function register(
       if (response.ok) {
         return;
       } else {
-        return response.json().then(json => {
-          if (json.error) {
-            throw json.error;
-          }
-          throw "Registration failed";
-        });
+        return response.json()
+          .catch(error => {
+            throw "error parsing response";
+          }).then(json => {
+            if (json.error) {
+              throw json.error;
+            }
+            throw "weirdly formatted response";
+          });
       }
-      return;
     });
 }
 

@@ -1,24 +1,28 @@
 import api from "@cectf/api/api";
 import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
-const getChallenges = async function(): Promise<AdminChallenge[]> {
-  return api.get("/api/admin/challenges").then(async response => {
-    if (response.status != 200) {
-      return [];
-    }
-    return response.json();
-  });
+const getChallenges = async function (): Promise<AdminChallenge[]> {
+  return api
+    .get("/api/admin/challenges")
+    .then(async response => {
+      if (response.status != 200) {
+        return [];
+      }
+      return response.json();
+    });
 };
 
-const createChallenge = async function(
+const createChallenge = async function (
   challenge: NewAdminChallenge
 ): Promise<AdminChallenge> {
-  return api.post("/api/admin/challenges", challenge).then(async response => {
-    return response.json();
-  });
+  return api
+    .post("/api/admin/challenges", challenge)
+    .then(async response => {
+      return response.json();
+    });
 };
 
-const updateChallenge = async function(
+const updateChallenge = async function (
   challengeId: number,
   challenge: AdminChallenge | NewAdminChallenge
 ): Promise<AdminChallenge> {
@@ -29,10 +33,12 @@ const updateChallenge = async function(
     });
 };
 
-const deleteChallenge = async function(challengeId: number): Promise<void> {
-  return api.deleteHttp("/api/admin/challenges/" + challengeId).then(() => {
-    return;
-  });
+const deleteChallenge = async function (challengeId: number): Promise<void> {
+  return api
+    .deleteHttp("/api/admin/challenges/" + challengeId)
+    .then(() => {
+      return;
+    });
 };
 
 export default {
