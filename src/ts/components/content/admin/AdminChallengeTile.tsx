@@ -2,7 +2,6 @@ import * as React from "react";
 import { AdminChallenge, NewAdminChallenge, FileDescriptor, ModalID } from "@cectf/types";
 import CreateChallengeModal from "@cectf/components/content/admin/CreateChallengeModal";
 import service from "@cectf/services";
-import api from "@cectf/api";
 import { store, openModalKey, closeModal } from "@cectf/state";
 
 interface AdminChallengeTileProps {

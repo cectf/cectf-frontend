@@ -1,7 +1,12 @@
 import api from "@cectf/api/api";
 import { FileDescriptor } from "@cectf/types";
 
-const getFiles = async function(
+/**
+ * Gets all the files for the given challenge.
+ * 
+ * @param challengeId the id of the challenge
+ */
+const getFiles = async function (
   challengeId: number
 ): Promise<FileDescriptor[]> {
   return api.get("/api/files/" + challengeId).then(async response => {
@@ -12,22 +17,34 @@ const getFiles = async function(
   });
 };
 
-const uploadFile = async function(
+/**
+ * Uploads a new file for a challenge.
+ * 
+ * @param challengeId the id of the challenge
+ * @param file the file to upload
+ */
+const uploadFile = async function (
   challengeId: number,
   file: File
 ): Promise<void> {
-  return api.upload("/api/files/" + challengeId, file).then();
+  return api
+    .upload("/api/files/" + challengeId, file)
+    .then();
 };
 
-const deleteFile = async function(
+/**
+ * Deletes a file from a challenge.
+ * 
+ * @param challengeId the id of the challenge
+ * @param fileDescriptor the descriptor (filename, url) of the file to delete
+ */
+const deleteFile = async function (
   challengeId: number,
-  file: FileDescriptor
+  fileDescriptor: FileDescriptor
 ): Promise<void> {
   return api
-    .deleteHttp("/api/files/" + challengeId + "/" + file.name)
-    .then(() => {
-      return;
-    });
+    .deleteHttp("/api/files/" + challengeId + "/" + fileDescriptor.name)
+    .then();
 };
 
 export default {

@@ -25,6 +25,7 @@ export interface AdminChallenge {
   body: string;
   solution: string;
   previousChallenge: number | null;
+  files: FileDescriptor[] | undefined;
 }
 
 export interface NewAdminChallenge {

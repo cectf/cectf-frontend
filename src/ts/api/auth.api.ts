@@ -1,39 +1,36 @@
 import api from "@cectf/api/api";
 import { store } from "@cectf/state";
-import { Popup } from "@cectf/types";
 
-async function login(
-  username: string,
-  password: string
-): Promise<void> {
+/**
+ * Performs a login. The session token will be updated by the server to reflect this.
+ * 
+ * @param username the username/email to log in with. Both are accepted by the server.
+ * @param password the password to log in with
+ */
+async function login(username: string, password: string): Promise<void> {
   return api
     .post("/api/auth/login", {
       username: username,
       password: password,
       csrf_token: store.getState().csrf
     })
-    .then(response => {
-      if (response.ok) {
-        return;
-      } else {
-        return response.json()
-          .catch(error => {
-            throw "error parsing response";
-          })
-          .then(json => {
-            if (json.error) {
-              throw json.error;
-            }
-            throw "weirdly formatted response";
-          });
-      }
-    });
+    .then();
 }
 
+/**
+ * Performs a logout. The session token will be updated by the server to reflect this.
+ */
 async function logout(): Promise<void> {
   return api.get("/api/auth/logout").then();
 }
 
+/**
+ * Registers a new user. After registration the user will be logged in just as if `login` had been called.
+ * 
+ * @param email the email of the new user
+ * @param username the username of the new user
+ * @param password the password of the new user
+ */
 async function register(
   email: string,
   username: string,
@@ -46,21 +43,7 @@ async function register(
       password: password,
       csrf_token: store.getState().csrf
     })
-    .then(response => {
-      if (response.ok) {
-        return;
-      } else {
-        return response.json()
-          .catch(error => {
-            throw "error parsing response";
-          }).then(json => {
-            if (json.error) {
-              throw json.error;
-            }
-            throw "weirdly formatted response";
-          });
-      }
-    });
+    .then();
 }
 
 export default { login, logout, register };

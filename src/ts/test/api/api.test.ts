@@ -17,6 +17,8 @@ afterEach(() => {
 
 const url = "/api";
 const json = { a: "b" };
+const notJson = 666;
+const error = "ERROR!";
 const file: File = { lastModified: 1, name: "name", type: "type", size: 0, slice: () => new Blob() };
 
 const mockResponse = (method: string, response: any) => {
@@ -99,6 +101,24 @@ it("get 400", async () => {
     .then(expectStatusToBe(400));
 });
 
+it("get 400 with JSON", async () => {
+  expect.assertions(8);
+
+  mockResponse("GET", { body: json, status: 400 });
+
+  return api.get(url)
+    .catch(expectErrorToBe("Error parsing JSON response"));
+});
+
+it("get 400 with error in JSON", async () => {
+  expect.assertions(8);
+
+  mockResponse("GET", { body: { error: error }, status: 400 });
+
+  return api.get(url)
+    .catch(expectErrorToBe(error));
+});
+
 it("get 500", async () => {
   expect.assertions(8);
 
@@ -106,6 +126,15 @@ it("get 500", async () => {
 
   return api.get(url)
     .catch(expectErrorToBe("internal server error :("));
+});
+
+it("get 504", async () => {
+  expect.assertions(8);
+
+  mockResponse("GET", { status: 504 });
+
+  return api.get(url)
+    .catch(expectErrorToBe("Server did not return a valid response"));
 });
 
 it("post 204 no content", async () => {
@@ -127,15 +156,6 @@ it("post 200 JSON response", async () => {
     .then(expectJsonToBe(json));
 });
 
-it("post 200 with no JSON", async () => {
-  expect.assertions(8);
-
-  mockResponse("POST", 200);
-
-  return api.post(url, json)
-    .catch(expectErrorToBe("Server did not return a valid response"));
-});
-
 it("post 400", async () => {
   expect.assertions(8);
 
@@ -143,15 +163,6 @@ it("post 400", async () => {
 
   return api.post(url, json)
     .then(expectStatusToBe(400));
-});
-
-it("post 500", async () => {
-  expect.assertions(8);
-
-  mockResponse("POST", 500);
-
-  return api.post(url, json)
-    .catch(expectErrorToBe("internal server error :("));
 });
 
 it("delete 204 no content", async () => {
@@ -163,44 +174,6 @@ it("delete 204 no content", async () => {
     .then(expectStatusToBe(204));
 });
 
-it("delete 200 JSON response", async () => {
-  expect.assertions(9);
-
-  mockResponse("DELETE", json);
-
-  return api.deleteHttp(url)
-    .then(expectStatusToBe(200))
-    .then(expectJsonToBe(json));
-});
-
-it("delete 200 with no JSON", async () => {
-  expect.assertions(8);
-
-  mockResponse("DELETE", 200);
-
-  return api.deleteHttp(url)
-    .catch(expectErrorToBe("Server did not return a valid response"));
-});
-
-it("delete 400", async () => {
-  expect.assertions(8);
-
-  mockResponse("DELETE", 400);
-
-  return api.deleteHttp(url)
-    .then(expectStatusToBe(400));
-});
-
-it("delete 500", async () => {
-  expect.assertions(8);
-
-  mockResponse("DELETE", 500);
-
-  return api.deleteHttp(url)
-    .catch(expectErrorToBe("internal server error :("));
-});
-
-
 it("upload 204 no content", async () => {
   expect.assertions(8);
 
@@ -209,41 +182,3 @@ it("upload 204 no content", async () => {
   return api.upload(url, file)
     .then(expectStatusToBe(204));
 });
-
-it("upload 200 JSON response", async () => {
-  expect.assertions(9);
-
-  mockResponse("POST", json);
-
-  return api.upload(url, file)
-    .then(expectStatusToBe(200))
-    .then(expectJsonToBe(json));
-});
-
-it("upload 200 with no JSON", async () => {
-  expect.assertions(8);
-
-  mockResponse("POST", 200);
-
-  return api.upload(url, file)
-    .catch(expectErrorToBe("Server did not return a valid response"));
-});
-
-it("upload 400", async () => {
-  expect.assertions(8);
-
-  mockResponse("POST", 400);
-
-  return api.upload(url, file)
-    .then(expectStatusToBe(400));
-});
-
-it("upload 500", async () => {
-  expect.assertions(8);
-
-  mockResponse("POST", 500);
-
-  return api.upload(url, file)
-    .catch(expectErrorToBe("internal server error :("));
-});
-

@@ -38,20 +38,6 @@ it("login failed with error", async () => {
     });
 });
 
-it("login failed with malformed JSON", async () => {
-  fetchMock.postOnce("/api/auth/login",
-    { body: "not json", status: 400 }
-  );
-
-  expect.assertions(3);
-  return authApi.login(username, password)
-    .catch(actualError => {
-      expect(fetchMock.calls().length).toEqual(1);
-      expect(fetchMock.calls()[0][0]).toEqual("/api/auth/login");
-      expect(actualError).toEqual("error parsing response");
-    });
-});
-
 it("login failed with incorrect JSON", async () => {
   fetchMock.postOnce("/api/auth/login",
     { body: {}, status: 400 }
@@ -62,7 +48,7 @@ it("login failed with incorrect JSON", async () => {
     .catch(actualError => {
       expect(fetchMock.calls().length).toEqual(1);
       expect(fetchMock.calls()[0][0]).toEqual("/api/auth/login");
-      expect(actualError).toEqual("weirdly formatted response");
+      expect(actualError).toEqual("Error parsing JSON response");
     });
 });
 
@@ -104,20 +90,6 @@ it("register failed with error", async () => {
     });
 });
 
-it("register failed with malformed JSON", async () => {
-  fetchMock.postOnce("/api/auth/register",
-    { body: "not json", status: 400 }
-  );
-
-  expect.assertions(3);
-  return authApi.register(email, username, password)
-    .catch(actualError => {
-      expect(fetchMock.calls().length).toEqual(1);
-      expect(fetchMock.calls()[0][0]).toEqual("/api/auth/register");
-      expect(actualError).toEqual("error parsing response");
-    });
-});
-
 it("register failed with incorrect JSON", async () => {
   fetchMock.postOnce("/api/auth/register",
     { body: {}, status: 400 }
@@ -128,6 +100,6 @@ it("register failed with incorrect JSON", async () => {
     .catch(actualError => {
       expect(fetchMock.calls().length).toEqual(1);
       expect(fetchMock.calls()[0][0]).toEqual("/api/auth/register");
-      expect(actualError).toEqual("weirdly formatted response");
+      expect(actualError).toEqual("Error parsing JSON response");
     });
 });
