@@ -1,4 +1,4 @@
-import { Challenge, Config, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey } from "@cectf/types";
+import { Challenge, Config, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey, FileDescriptor } from "@cectf/types";
 
 /*
  * action types
@@ -20,6 +20,7 @@ export const enum ActionId {
     ADMIN_ADD_CHALLENGE,
     ADMIN_UPDATE_CHALLENGE,
     ADMIN_DELETE_CHALLENGE,
+    SET_CHALLENGE_FILES,
     SET_USER,
     ADD_POPUP,
     REMOVE_POPUP,
@@ -35,7 +36,7 @@ export const enum ActionId {
  */
 
 export function updateConfig(config: Config): Action<Config> {
-    return {type: ActionId.UPDATE_CONFIG, value: config}
+    return { type: ActionId.UPDATE_CONFIG, value: config }
 }
 
 export function reset(): Action<null> {
@@ -72,6 +73,13 @@ export function adminUpdateChallenge(challenge: AdminChallenge): Action<AdminCha
 
 export function adminDeleteChallenge(challenge: AdminChallenge): Action<AdminChallenge> {
     return { type: ActionId.ADMIN_DELETE_CHALLENGE, value: challenge }
+}
+
+export function setChallengeFiles(challengeId: number, files: FileDescriptor[]): Action<{ id: number, files: FileDescriptor[] }> {
+    return {
+        type: ActionId.SET_CHALLENGE_FILES,
+        value: { id: challengeId, files: files }
+    };
 }
 
 export function setUser(user: User | null): Action<User | null> {

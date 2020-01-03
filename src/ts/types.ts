@@ -25,7 +25,6 @@ export interface AdminChallenge {
   body: string;
   solution: string;
   previousChallenge: number | null;
-  files: FileDescriptor[] | undefined;
 }
 
 export interface NewAdminChallenge {
@@ -100,6 +99,7 @@ export interface State {
   csrf: string;
   challenges: Challenge[];
   adminChallenges: AdminChallenge[];
+  files: Map<number, FileDescriptor[]>;
   user: User | null;
   navPage: NavPage;
   popups: Popup[];

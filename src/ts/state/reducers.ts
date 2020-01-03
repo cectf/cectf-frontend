@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { Action, ActionId } from '@cectf/state/actions';
-import { State, Config, Challenge, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey, DEFAULT_CONFIG } from "@cectf/types";
+import { State, Config, Challenge, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey, DEFAULT_CONFIG, FileDescriptor } from "@cectf/types";
 
 function activeRequests(state: string[] = [], action: Action<string>): string[] {
     switch (action.type) {
@@ -17,7 +17,7 @@ function activeRequests(state: string[] = [], action: Action<string>): string[] 
     }
 }
 
-function adminChallenges(state: AdminChallenge[] = [], action: Action<AdminChallenge & AdminChallenge[]>): AdminChallenge[] {
+function adminChallenges(state: AdminChallenge[] = [], action: Action<AdminChallenge & AdminChallenge[] & number>): AdminChallenge[] {
     switch (action.type) {
         case ActionId.ADMIN_SET_CHALLENGES:
             return action.value;
@@ -32,7 +32,7 @@ function adminChallenges(state: AdminChallenge[] = [], action: Action<AdminChall
                     return Object.assign({}, challenge, action.value);
                 }
                 return challenge;
-            })
+            });
         case ActionId.ADMIN_DELETE_CHALLENGE:
             return state.reduce((sum: AdminChallenge[], challenge) => {
                 if (action.value !== challenge) {
@@ -74,6 +74,16 @@ function csrf(state = "", action: Action<string>): string {
     switch (action.type) {
         case ActionId.SET_CSRF:
             return action.value;
+        default:
+            return state;
+    }
+}
+
+function files(state = new Map<number, FileDescriptor[]>(), action: Action<{ id: number, files: FileDescriptor[] }>) {
+    switch (action.type) {
+        case ActionId.SET_CHALLENGE_FILES:
+            state = Object.assign({}, state);
+            return state.set(action.value.id, action.value.files);
         default:
             return state;
     }
@@ -131,6 +141,7 @@ const combinedReducers = combineReducers({
     config,
     csrf,
     challenges,
+    files,
     modal,
     navPage,
     popups,

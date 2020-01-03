@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 import services from "@cectf/services";
 import AdminChallengeTile from "@cectf/components/content/admin/AdminChallengeTile";
 import CreateChallengeModal from "@cectf/components/content/admin/CreateChallengeModal";
-import { State, AdminChallenge, NewAdminChallenge, ModalID } from "@cectf/types";
+import { State, AdminChallenge, NewAdminChallenge, ModalID, FileDescriptor } from "@cectf/types";
 import { store, closeModal, openModal } from "@cectf/state";
 
 interface AdminChallengesProps {
   challenges: AdminChallenge[];
+  filesMap: Map<number, FileDescriptor[]>;
 }
 interface AdminChallengesState { }
 
@@ -42,7 +43,11 @@ class AdminChallengesComponent extends React.Component<
           Create New Challenge
         </button>
         {this.props.challenges.map(challenge => (
-          <AdminChallengeTile key={challenge.id} challenge={challenge} existingChallenges={this.props.challenges} />
+          <AdminChallengeTile
+            key={challenge.id}
+            challenge={challenge}
+            files={this.props.filesMap.get(challenge.id)}
+            existingChallenges={this.props.challenges} />
         ))}
       </div>,
       <div key="modal">
@@ -52,9 +57,10 @@ class AdminChallengesComponent extends React.Component<
   }
 }
 
-const mapStateToProps = (state: State, ownProps: any): { challenges: AdminChallenge[] } => {
+const mapStateToProps = (state: State, ownProps: any): AdminChallengesProps => {
   return {
-    challenges: state.adminChallenges
+    challenges: state.adminChallenges,
+    filesMap: state.files
   };
 }
 
