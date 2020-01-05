@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { Action, ActionId } from '@cectf/state/actions';
-import { State, Config, Challenge, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey, DEFAULT_CONFIG, FileDescriptor } from "@cectf/types";
+import { State, Config, Challenge, AdminChallenge, User, NavPage, Popup, ModalKey, DEFAULT_CONFIG, FileDescriptor, ChallengeData, PopupLocation } from "@cectf/types";
 
 function activeRequests(state: string[] = [], action: Action<string>): string[] {
     switch (action.type) {
@@ -45,13 +45,13 @@ function adminChallenges(state: AdminChallenge[] = [], action: Action<AdminChall
     }
 }
 
-function challenges(state: Challenge[] = [], action: Action<Challenge & Challenge[]>): Challenge[] {
+function challenges(state: ChallengeData[] = [], action: Action<ChallengeData & Challenge[]>): ChallengeData[] {
     switch (action.type) {
         case ActionId.CTF_SET_CHALLENGES:
-            return action.value;
+            return action.value.map(challenge => { return { data: challenge, open: false } });
         case ActionId.CTF_UPDATE_CHALLENGE:
             return state.map(challenge => {
-                if (challenge.id === action.value.id) {
+                if (challenge.data.id === action.value.data.id) {
                     return Object.assign({}, challenge, action.value);
                 }
                 return challenge;
@@ -82,7 +82,7 @@ function csrf(state = "", action: Action<string>): string {
 function files(state = new Map<number, FileDescriptor[]>(), action: Action<{ id: number, files: FileDescriptor[] }>) {
     switch (action.type) {
         case ActionId.SET_CHALLENGE_FILES:
-            state = Object.assign({}, state);
+            state = new Map(state);
             return state.set(action.value.id, action.value.files);
         default:
             return state;
@@ -109,18 +109,21 @@ function navPage(state: NavPage = NavPage.ABOUT, action: Action<NavPage>): NavPa
     }
 }
 
-function popups(state: Popup[] = [], action: Action<Popup>): Popup[] {
+function popups(state: Map<PopupLocation, Popup> = new Map(), action: Action<Popup & PopupLocation>): Map<PopupLocation, Popup> {
     switch (action.type) {
         case ActionId.ADD_POPUP:
-            return state.concat(action.value);
+            state = new Map(state);
+            state.set(action.value.location, action.value);
+            return state;
         case ActionId.REMOVE_POPUP:
-            var index = state.indexOf(action.value);
-            if (index > -1) {
-                return state.slice(0, index).concat(state.slice(index + 1, state.length));
+            const popup = state.get(action.value);
+            if (popup) {
+                state = new Map(state);
+                state.delete(action.value);
             }
             return state;
         case ActionId.CLEAR_POPUPS:
-            return [];
+            return new Map();
         default:
             return state;
     }

@@ -34,14 +34,14 @@ class UserBar extends React.Component<
           data-username={this.props.user.username}>
           <div id="user-bar__welcome"
             className={styles.userBarWelcome}>
-            Welcome, user {this.props.user.username}!
+            Welcome, {this.props.user.username}!
           </div>
           <div id="user-bar__logout"
             className={styles.userBarLogout}>
-            <a id="logout"
-              href="/" onClick={this.onLogout}>
+            <button id="logout"
+              onClick={this.onLogout}>
               Log out
-            </a>
+            </button>
           </div>
         </div>
       );

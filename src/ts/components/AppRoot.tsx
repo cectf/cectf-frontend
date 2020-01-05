@@ -2,11 +2,12 @@ import * as React from "react";
 import Title from "@cectf/components/Title"
 import AppContent from "@cectf/components/content/AppContent";
 import UserBar from "@cectf/components/userBar/UserBar";
-import Popups from "@cectf/components/popups/Popups";
+import Popup from "@cectf/components/popups/Popup";
 import NavBar from "@cectf/components/navBar/NavBar";
 import StateDisplay from "@cectf/components/StateDisplay";
 import Footer from "@cectf/components/Footer";
 import * as styles from "@styles/appRoot.scss";
+import { PopupLocation } from "@cectf/types";
 
 export default class AppRoot extends React.Component<{}, {}> {
   render() {
@@ -15,7 +16,7 @@ export default class AppRoot extends React.Component<{}, {}> {
         <div id="app" className={styles.appRoot}>
           <Title />
           <UserBar />
-          <Popups />
+          <Popup location={PopupLocation.TOP_BAR} />
           <NavBar />
           <AppContent />
           <Footer />
@@ -23,6 +24,6 @@ export default class AppRoot extends React.Component<{}, {}> {
         </div>
       </div>
     );
-    
+
   }
 }

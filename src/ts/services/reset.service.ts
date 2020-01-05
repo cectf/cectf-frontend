@@ -4,6 +4,7 @@ import configService from "@cectf/services/config.service";
 import csrfService from "@cectf/services/csrf.service";
 import popupService from "@cectf/services/popup.service";
 import { store, reset } from "@cectf/state"
+import { PopupLocation } from '@cectf/types';
 
 /**
  * Resets the redux store and fetches the configuration and the CSRF token
@@ -16,7 +17,7 @@ const resetApp = async function (): Promise<void> {
       return csrfService.refreshCsrf()
     })
     .catch((error) => {
-      popupService.error("Something went wrong while resetting the application: " + error)
+      popupService.error(PopupLocation.TOP_BAR, "Something went wrong while resetting the application: " + error)
     });
 }
 
@@ -30,11 +31,11 @@ const resetDatabase = async function (): Promise<void> {
     .then(() => {
       return resetApp()
         .then(() => {
-          popupService.info("Database reset successfully!");
+          popupService.info(PopupLocation.TOP_BAR, "Database reset successfully!");
         });
     })
     .catch((error) => {
-      popupService.error("Something went wrong while resetting the database: " + error)
+      popupService.error(PopupLocation.TOP_BAR, "Something went wrong while resetting the database: " + error)
     });;
 };
 

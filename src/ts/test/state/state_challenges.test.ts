@@ -3,7 +3,7 @@ import * as actions from "@cectf/state/actions";
 import { store } from "@cectf/state";
 import { Challenge } from "@cectf/types";
 
-var challenge1: Challenge = {
+const challenge1: Challenge = {
     id: 1,
     title: "First",
     category: "crypto",
@@ -11,7 +11,7 @@ var challenge1: Challenge = {
     body: "Do it",
     solved: true
 };
-var challenge2: Challenge = {
+const challenge2: Challenge = {
     id: 2,
     title: "Second",
     category: "reversing",
@@ -20,24 +20,30 @@ var challenge2: Challenge = {
     solved: false
 };
 
+const challenges = [challenge1, challenge2];
+const challengeData = [{ data: challenge1, open: false }, { data: challenge2, open: false }];
+
 afterEach(() => {
     store.dispatch(actions.reset());
 });
 
 it("set challenges", () => {
     expect(store.getState().challenges).toEqual([]);
-    store.dispatch(actions.ctfSetChallenges([challenge1, challenge2]));
-    expect(store.getState().challenges).toEqual([challenge1, challenge2]);
+    store.dispatch(actions.ctfSetChallenges(challenges));
+    expect(store.getState().challenges).toEqual(challengeData);
 });
 
 it("update challenge", () => {
-    store.dispatch(actions.ctfSetChallenges([challenge1, challenge2]));
-    expect(store.getState().challenges).toEqual([challenge1, challenge2]);
+    store.dispatch(actions.ctfSetChallenges(challenges));
+    expect(store.getState().challenges).toEqual(challengeData);
 
-    var updatedChallenge1 = Object.assign({}, challenge1, {
-        title: "NotFirst",
-        category: "cryptography"
-    });
+    const updatedChallenge1 = {
+        data: Object.assign({}, challenge1, {
+            title: "NotFirst",
+            category: "cryptography"
+        }),
+        open: true
+    };
     store.dispatch(actions.ctfUpdateChallenge(updatedChallenge1));
-    expect(store.getState().challenges).toEqual([updatedChallenge1, challenge2]);
+    expect(store.getState().challenges).toEqual([updatedChallenge1, challengeData[1]]);
 });

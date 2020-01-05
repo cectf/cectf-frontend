@@ -1,20 +1,33 @@
 
 import * as actions from "@cectf/state/actions";
 import { store } from "@cectf/state";
-import { Popup, PopupLevel } from "@cectf/types";
+import { Popup, PopupLevel, PopupLocation } from "@cectf/types";
 
-var popup1: Popup = {
+const topPopup1: Popup = {
     key: 0,
-    date: new Date(),
     level: PopupLevel.INFO,
-    text: "Informative"
+    text: "Informative",
+    location: PopupLocation.TOP_BAR
+}
+const topPopup2: Popup = {
+    key: 1,
+    level: PopupLevel.ERROR,
+    text: "Erroneous",
+    location: PopupLocation.TOP_BAR
 }
 
-var popup2: Popup = {
-    key: 1,
-    date: new Date(),
+const signupPopup1: Popup = {
+    key: 2,
+    level: PopupLevel.INFO,
+    text: "informative",
+    location: PopupLocation.SIGNUP
+}
+
+const signupPopup2: Popup = {
+    key: 3,
     level: PopupLevel.ERROR,
-    text: "Erroneous"
+    text: "Erroneous",
+    location: PopupLocation.SIGNUP
 }
 
 afterEach(() => {
@@ -22,48 +35,65 @@ afterEach(() => {
 });
 
 it("add popup", () => {
-    expect(store.getState().popups).toEqual([]);
-    store.dispatch(actions.addPopup(popup1));
-    expect(store.getState().popups).toEqual([popup1]);
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(undefined);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
+    store.dispatch(actions.addPopup(topPopup1));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
 });
 
-it("add multiple popups", () => {
-    expect(store.getState().popups).toEqual([]);
-    store.dispatch(actions.addPopup(popup1));
-    store.dispatch(actions.addPopup(popup2));
-    expect(store.getState().popups).toEqual([popup1, popup2]);
+it("overwrite popup", () => {
+    store.dispatch(actions.addPopup(topPopup1));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
+    store.dispatch(actions.addPopup(topPopup2));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup2);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
+});
+
+it("add popup to multiple locations", () => {
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(undefined);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
+    store.dispatch(actions.addPopup(topPopup1));
+    store.dispatch(actions.addPopup(signupPopup1));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(signupPopup1);
 });
 
 it("remove popup", () => {
-    expect(store.getState().popups).toEqual([]);
-    store.dispatch(actions.addPopup(popup1));
-    expect(store.getState().popups).toEqual([popup1]);
-    store.dispatch(actions.removePopup(popup1));
-    expect(store.getState().popups).toEqual([]);
+    store.dispatch(actions.addPopup(topPopup1));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
+    store.dispatch(actions.removePopup(PopupLocation.TOP_BAR));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(undefined);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
 });
 
-it("remove old popup", () => {
-    expect(store.getState().popups).toEqual([]);
-    store.dispatch(actions.addPopup(popup1));
-    store.dispatch(actions.addPopup(popup2));
-    expect(store.getState().popups).toEqual([popup1, popup2]);
-    store.dispatch(actions.removePopup(popup1));
-    expect(store.getState().popups).toEqual([popup2]);
+it("remove popup from only one location", () => {
+    store.dispatch(actions.addPopup(topPopup1));
+    store.dispatch(actions.addPopup(signupPopup2));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(signupPopup2);
+    store.dispatch(actions.removePopup(PopupLocation.TOP_BAR));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(undefined);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(signupPopup2);
 });
 
 it("remove nonexistent popup", () => {
-    expect(store.getState().popups).toEqual([]);
-    store.dispatch(actions.addPopup(popup1));
-    expect(store.getState().popups).toEqual([popup1]);
-    store.dispatch(actions.removePopup(popup2));
-    expect(store.getState().popups).toEqual([popup1]);
+    store.dispatch(actions.addPopup(topPopup1));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
+    store.dispatch(actions.removePopup(PopupLocation.SIGNUP));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
 });
 
 it("clear popups", () => {
-    expect(store.getState().popups).toEqual([]);
-    store.dispatch(actions.addPopup(popup1));
-    store.dispatch(actions.addPopup(popup2));
-    expect(store.getState().popups).toEqual([popup1, popup2]);
+    store.dispatch(actions.addPopup(topPopup1));
+    store.dispatch(actions.addPopup(signupPopup1));
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(topPopup1);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(signupPopup1);
     store.dispatch(actions.clearPopups());
-    expect(store.getState().popups).toEqual([]);
+    expect(store.getState().popups.get(PopupLocation.TOP_BAR)).toEqual(undefined);
+    expect(store.getState().popups.get(PopupLocation.SIGNUP)).toEqual(undefined);
 });

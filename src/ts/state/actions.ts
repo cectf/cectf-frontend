@@ -1,4 +1,4 @@
-import { Challenge, Config, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey, FileDescriptor } from "@cectf/types";
+import { Challenge, Config, AdminChallenge, User, NavPage, Popup, ModalID, ModalKey, FileDescriptor, ChallengeData, PopupLocation } from "@cectf/types";
 
 /*
  * action types
@@ -10,25 +10,25 @@ export interface Action<T> {
 }
 
 export const enum ActionId {
-    UPDATE_CONFIG,
-    RESET,
-    SET_CSRF,
-    SET_NAV_PAGE,
-    CTF_SET_CHALLENGES,
-    CTF_UPDATE_CHALLENGE,
-    ADMIN_SET_CHALLENGES,
-    ADMIN_ADD_CHALLENGE,
-    ADMIN_UPDATE_CHALLENGE,
-    ADMIN_DELETE_CHALLENGE,
-    SET_CHALLENGE_FILES,
-    SET_USER,
-    ADD_POPUP,
-    REMOVE_POPUP,
-    CLEAR_POPUPS,
-    START_REQUEST,
-    FINISH_REQUEST,
-    OPEN_MODAL,
-    CLOSE_MODAL
+    UPDATE_CONFIG = "UPDATE_CONFIG",
+    RESET = "RESET",
+    SET_CSRF = "SET_CSRF",
+    SET_NAV_PAGE = "SET_NAV_PAGE",
+    CTF_SET_CHALLENGES = "CTF_SET_CHALLENGES",
+    CTF_UPDATE_CHALLENGE = "CTF_UPDATE_CHALLENGE",
+    ADMIN_SET_CHALLENGES = "ADMIN_SET_CHALLENGES",
+    ADMIN_ADD_CHALLENGE = "ADMIN_ADD_CHALLENGE",
+    ADMIN_UPDATE_CHALLENGE = "ADMIN_UPDATE_CHALLENGE",
+    ADMIN_DELETE_CHALLENGE = "ADMIN_DELETE_CHALLENGE",
+    SET_CHALLENGE_FILES = "SET_CHALLENGE_FILES",
+    SET_USER = "SET_USER",
+    ADD_POPUP = "ADD_POPUP",
+    REMOVE_POPUP = "REMOVE_POPUP",
+    CLEAR_POPUPS = "CLEAR_POPUPS",
+    START_REQUEST = "START_REQUEST",
+    FINISH_REQUEST = "FINISH_REQUEST",
+    OPEN_MODAL = "OPEN_MODAL",
+    CLOSE_MODAL = "CLOSE_MODAL"
 }
 
 /*
@@ -55,7 +55,7 @@ export function ctfSetChallenges(challenges: Challenge[]): Action<Challenge[]> {
     return { type: ActionId.CTF_SET_CHALLENGES, value: challenges }
 }
 
-export function ctfUpdateChallenge(challenge: Challenge): Action<Challenge> {
+export function ctfUpdateChallenge(challenge: ChallengeData): Action<ChallengeData> {
     return { type: ActionId.CTF_UPDATE_CHALLENGE, value: challenge }
 }
 
@@ -90,8 +90,8 @@ export function addPopup(popup: Popup): Action<Popup> {
     return { type: ActionId.ADD_POPUP, value: popup };
 }
 
-export function removePopup(popup: Popup): Action<Popup> {
-    return { type: ActionId.REMOVE_POPUP, value: popup };
+export function removePopup(location: PopupLocation): Action<PopupLocation> {
+    return { type: ActionId.REMOVE_POPUP, value: location };
 }
 
 export function clearPopups(): Action<undefined> {

@@ -1,9 +1,9 @@
 import * as log from 'loglevel';
 import api from "@cectf/api";
-import { store, reset, startRequest, finishRequest } from "@cectf/state";
 import userService from "@cectf/services/user.service";
 import popupService from "@cectf/services/popup.service";
 import resetService from "@cectf/services/reset.service";
+import { PopupLocation } from '@cectf/types';
 
 async function login(username: string, password: string) {
   log.info("Attempting login for user %s", username);
@@ -13,7 +13,7 @@ async function login(username: string, password: string) {
       userService.updateCurrentUser();
     }).catch(error => {
       log.debug("Login failed: %s", error);
-      popupService.error(error);
+      popupService.error(PopupLocation.TOP_BAR, error);
     });
 }
 
@@ -23,7 +23,7 @@ async function logout(): Promise<void> {
     return resetService.resetApp();
   }).catch(error => {
     log.debug("Logout failed: %s", error);
-    popupService.error(error);
+    popupService.error(PopupLocation.TOP_BAR, error);
   });
 }
 
@@ -34,7 +34,7 @@ async function register(email: string, username: string, password: string): Prom
     return userService.updateCurrentUser();
   }).catch(error => {
     log.debug("Registration failed: %s", error);
-    popupService.error(error);
+    popupService.error(PopupLocation.SIGNUP, error);
   });
 }
 

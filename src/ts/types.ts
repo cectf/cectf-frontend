@@ -17,6 +17,11 @@ export interface Challenge {
   solved: boolean;
 }
 
+export interface ChallengeData {
+  data: Challenge;
+  open: boolean;
+}
+
 export interface AdminChallenge {
   id: number;
   title: string;
@@ -76,11 +81,18 @@ export enum PopupLevel {
   INFO = "info"
 }
 
+export enum PopupLocation {
+  TOP_BAR = "TOP_BAR",
+  SIGNUP = "SIGNUP",
+  CHALLENGE_TILE = "CHALLENGE_TILE"
+}
+
 export interface Popup {
   key: number;
-  date: Date;
   level: PopupLevel;
   text: string;
+  location: PopupLocation;
+  locationKey?: any;
 }
 
 export enum ModalID {
@@ -97,12 +109,12 @@ export interface ModalKey {
 export interface State {
   config: Config;
   csrf: string;
-  challenges: Challenge[];
+  challenges: ChallengeData[];
   adminChallenges: AdminChallenge[];
   files: Map<number, FileDescriptor[]>;
   user: User | null;
   navPage: NavPage;
-  popups: Popup[];
+  popups: Map<PopupLocation, Popup>;
   activeRequests: string[];
   modal: ModalKey | null;
 }

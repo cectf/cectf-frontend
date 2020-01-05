@@ -3,7 +3,7 @@ import api from "@cectf/api/config.api";
 import services from "@cectf/services";
 import { store } from "@cectf/state";
 import * as actions from "@cectf/state/actions";
-import { Config } from "@cectf/types";
+import { Config, PopupLocation } from "@cectf/types";
 
 
 it("updateConfig production", async () => {
@@ -52,7 +52,7 @@ it("updateConfig error", async () => {
   return services.config.updateConfig().then(() => {
     expect(getConfig.mock.calls.length).toEqual(1);
     expect(popupError.mock.calls.length).toEqual(1);
-    expect(popupError.mock.calls[0]).toEqual([error]);
+    expect(popupError.mock.calls[0]).toEqual([PopupLocation.TOP_BAR, error]);
     expect(log.getLevel()).toEqual(1);
   });
 });

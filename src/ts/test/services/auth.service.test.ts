@@ -3,6 +3,7 @@ import service from "@cectf/services/auth.service";
 import services from "@cectf/services";
 import { store } from "@cectf/state";
 import * as actions from "@cectf/state/actions";
+import { PopupLocation } from "@cectf/types";
 
 
 it("login", async () => {
@@ -25,11 +26,12 @@ it("login failed", async () => {
   var error = jest.fn();
   services.popup.error = error;
 
-  expect.assertions(3);
+  expect.assertions(4);
   return service.login("username", "password").then(() => {
     expect(login.mock.calls.length).toEqual(1);
     expect(error.mock.calls.length).toEqual(1);
-    expect(error.mock.calls[0][0]).toEqual(failureMessage);
+    expect(error.mock.calls[0][0]).toEqual(PopupLocation.TOP_BAR);
+    expect(error.mock.calls[0][1]).toEqual(failureMessage);
   });
 });
 
@@ -53,11 +55,12 @@ it("logout failed", async () => {
   var error = jest.fn();
   services.popup.error = error;
 
-  expect.assertions(3);
+  expect.assertions(4);
   return service.logout().then(() => {
     expect(logout.mock.calls.length).toEqual(1);
     expect(error.mock.calls.length).toEqual(1);
-    expect(error.mock.calls[0][0]).toEqual(failureMessage);
+    expect(error.mock.calls[0][0]).toEqual(PopupLocation.TOP_BAR);
+    expect(error.mock.calls[0][1]).toEqual(failureMessage);
   });
 });
 
@@ -81,10 +84,11 @@ it("register failed", async () => {
   var error = jest.fn();
   services.popup.error = error;
 
-  expect.assertions(3);
+  expect.assertions(4);
   return service.register("username@email.com", "username", "password").then(() => {
     expect(register.mock.calls.length).toEqual(1);
     expect(error.mock.calls.length).toEqual(1);
-    expect(error.mock.calls[0][0]).toEqual(failureMessage);
+    expect(error.mock.calls[0][0]).toEqual(PopupLocation.SIGNUP);
+    expect(error.mock.calls[0][1]).toEqual(failureMessage);
   });
 });

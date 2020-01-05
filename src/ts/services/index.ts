@@ -8,4 +8,11 @@ import popup from "@cectf/services/popup.service";
 import reset from "@cectf/services/reset.service";
 import user from "@cectf/services/user.service";
 
+/**
+ * Defines the service layer of the application.
+ * The service layer is the central go-between for all the different areas of the application (API, component, and redux store).
+ * The service layer is solely responsible for invoking the API layer.
+ * The service layer
+ */
+
 export default { auth, challenges, challengesAdmin, challengeFiles, config, csrf, popup, reset, user };

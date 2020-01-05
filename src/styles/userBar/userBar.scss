@@ -13,10 +13,12 @@
 
 .user-bar__welcome {
   margin-left: 6px;
+  padding-top: 4px;
   flex-grow: 1;
   font-size: 24px;
   text-align: left;
 }
 .user-bar__logout {
+  padding: 4px;
   font-size: 24px;
 }

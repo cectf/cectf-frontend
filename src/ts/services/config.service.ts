@@ -2,6 +2,7 @@ import * as log from 'loglevel';
 import api from "@cectf/api";
 import * as state from "@cectf/state";
 import popupService from "@cectf/services/popup.service";
+import { PopupLocation } from '@cectf/types';
 
 async function updateConfig() {
   log.info("Updating app configuration");
@@ -15,7 +16,7 @@ async function updateConfig() {
       }
       state.store.dispatch(state.updateConfig(config))
     }).catch(error => {
-      popupService.error(error);
+      popupService.error(PopupLocation.TOP_BAR, error);
     });
 }
 

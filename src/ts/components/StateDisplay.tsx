@@ -14,6 +14,24 @@ class StateDisplayComponent extends React.Component<
   constructor(props: StateDisplayProps) {
     super(props);
   }
+  mapToObject = (aMap: Map<any, any>) => {
+    var obj = Object.create(null);
+    for (var [k, v] of aMap) {
+      if (v instanceof Map) {
+        obj[k.toString()] = this.mapToObject(v);
+      } else {
+        obj[k.toString()] = v;
+      }
+    }
+    return obj;
+  }
+  replacer = (name: string, val: any) => {
+    if (val instanceof Map) {
+      return this.mapToObject(val);
+    } else {
+      return val;
+    }
+  }
   render() {
     if (this.props.currentState.config.production) {
       return null;
@@ -22,12 +40,16 @@ class StateDisplayComponent extends React.Component<
         <div>
           <hr />
           <div>Current Redux State:
-            <pre>{JSON.stringify(this.props.currentState, null, 2)}</pre>
+            <pre>{JSON.stringify(this.props.currentState, this.replacer, 2)}</pre>
           </div>
         </div>
       );
     }
   }
+}
+
+var x: any = {
+  1: 2
 }
 
 const mapStateToProps = (state: State, ownProps: any): StateDisplayProps => {

@@ -1,42 +1,36 @@
 import * as log from 'loglevel';
 import { store, addPopup, removePopup } from "@cectf/state";
-import { Popup, PopupLevel } from "@cectf/types";
+import { Popup, PopupLevel, PopupLocation } from "@cectf/types";
 
 var popupKey = 0;
-var timeout: number = 5000;
 
-const setPopupTimeout = (newTimeout: number) => {
-    timeout = newTimeout;
-}
-
-const pop = function (popup: Popup) {
-    store.dispatch(addPopup(popup));
-    return new Promise(resolve => {
-        setTimeout(() => {
-            store.dispatch(removePopup(popup));
-            resolve();
-        }, timeout)
-    });
-}
-
-const info = function (info: string) {
+const info = (location: PopupLocation, info: string, locationKey?: any) => {
     log.debug("Popping info \"%s\"", info);
-    return pop({
+    const popup = {
         key: popupKey++,
-        date: new Date(),
         level: PopupLevel.INFO,
-        text: info
-    });
+        text: info,
+        location: location,
+        locationKey: locationKey
+    };
+    store.dispatch(addPopup(popup));
 }
 
-const error = function (error: string) {
+const error = (location: PopupLocation, error: string, locationKey?: any) => {
     log.debug("Popping error \"%s\"", error);
-    return pop({
+    const popup = {
         key: popupKey++,
-        date: new Date(),
         level: PopupLevel.ERROR,
-        text: error
-    });
+        text: error,
+        location: location,
+        locationKey: locationKey
+    };
+    store.dispatch(addPopup(popup));
 }
 
-export default { info, error, setPopupTimeout };
+const remove = (location: PopupLocation) => {
+    log.debug("Removing any popups from %s", location);
+    store.dispatch(removePopup(location));
+}
+
+export default { info, error, remove };

@@ -2,8 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import service from "@cectf/services";
 import Modal from "@cectf/components/Modal";
-import Popups from "@cectf/components/popups/Popups";
-import { State, ModalID } from "@cectf/types";
+import Popup from "@cectf/components/popups/Popup";
+import { State, ModalID, PopupLocation } from "@cectf/types";
 import * as styles from "@styles/userBar/register.scss";
 import * as modalStyles from "@styles/modal/register.scss";
 import { store, openModal } from "@cectf/state";
@@ -48,6 +48,7 @@ class RegisterFormComponent extends React.Component<
   onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
+    service.popup.remove(PopupLocation.SIGNUP);
     service.auth.register(
       this.state.email,
       this.state.username,
@@ -115,7 +116,7 @@ class RegisterFormComponent extends React.Component<
             </button>
           </form>
         </div>
-        <Popups />
+        <Popup location={PopupLocation.SIGNUP} />
       </Modal>
     ];
   }

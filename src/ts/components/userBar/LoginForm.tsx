@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import service from "@cectf/services";
-import { State } from "@cectf/types";
+import { State, PopupLocation } from "@cectf/types";
 import * as styles from "@styles/userBar/loginForm.scss";
 
 interface LoginProps {
@@ -29,6 +29,7 @@ class LoginFormComponent extends React.Component<LoginProps, LoginState> {
   onSubmit(event: React.FormEvent) {
     event.preventDefault();
     event.stopPropagation();
+    service.popup.remove(PopupLocation.TOP_BAR);
     service.auth.login(this.state.username, this.state.password);
   }
 

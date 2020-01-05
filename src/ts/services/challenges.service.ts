@@ -1,7 +1,7 @@
 import * as log from 'loglevel';
 import api from "@cectf/api";
 import { store, ctfSetChallenges, ctfUpdateChallenge } from "@cectf/state";
-import { SubmissionStatus } from "@cectf/types";
+import { SubmissionStatus, Challenge } from "@cectf/types";
 
 const updateChallenges = async function () {
   log.info("Updating challenges");
@@ -25,4 +25,9 @@ const submitFlag = async function (
   });
 };
 
-export default { updateChallenges, submitFlag };
+const setChallengeIsOpen = async function (challenge: Challenge, open: boolean) {
+  log.info("Opening/closing challenge %s", challenge.id);
+  store.dispatch(ctfUpdateChallenge({ data: challenge, open: open }));
+}
+
+export default { updateChallenges, submitFlag, setChallengeIsOpen };

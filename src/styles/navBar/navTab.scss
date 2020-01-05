@@ -15,6 +15,7 @@
 
 .nav-tab--inactive {
   @extend .nav-tab;
+  cursor: pointer;
   //background-color: colors.$nav-tab-inactive;
 }
 

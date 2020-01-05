@@ -15,6 +15,10 @@ export default class AdminChallengeTile extends React.Component<
   AdminChallengeTileProps,
   AdminChallengeTileState
   > {
+  constructor (props: AdminChallengeTileProps, state: AdminChallengeTileState) {
+    super(props, state);
+    services.challengeFiles.updateChallengeFiles(props.challenge);
+  }
   editChallenge = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();

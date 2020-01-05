@@ -1,100 +1,86 @@
-import * as log from 'loglevel';
-import api from "@cectf/api/config.api";
 import service from "@cectf/services/popup.service";
 import { store } from "@cectf/state";
 import * as actions from "@cectf/state/actions";
-import { Popup, PopupLevel } from "@cectf/types";
+import { Popup, PopupLevel, PopupLocation } from "@cectf/types";
 
-var shortTimeout: number = 50;
+const message = "informative error";
+const locationKey = 666;
 
-it("info popup", async () => {
-
-  service.setPopupTimeout(shortTimeout);
-
-  var infoMessage: string = "Info!";
+it("info", async () => {
 
   var dispatch = jest.fn();
   store.dispatch = dispatch;
 
-  service.info(infoMessage);
+  service.info(PopupLocation.TOP_BAR, message);
 
-  expect.assertions(10);
-
-  // verify 1 call to dispatch with 1 argument
   expect(dispatch.mock.calls.length).toEqual(1);
-  expect(dispatch.mock.calls[0].length).toEqual(1);
-
-  // verify argument was an ADD_POPUP action
-  var action = dispatch.mock.calls[0][0];
-  expect(action.type).toEqual(actions.ActionId.ADD_POPUP);
-
-  // verify popup properties, except for date
-  var popup: Popup = action.value;
-  expect(popup.level).toEqual(PopupLevel.INFO);
-  expect(popup.text).toEqual(infoMessage);
-
-  // wait for the popup to dismiss itself
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // verify 2 calls to dispatch, 2nd with 1 argument
-      expect(dispatch.mock.calls.length).toEqual(2);
-      expect(dispatch.mock.calls[1].length).toEqual(1);
-
-      // verify argument was a REMOVE_POPUP action
-      var action = dispatch.mock.calls[1][0];
-      expect(action.type).toEqual(actions.ActionId.REMOVE_POPUP);
-
-      // verify popup properties, except for date
-      var popup: Popup = action.value;
-      expect(popup.level).toEqual(PopupLevel.INFO);
-      expect(popup.text).toEqual(infoMessage);
-      resolve();
-    }, shortTimeout);
-  });
+  expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
+    key: 0,
+    level: PopupLevel.INFO,
+    text: message,
+    location: PopupLocation.TOP_BAR,
+    locationKey: undefined
+  })]);
 });
 
-it("error popup", async () => {
-
-  service.setPopupTimeout(shortTimeout);
-
-  var errorMessage: string = "Error!";
+it("info with locationKey", async () => {
 
   var dispatch = jest.fn();
   store.dispatch = dispatch;
 
-  service.error(errorMessage);
+  service.info(PopupLocation.TOP_BAR, message, locationKey);
 
-  expect.assertions(10);
-
-  // verify 1 call to dispatch with 1 argument
   expect(dispatch.mock.calls.length).toEqual(1);
-  expect(dispatch.mock.calls[0].length).toEqual(1);
+  expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
+    key: 1,
+    level: PopupLevel.INFO,
+    text: message,
+    location: PopupLocation.TOP_BAR,
+    locationKey: locationKey
+  })]);
+});
 
-  // verify argument was an ADD_POPUP action
-  var action = dispatch.mock.calls[0][0];
-  expect(action.type).toEqual(actions.ActionId.ADD_POPUP);
+it("error", async () => {
 
-  // verify popup properties, except for date
-  var popup: Popup = action.value;
-  expect(popup.level).toEqual(PopupLevel.ERROR);
-  expect(popup.text).toEqual(errorMessage);
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
 
-  // wait for the popup to dismiss itself
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // verify 2 calls to dispatch, 2nd with 1 argument
-      expect(dispatch.mock.calls.length).toEqual(2);
-      expect(dispatch.mock.calls[1].length).toEqual(1);
+  service.error(PopupLocation.TOP_BAR, message);
 
-      // verify argument was a REMOVE_POPUP action
-      var action = dispatch.mock.calls[1][0];
-      expect(action.type).toEqual(actions.ActionId.REMOVE_POPUP);
+  expect(dispatch.mock.calls.length).toEqual(1);
+  expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
+    key: 2,
+    level: PopupLevel.ERROR,
+    text: message,
+    location: PopupLocation.TOP_BAR,
+    locationKey: undefined
+  })]);
+});
 
-      // verify popup properties, except for date
-      var popup: Popup = action.value;
-      expect(popup.level).toEqual(PopupLevel.ERROR);
-      expect(popup.text).toEqual(errorMessage);
-      resolve();
-    }, shortTimeout);
-  });
+it("error with locationKey", async () => {
+
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
+
+  service.error(PopupLocation.TOP_BAR, message, locationKey);
+
+  expect(dispatch.mock.calls.length).toEqual(1);
+  expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
+    key: 3,
+    level: PopupLevel.ERROR,
+    text: message,
+    location: PopupLocation.TOP_BAR,
+    locationKey: locationKey
+  })]);
+});
+
+it("remove", async () => {
+
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
+
+  service.remove(PopupLocation.TOP_BAR);
+
+  expect(dispatch.mock.calls.length).toEqual(1);
+  expect(dispatch.mock.calls[0]).toEqual([actions.removePopup(PopupLocation.TOP_BAR)]);
 });

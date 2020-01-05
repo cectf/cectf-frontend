@@ -2,6 +2,8 @@
 
 @mixin challenge-tile {
   margin: 5px;
+  padding-top: 5px;
+  padding-bottom: 10px;
   border-style: solid;
   border-radius: 10px;
   border-color: colors.$challenge-tile-border;
@@ -17,6 +19,10 @@
   background-color: colors.$challenge-tile-unsolved;
 }
 
+.challenge-tile__header {
+  cursor: pointer;
+}
+
 .challenge-tile__title {
   font-size: 30px;
 }
@@ -29,6 +35,18 @@
   font-size: 11px;
 }
 
-.challenge-tile__flag {
-  font-size: 18px;
+@mixin challenge-tile__body {
+  transition: max-height 0.3s;
+  font-size: 14px;
+}
+.challenge-tile__body--open {
+  @include challenge-tile__body;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.challenge-tile__body--closed {
+  @include challenge-tile__body;
+  max-height: 0px;
+  overflow: hidden;
 }
