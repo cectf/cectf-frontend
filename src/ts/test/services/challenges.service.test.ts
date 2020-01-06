@@ -1,8 +1,9 @@
 import api from "@cectf/api/challenges.api";
 import service from "@cectf/services/challenges.service";
+import popupService from "@cectf/services/popup.service";
 import { store } from "@cectf/state";
 import * as actions from "@cectf/state/actions";
-import { Challenge, SubmissionStatus } from "@cectf/types";
+import { Challenge, SubmissionStatus, PopupLocation } from "@cectf/types";
 
 var challenge: Challenge = {
   id: 1,
@@ -37,15 +38,18 @@ it("submitFlag correct", () => {
   api.getChallenges = getChallenges;
   var dispatch = jest.fn();
   store.dispatch = dispatch;
+  var info = jest.fn();
+  popupService.info = info;
 
-  expect.assertions(5);
+  expect.assertions(6);
   return service.submitFlag(1, "CTF{flag}")
-    .then(submissionStatus => {
-      expect(submissionStatus).toEqual(SubmissionStatus.CORRECT);
+    .then(() => {
       expect(submitFlag.mock.calls.length).toEqual(1);
       expect(getChallenges.mock.calls.length).toEqual(1);
       expect(dispatch.mock.calls.length).toEqual(1);
       expect(dispatch.mock.calls[0]).toEqual([actions.ctfSetChallenges([challenge])]);
+      expect(info.mock.calls.length).toEqual(1);
+      expect(info.mock.calls[0]).toEqual([PopupLocation.CHALLENGE_TILE, "You did it!", challenge.id]);
     });
 });
 
@@ -56,13 +60,16 @@ it("submitFlag incorrect", () => {
   api.submitFlag = submitFlag;
   var dispatch = jest.fn();
   store.dispatch = dispatch;
+  var error = jest.fn();
+  popupService.error = error;
 
-  expect.assertions(3);
+  expect.assertions(4);
   return service.submitFlag(1, "CTF{flag}")
-    .then(submissionStatus => {
-      expect(submissionStatus).toEqual(SubmissionStatus.INCORRECT);
+    .then(() => {
       expect(submitFlag.mock.calls.length).toEqual(1);
       expect(dispatch.mock.calls.length).toEqual(0);
+      expect(error.mock.calls.length).toEqual(1);
+      expect(error.mock.calls[0]).toEqual([PopupLocation.CHALLENGE_TILE, "That ain't right. n00b.", challenge.id]);
     });
 });
 
@@ -73,13 +80,36 @@ it("submitFlag already solved", () => {
   api.submitFlag = submitFlag;
   var dispatch = jest.fn();
   store.dispatch = dispatch;
+  var info = jest.fn();
+  popupService.info = info;
 
-  expect.assertions(3);
+  expect.assertions(4);
   return service.submitFlag(1, "CTF{flag}")
-    .then(submissionStatus => {
-      expect(submissionStatus).toEqual(SubmissionStatus.ALREADY_SOLVED);
+    .then(() => {
       expect(submitFlag.mock.calls.length).toEqual(1);
       expect(dispatch.mock.calls.length).toEqual(0);
+      expect(info.mock.calls.length).toEqual(1);
+      expect(info.mock.calls[0]).toEqual([PopupLocation.CHALLENGE_TILE, "You already solved this one!", challenge.id]);
+    });
+});
+
+it("submitFlag unknown submission status", () => {
+  var submitFlag = jest.fn(() =>
+    Promise.resolve({ status: 666 })
+  );
+  api.submitFlag = submitFlag;
+  var dispatch = jest.fn();
+  store.dispatch = dispatch;
+  var error = jest.fn();
+  popupService.error = error;
+
+  expect.assertions(4);
+  return service.submitFlag(1, "CTF{flag}")
+    .then(() => {
+      expect(submitFlag.mock.calls.length).toEqual(1);
+      expect(dispatch.mock.calls.length).toEqual(0);
+      expect(error.mock.calls.length).toEqual(1);
+      expect(error.mock.calls[0]).toEqual([PopupLocation.CHALLENGE_TILE, "Unknown server error :O", challenge.id]);
     });
 });
 

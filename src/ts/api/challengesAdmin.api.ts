@@ -1,6 +1,9 @@
 import api from "@cectf/api/api";
 import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
+/**
+ * Gets all data for all challenges for rendering in the admin view
+ */
 const getChallenges = async function (): Promise<AdminChallenge[]> {
   return api
     .get("/api/admin/challenges")
@@ -12,6 +15,11 @@ const getChallenges = async function (): Promise<AdminChallenge[]> {
     });
 };
 
+/**
+ * Creates a new challenge
+ * 
+ * @param challenge the challenge to create
+ */
 const createChallenge = async function (
   challenge: NewAdminChallenge
 ): Promise<AdminChallenge> {
@@ -22,6 +30,12 @@ const createChallenge = async function (
     });
 };
 
+/**
+ * Updates a challenge
+ * 
+ * @param challengeId the ID of the challenge to update
+ * @param challenge the new challenge information
+ */
 const updateChallenge = async function (
   challengeId: number,
   challenge: AdminChallenge | NewAdminChallenge
@@ -33,6 +47,11 @@ const updateChallenge = async function (
     });
 };
 
+/**
+ * Deletes a challenge
+ * 
+ * @param challengeId the ID of the challenge to delete
+ */
 const deleteChallenge = async function (challengeId: number): Promise<void> {
   return api
     .deleteHttp("/api/admin/challenges/" + challengeId)

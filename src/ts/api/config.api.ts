@@ -1,6 +1,9 @@
 import api from "@cectf/api/api";
 import { Config } from "@cectf/types";
 
+/**
+ * Gets the current configuration from the server
+ */
 async function getConfig(): Promise<Config> {
   return api
     .get("/api/config/config.json")

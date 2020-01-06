@@ -24,14 +24,14 @@ it("Close keyless modal", () => {
 
 it("Open keyed modal", () => {
     expect(store.getState().modal).toEqual(null);
-    store.dispatch(actions.openModalKey(ModalID.CHALLENGE, 1));
-    expect(store.getState().modal).toEqual({id: ModalID.CHALLENGE, index: 1});
+    store.dispatch(actions.openModalKey(ModalID.ADMIN_CHALLENGE, 1));
+    expect(store.getState().modal).toEqual({id: ModalID.ADMIN_CHALLENGE, index: 1});
 });
 
 it("Close keyed modal", () => {
     expect(store.getState().modal).toEqual(null);
-    store.dispatch(actions.openModalKey(ModalID.CHALLENGE, 1));
-    expect(store.getState().modal).toEqual({id: ModalID.CHALLENGE, index: 1});
+    store.dispatch(actions.openModalKey(ModalID.ADMIN_CHALLENGE, 1));
+    expect(store.getState().modal).toEqual({id: ModalID.ADMIN_CHALLENGE, index: 1});
     store.dispatch(actions.closeModal());
     expect(store.getState().modal).toEqual(null);
 });

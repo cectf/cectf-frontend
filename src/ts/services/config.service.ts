@@ -4,6 +4,9 @@ import * as state from "@cectf/state";
 import popupService from "@cectf/services/popup.service";
 import { PopupLocation } from '@cectf/types';
 
+/**
+ * Updates the configuration from the server and stores it in redux
+ */
 async function updateConfig() {
   log.info("Updating app configuration");
   return api.config.getConfig()

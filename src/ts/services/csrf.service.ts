@@ -1,7 +1,9 @@
-import * as log from 'loglevel';
 import api from "@cectf/api";
 import { store , setCsrf } from "@cectf/state"
 
+/**
+ * Updates the CSRF token from the server
+ */
 const refreshCsrf = async function () {
   return api.csrf
     .getCsrf()

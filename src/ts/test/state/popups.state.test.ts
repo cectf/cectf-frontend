@@ -4,27 +4,23 @@ import { store } from "@cectf/state";
 import { Popup, PopupLevel, PopupLocation } from "@cectf/types";
 
 const topPopup1: Popup = {
-    key: 0,
     level: PopupLevel.INFO,
     text: "Informative",
     location: PopupLocation.TOP_BAR
 }
 const topPopup2: Popup = {
-    key: 1,
     level: PopupLevel.ERROR,
     text: "Erroneous",
     location: PopupLocation.TOP_BAR
 }
 
 const signupPopup1: Popup = {
-    key: 2,
     level: PopupLevel.INFO,
     text: "informative",
     location: PopupLocation.SIGNUP
 }
 
 const signupPopup2: Popup = {
-    key: 3,
     level: PopupLevel.ERROR,
     text: "Erroneous",
     location: PopupLocation.SIGNUP

@@ -42,18 +42,7 @@ class ChallengeTileComponent extends React.Component<
   onFlagSubmit(event: React.FormEvent) {
     event.preventDefault();
     event.stopPropagation();
-    service.challenges
-      .submitFlag(this.props.challenge.id, this.state.flagAttempt)
-      // TODO make this use a messaging state instead
-      .then(status => {
-        if (status == SubmissionStatus.CORRECT) {
-          service.popup.info(PopupLocation.CHALLENGE_TILE, "You did it!", this.props.challenge.id);
-        } else if (status == SubmissionStatus.INCORRECT) {
-          service.popup.error(PopupLocation.CHALLENGE_TILE, "That ain't right. n00b.", this.props.challenge.id);
-        } else if (status == SubmissionStatus.ALREADY_SOLVED) {
-          service.popup.info(PopupLocation.CHALLENGE_TILE, "You already solved this one!", this.props.challenge.id);
-        }
-      });
+    service.challenges.submitFlag(this.props.challenge.id, this.state.flagAttempt);
   }
   render() {
 

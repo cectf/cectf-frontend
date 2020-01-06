@@ -15,7 +15,6 @@ it("info", async () => {
 
   expect(dispatch.mock.calls.length).toEqual(1);
   expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
-    key: 0,
     level: PopupLevel.INFO,
     text: message,
     location: PopupLocation.TOP_BAR,
@@ -32,7 +31,6 @@ it("info with locationKey", async () => {
 
   expect(dispatch.mock.calls.length).toEqual(1);
   expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
-    key: 1,
     level: PopupLevel.INFO,
     text: message,
     location: PopupLocation.TOP_BAR,
@@ -49,7 +47,6 @@ it("error", async () => {
 
   expect(dispatch.mock.calls.length).toEqual(1);
   expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
-    key: 2,
     level: PopupLevel.ERROR,
     text: message,
     location: PopupLocation.TOP_BAR,
@@ -66,7 +63,6 @@ it("error with locationKey", async () => {
 
   expect(dispatch.mock.calls.length).toEqual(1);
   expect(dispatch.mock.calls[0]).toEqual([actions.addPopup({
-    key: 3,
     level: PopupLevel.ERROR,
     text: message,
     location: PopupLocation.TOP_BAR,

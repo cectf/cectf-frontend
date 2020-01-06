@@ -3,6 +3,9 @@ import api from "@cectf/api";
 import { store, adminSetChallenges, adminAddChallenge, adminUpdateChallenge, adminDeleteChallenge } from "@cectf/state";
 import { AdminChallenge, NewAdminChallenge } from "@cectf/types";
 
+/**
+ * Updates the list of challenges in redux for display in the admin view.
+ */
 const updateChallenges = async function () {
   log.info("Updating admin challenges");
   api.challengesAdmin.getChallenges()
@@ -11,6 +14,11 @@ const updateChallenges = async function () {
     });
 };
 
+/**
+ * Creates a new challenge.
+ * 
+ * @param challenge the challenge to create
+ */
 const createChallenge = async function (
   challenge: NewAdminChallenge
 ): Promise<AdminChallenge> {
@@ -22,6 +30,12 @@ const createChallenge = async function (
     });
 };
 
+/**
+ * Updates a challenge.
+ * 
+ * @param challengeId the ID of the challenge to update
+ * @param challenge the new challenge data
+ */
 const updateChallenge = async function (
   challengeId: number,
   challenge: AdminChallenge | NewAdminChallenge
@@ -34,6 +48,11 @@ const updateChallenge = async function (
     });
 };
 
+/**
+ * Deletes a challenge.
+ * 
+ * @param challenge the challenge to delete
+ */
 const deleteChallenge = async function (
   challenge: AdminChallenge
 ): Promise<void> {

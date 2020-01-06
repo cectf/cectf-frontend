@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom";
 import * as ReactModal from "react-modal";
 import { Provider } from 'react-redux';
 import AppRoot from "@cectf/components/AppRoot"
-//import AppRoot from "@cectf/components/AppRoot";
 import service from "@cectf/services";
 import { store } from "@cectf/state";
 import "@styles/appRoot.scss";
