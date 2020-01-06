@@ -91,9 +91,6 @@ class AboutComponent extends React.Component<AboutProps, AboutState> {
         <ul>
           Travis CI: <a href="https://travis-ci.com/cectf">https://travis-ci.com/cectf</a>
         </ul>
-        <ul>
-          Development wiki: Coming soon!
-        </ul>
       </li>
       <p>
         You can also visit <a href="https://ctf-staging.chiquito.us">ctf-staging.chiquito.us</a>, the public test environment!

@@ -66,7 +66,32 @@ Tests cover the API, service, and redux layers. Each area requires a slightly di
 
 Components are deliberately not tested and not included in the coverage report. All logic should be delegated to the service layer, so components should be strictly presentational. I consider the value of verifying the appearance of the components to be lower than the cost of maintaining and updating those tests, as the appearance is the least critical part of the app and the most subject to change. There is also the regression test suite, [cectf-test](https://github.com/cectf/cectf-test), which verifies the behavior of the components. If the app grows substantially or more contributors volunteer, this policy may be revisited.
 
-
 Code coverage for all areas under test is currently 100%, so maintaining that standard is a requirement for any commits to master.
+
+## Design
+
+The project is layed out into 4 different functional areas: API, redux store, component, and service.
+
+### API
+
+The API layer provides a layer of abstraction over the fetch API and provides concise methods for accessing the [cectf-server](https://github.com/cectf/cectf-server) REST API. It automatically handles all CSRF tokens and does rudimentary error handling.
+
+### Redux Store
+
+[react-redux](https://react-redux.js.org/) is used to manage the state of the application. As in all redux applications, the overall state of the application is represented as a single object. The service layer dispatches atomic actions that are fed into the reducer, which mutates the state into it's next form. react-redux will then determine if a state change requires an update to any components, which will be updated and re-rendered automatically.
+
+## Component
+
+The components define the DOM structure and interactive elements of the application. The state stored in redux should be designed such that it can be translated efficiently into the component layer. The service layer is invoked in response to user interaction, such as clicks, keystrokes, or form submissions.
+
+Closely related to the components is the SCSS styling. The SCSS files are compiled alongside the Typescript files so that the class names can be imported and referenced in the component files.
+
+**NOTE**: There is currently a bug in the webpack plugin used to generate `*.scss.d.ts` files. When the build is run, the typescript is compiled, then the `*.scss.d.ts` are generated for each `*.scss` file. If a new SCSS file is added or a new field is added to an existing file, the typescript definition file will not be available at compile time, so the typescript build will fail. Running the build again will resolve the problem.
+
+### Service
+
+The service layer unites all the other layers. All business logic should live in this layer. As a general rule, other layers should use the service layer rather than interacting directly with eachother. Currently, the only exceptions are the react-redux bindings between the redux store and the components, and the API helper which looks up the CSRF token in the redux store so that it can be included on all requests.
+
+
 
 To generate an interactive dependency graph, run `npx webpack --config webpack.prod.js --profile --json > stats.json`, then upload `stats.json` to http://webpack.github.io/analyse/#modules.
