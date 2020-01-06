@@ -58,6 +58,12 @@ server {
 }
 ```
 
+## Releasing
+
+This project is managed on [Travis CI](https://travis-ci.com/cectf/cectf-frontend). Commits to the `dev` are built and tested automatically. Commits to the `master` branch are built, tested, then uploaded to [Github Pages](https://github.com/cectf/cectf.github.io) where they can be publically accessed. I am looking into a more stable release option.
+
+My production deployment pulls the files from [Github Pages](https://github.com/cectf/cectf.github.io) and builds them into a docker image which is then deployed on a cluster of Raspberry Pis.
+
 ## Tests
 
 Run `npm test` to run the frontend unit tests. This should include a coverage report.
